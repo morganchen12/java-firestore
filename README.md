@@ -1,4 +1,4 @@
-# Google Cloud Firestore Client for Java
+# Google Cloud Firestore Client 
 
 Java idiomatic client for [Cloud Firestore][product-docs].
 
