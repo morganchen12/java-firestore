@@ -27,14 +27,12 @@
     <firestore.project.id/>
   </properties>
 
-
-    <dependencyManagement>
+  <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>com.google.cloud</groupId>
         <artifactId>google-cloud-firestore-bom</artifactId>
-        <!-- Tell the application to use the private preview BOM of cloud SDK -->
-        <version>99.99.0-PRIVATEPREVIEW</version>
+        <version>3.40.0</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -43,10 +41,9 @@
 
   <dependencies>
     <dependency>
-      <!-- Use firebase-admin SDK as usual which will pull in the private preview version of cloud SDK -->
       <groupId>com.google.firebase</groupId>
       <artifactId>firebase-admin</artifactId>
-      <version>9.7.0</version>
+      <version>9.8.0</version>
     </dependency>
   </dependencies>
 

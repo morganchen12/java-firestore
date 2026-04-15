@@ -20,6 +20,9 @@ import static com.google.cloud.firestore.pipeline.expressions.AggregateFunction.
 import static com.google.cloud.firestore.pipeline.expressions.Expression.*;
 import static com.google.cloud.firestore.pipeline.expressions.Ordering.*;
 
+import com.google.cloud.firestore.pipeline.expressions.BooleanExpression;
+import com.google.cloud.firestore.pipeline.expressions.Expression;
+import com.google.cloud.firestore.pipeline.expressions.Selectable;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiStreamObserver;
 
