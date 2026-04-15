@@ -85,6 +85,7 @@ import com.google.firestore.v1.RunQueryRequest;
 import io.grpc.Status;
 import io.grpc.Status.Code;
 import io.grpc.StatusRuntimeException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -92,6 +93,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Semaphore;
@@ -101,12 +103,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class ITSystemTest extends ITBaseTest {
@@ -905,9 +907,19 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void partitionedQuery() throws Exception {
+<<<<<<< HEAD
     // Partitioned queries are not supported in the emulator.
     assumeFalse(
         "Skip this test when running against the Firestore emulator because it does not support partitioned queries.",
+=======
+    assumeFalse(
+        "Partitioned query is not supported with enterprise yet",
+        getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
+    // Partitioned queries are not supported in the emulator.
+    assumeFalse(
+        "Skip this test when running against the Firestore emulator because it does not support"
+            + " partitioned queries.",
+>>>>>>> main
         isRunningAgainstFirestoreEmulator(firestore));
 
     int documentCount = 2 * 128 + 127; // Minimum partition size is 128.
@@ -938,9 +950,19 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void partitionedQuery_future() throws Exception {
+<<<<<<< HEAD
     // Partitioned queries are not supported in the emulator.
     assumeFalse(
         "Skip this test when running against the Firestore emulator because it does not support partitioned queries.",
+=======
+    assumeFalse(
+        "Partitioned query is not supported with enterprise yet",
+        getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
+    // Partitioned queries are not supported in the emulator.
+    assumeFalse(
+        "Skip this test when running against the Firestore emulator because it does not support"
+            + " partitioned queries.",
+>>>>>>> main
         isRunningAgainstFirestoreEmulator(firestore));
 
     int documentCount = 2 * 128 + 127; // Minimum partition size is 128.
@@ -971,9 +993,19 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void emptyPartitionedQuery() throws Exception {
+<<<<<<< HEAD
     // Partitioned queries are not supported in the emulator.
     assumeFalse(
         "Skip this test when running against the Firestore emulator because it does not support partitioned queries.",
+=======
+    assumeFalse(
+        "Partitioned query is not supported with enterprise yet",
+        getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
+    // Partitioned queries are not supported in the emulator.
+    assumeFalse(
+        "Skip this test when running against the Firestore emulator because it does not support"
+            + " partitioned queries.",
+>>>>>>> main
         isRunningAgainstFirestoreEmulator(firestore));
 
     StreamConsumer<QueryPartition> consumer = new StreamConsumer<>();
@@ -1131,6 +1163,11 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void listCollections() throws Exception {
+    assumeTrue(
+        "Skip this test when running against enterprise because it does not support"
+            + " listCollections",
+        getFirestoreEdition() != FirestoreEdition.ENTERPRISE);
+
     // We test with 21 collections since 20 collections are by default returned in a single paged
     // response.
     String[] collections =
@@ -1157,6 +1194,9 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void listDocuments() throws Exception {
+    assumeTrue(
+        "Skip this test when running against enterprise because it does not support listDocuments",
+        getFirestoreEdition() != FirestoreEdition.ENTERPRISE);
     // We test with 21 documents since 20 documents are by default returned in a single paged
     // response.
     String[] documents =
@@ -1183,6 +1223,11 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void listDocumentsListsMissingDocument() throws Exception {
+    assumeFalse(
+        "Skip this test when running against enterprise because it does not support"
+            + " missing documents.",
+        getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
+
     randomColl.document("missing/foo/bar").set(SINGLE_FIELD_MAP).get();
     Iterable<DocumentReference> collectionRefs = randomColl.listDocuments();
     assertEquals(randomColl.document("missing"), collectionRefs.iterator().next());
@@ -1403,11 +1448,10 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void listenToDocumentsWithVectors() throws Throwable {
-    final Semaphore semaphore = new Semaphore(0);
+    CompletableFuture<Void> listen = new CompletableFuture<>();
     ListenerRegistration registration = null;
     DocumentReference ref = randomColl.document();
-    AtomicReference<Throwable> failureMessage = new AtomicReference(null);
-    int totalPermits = 5;
+    AtomicInteger snapshotCount = new AtomicInteger();
 
     try {
       registration =
@@ -1419,7 +1463,7 @@ public class ITSystemTest extends ITBaseTest {
                       DocumentSnapshot docSnap =
                           value.isEmpty() ? null : value.getDocuments().get(0);
 
-                      switch (semaphore.availablePermits()) {
+                      switch (snapshotCount.getAndIncrement()) {
                         case 0:
                           assertNull(docSnap);
                           ref.create(
@@ -1488,41 +1532,35 @@ public class ITSystemTest extends ITBaseTest {
                           break;
                         case 4:
                           assertNull(docSnap);
+                          listen.complete(null);
                           break;
                       }
                     } catch (Throwable t) {
-                      failureMessage.set(t);
-                      semaphore.release(totalPermits);
+                      listen.completeExceptionally(t);
                     }
-
-                    semaphore.release();
                   });
 
-      semaphore.acquire(totalPermits);
+      listen.get();
     } finally {
       if (registration != null) {
         registration.remove();
-      }
-
-      if (failureMessage.get() != null) {
-        throw failureMessage.get();
       }
     }
   }
 
   @Test
   public void documentWatch() throws Exception {
-    final DocumentReference documentReference = randomColl.document();
-
-    final Semaphore semaphore = new Semaphore(0);
+    CompletableFuture<Void> listen = new CompletableFuture<>();
+    DocumentReference documentReference = randomColl.document();
     ListenerRegistration registration = null;
+    AtomicInteger snapshotCount = new AtomicInteger();
 
     try {
       registration =
           documentReference.addSnapshotListener(
               (value, error) -> {
                 try {
-                  switch (semaphore.availablePermits()) {
+                  switch (snapshotCount.getAndIncrement()) {
                     case 0:
                       assertFalse(value.exists());
                       documentReference.set(map("foo", "foo"));
@@ -1541,15 +1579,14 @@ public class ITSystemTest extends ITBaseTest {
                       break;
                     case 3:
                       assertFalse(value.exists());
+                      listen.complete(null);
                       break;
                   }
                 } catch (Exception e) {
-                  fail(e.getMessage());
+                  listen.completeExceptionally(e);
                 }
-                semaphore.release();
               });
-
-      semaphore.acquire(4);
+      listen.get();
     } finally {
       if (registration != null) {
         registration.remove();
@@ -1593,6 +1630,10 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void queryPaginationWithWhereClause() throws ExecutionException, InterruptedException {
+    // TODO(pipeline): Enable this test against production when adding implicitOrderBy.
+    assumeTrue(
+        "Skip this test when running against enterprise because it does not work yet.",
+        getFirestoreEdition() != FirestoreEdition.ENTERPRISE);
     WriteBatch batch = firestore.batch();
 
     for (int i = 0; i < 10; ++i) {
@@ -1656,9 +1697,14 @@ public class ITSystemTest extends ITBaseTest {
     batch.commit().get();
 
     QuerySnapshot querySnapshot = firestore.collectionGroup(collectionGroup).get().get();
-    assertEquals(
-        asList("cg-doc1", "cg-doc2", "cg-doc3", "cg-doc4", "cg-doc5"),
-        querySnapshotToIds(querySnapshot));
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(
+          asList("cg-doc1", "cg-doc2", "cg-doc3", "cg-doc4", "cg-doc5"),
+          querySnapshotToIds(querySnapshot));
+    } else {
+      assertThat(querySnapshotToIds(querySnapshot))
+          .containsExactlyElementsIn(asList("cg-doc1", "cg-doc2", "cg-doc3", "cg-doc4", "cg-doc5"));
+    }
   }
 
   @Test
@@ -1738,7 +1784,12 @@ public class ITSystemTest extends ITBaseTest {
             .whereLessThanOrEqualTo(FieldPath.documentId(), "a/b0")
             .get()
             .get();
-    assertEquals(asList("cg-doc2", "cg-doc3", "cg-doc4"), querySnapshotToIds(querySnapshot));
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(asList("cg-doc2", "cg-doc3", "cg-doc4"), querySnapshotToIds(querySnapshot));
+    } else {
+      assertThat(querySnapshotToIds(querySnapshot))
+          .containsExactlyElementsIn(asList("cg-doc2", "cg-doc3", "cg-doc4"));
+    }
 
     querySnapshot =
         firestore
@@ -1762,7 +1813,11 @@ public class ITSystemTest extends ITBaseTest {
     QuerySnapshot querySnapshot =
         randomColl.whereIn("zip", Arrays.<Object>asList(98101, 98103)).get().get();
 
-    assertEquals(asList("a", "c"), querySnapshotToIds(querySnapshot));
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(asList("a", "c"), querySnapshotToIds(querySnapshot));
+    } else {
+      assertThat(querySnapshotToIds(querySnapshot)).containsExactlyElementsIn(asList("a", "c"));
+    }
   }
 
   @Test
@@ -1777,13 +1832,37 @@ public class ITSystemTest extends ITBaseTest {
     setDocument("h", map("zip", null));
 
     QuerySnapshot querySnapshot = randomColl.whereNotEqualTo("zip", 98101).get().get();
-    assertEquals(asList("a", "b", "d", "e", "f", "g"), querySnapshotToIds(querySnapshot));
+    switch (getFirestoreEdition()) {
+      case STANDARD:
+        assertEquals(asList("a", "b", "d", "e", "f", "g"), querySnapshotToIds(querySnapshot));
+        break;
+      case ENTERPRISE:
+        assertThat(querySnapshotToIds(querySnapshot))
+            .containsExactlyElementsIn(asList("a", "b", "d", "e", "f", "g", "h"));
+        break;
+    }
 
     querySnapshot = randomColl.whereNotEqualTo("zip", Double.NaN).get().get();
-    assertEquals(asList("b", "c", "d", "e", "f", "g"), querySnapshotToIds(querySnapshot));
+    switch (getFirestoreEdition()) {
+      case STANDARD:
+        assertEquals(asList("b", "c", "d", "e", "f", "g"), querySnapshotToIds(querySnapshot));
+        break;
+      case ENTERPRISE:
+        assertThat(querySnapshotToIds(querySnapshot))
+            .containsExactlyElementsIn(asList("b", "c", "d", "e", "f", "g", "h"));
+        break;
+    }
 
     querySnapshot = randomColl.whereNotEqualTo("zip", null).get().get();
-    assertEquals(asList("a", "b", "c", "d", "e", "f", "g"), querySnapshotToIds(querySnapshot));
+    switch (getFirestoreEdition()) {
+      case STANDARD:
+        assertEquals(asList("a", "b", "c", "d", "e", "f", "g"), querySnapshotToIds(querySnapshot));
+        break;
+      case ENTERPRISE:
+        assertThat(querySnapshotToIds(querySnapshot))
+            .containsExactlyElementsIn(asList("a", "b", "c", "d", "e", "f", "g"));
+        break;
+    }
   }
 
   @Test
@@ -1795,7 +1874,11 @@ public class ITSystemTest extends ITBaseTest {
     QuerySnapshot querySnapshot =
         randomColl.whereNotEqualTo(FieldPath.documentId(), doc1.getId()).get().get();
 
-    assertEquals(asList("b", "c"), querySnapshotToIds(querySnapshot));
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(asList("b", "c"), querySnapshotToIds(querySnapshot));
+    } else {
+      assertThat(querySnapshotToIds(querySnapshot)).containsExactlyElementsIn(asList("b", "c"));
+    }
   }
 
   @Test
@@ -1807,7 +1890,11 @@ public class ITSystemTest extends ITBaseTest {
     QuerySnapshot querySnapshot =
         randomColl.whereIn(FieldPath.documentId(), Arrays.asList(doc1.getId(), doc2)).get().get();
 
-    assertEquals(asList("a", "b"), querySnapshotToIds(querySnapshot));
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(asList("a", "b"), querySnapshotToIds(querySnapshot));
+    } else {
+      assertThat(querySnapshotToIds(querySnapshot)).containsExactlyElementsIn(asList("a", "b"));
+    }
   }
 
   @Test
@@ -1821,15 +1908,31 @@ public class ITSystemTest extends ITBaseTest {
 
     QuerySnapshot querySnapshot =
         randomColl.whereNotIn("zip", Arrays.<Object>asList(98101, 98103)).get().get();
-    assertEquals(asList("b", "d", "e", "f"), querySnapshotToIds(querySnapshot));
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(asList("b", "d", "e", "f"), querySnapshotToIds(querySnapshot));
+    } else {
+      assertThat(querySnapshotToIds(querySnapshot))
+          .containsExactlyElementsIn(asList("b", "d", "e", "f"));
+    }
 
     querySnapshot = randomColl.whereNotIn("zip", Arrays.<Object>asList(Double.NaN)).get().get();
-    assertEquals(asList("b", "a", "c", "d", "e", "f"), querySnapshotToIds(querySnapshot));
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(asList("b", "a", "c", "d", "e", "f"), querySnapshotToIds(querySnapshot));
+    } else {
+      assertThat(querySnapshotToIds(querySnapshot))
+          .containsExactlyElementsIn(asList("b", "a", "c", "d", "e", "f"));
+    }
 
     List<Object> nullArray = new ArrayList<>();
     nullArray.add(null);
     querySnapshot = randomColl.whereNotIn("zip", nullArray).get().get();
-    assertEquals(new ArrayList<>(), querySnapshotToIds(querySnapshot));
+
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(new ArrayList<>(), querySnapshotToIds(querySnapshot));
+    } else {
+      assertThat(querySnapshotToIds(querySnapshot))
+          .containsExactlyElementsIn(asList("a", "b", "c", "d", "e", "f"));
+    }
   }
 
   @Test
@@ -1857,10 +1960,14 @@ public class ITSystemTest extends ITBaseTest {
     setDocument("f", map("array", asList(map("a", 42))));
     setDocument("g", map("array", 42));
 
-    QuerySnapshot querySnapshot =
-        randomColl.whereArrayContainsAny("array", Arrays.<Object>asList(42, 43)).get().get();
+    Query query = randomColl.whereArrayContainsAny("array", Arrays.<Object>asList(42, 43));
 
-    assertEquals(asList("a", "b", "d", "e"), querySnapshotToIds(querySnapshot));
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(asList("a", "b", "d", "e"), querySnapshotToIds(query.get().get()));
+    } else {
+      assertThat(querySnapshotToIds(query.get().get()))
+          .containsExactlyElementsIn(asList("a", "b", "d", "e"));
+    }
   }
 
   @Test
@@ -1904,10 +2011,14 @@ public class ITSystemTest extends ITBaseTest {
         ALL_SUPPORTED_TYPES_OBJECT, documentSnapshots.get(1).toObject(AllSupportedTypes.class));
     assertNotEquals(
         ALL_SUPPORTED_TYPES_OBJECT, documentSnapshots.get(2).toObject(AllSupportedTypes.class));
-    assertEquals(ref1.getId(), documentSnapshots.get(0).getId());
-    assertEquals(ref2.getId(), documentSnapshots.get(1).getId());
-    assertEquals(ref3.getId(), documentSnapshots.get(2).getId());
+
     assertEquals(3, documentSnapshots.size());
+    // Only standard edition returns the documents in the order of the request.
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(ref1.getId(), documentSnapshots.get(0).getId());
+      assertEquals(ref2.getId(), documentSnapshots.get(1).getId());
+      assertEquals(ref3.getId(), documentSnapshots.get(2).getId());
+    }
   }
 
   @Test
@@ -2244,6 +2355,9 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void testRecursiveDeleteTopLevelCollection() throws Exception {
+    assumeFalse(
+        "Skip this test when running against enterprise because it does not support showMissing",
+        getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     setupRecursiveDeleteTest();
     firestore.recursiveDelete(randomColl).get();
     assertEquals(0, countCollectionChildren(randomColl));
@@ -2251,6 +2365,9 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void testRecursiveDeleteNestedCollection() throws Exception {
+    assumeFalse(
+        "Skip this test when running against enterprise because it does not support showMissing",
+        getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     setupRecursiveDeleteTest();
     firestore.recursiveDelete(randomColl.document("bob").collection("parentsCol")).get();
     assertEquals(2, countCollectionChildren(randomColl));
@@ -2258,6 +2375,10 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void testRecursiveDeleteNestedDocument() throws Exception {
+    assumeFalse(
+        "Skip this test when running against enterprise because it does not support showMissing",
+        getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
+
     setupRecursiveDeleteTest();
     DocumentReference document = randomColl.document("bob/parentsCol/daniel");
     firestore.recursiveDelete(document).get();
@@ -2269,6 +2390,9 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void testRecursiveDeleteLeafDocument() throws Exception {
+    assumeFalse(
+        "Skip this test when running against enterprise because it does not support showMissing",
+        getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     setupRecursiveDeleteTest();
     DocumentReference document = randomColl.document("bob/parentsCol/daniel/childCol/ernie");
     firestore.recursiveDelete(document).get();
@@ -2277,8 +2401,12 @@ public class ITSystemTest extends ITBaseTest {
     assertEquals(5, countCollectionChildren(randomColl));
   }
 
+  @Ignore("Flaky with graalvm-native-a")
   @Test
   public void testRecursiveDeleteDoesNotAffectOtherCollections() throws Exception {
+    assumeFalse(
+        "Skip this test when running against enterprise because it does not support showMissing",
+        getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     setupRecursiveDeleteTest();
 
     // Add another nested collection that shouldn't be deleted.
@@ -2292,6 +2420,11 @@ public class ITSystemTest extends ITBaseTest {
 
   @Test
   public void testRecursiveDeleteWithCustomBulkWriterInstance() throws Exception {
+    assumeFalse(
+        "Skip this test when running against enterprise because it does not support"
+            + " bulk writer.",
+        getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
+
     setupRecursiveDeleteTest();
 
     BulkWriter bulkWriter = firestore.bulkWriter();
@@ -2309,9 +2442,9 @@ public class ITSystemTest extends ITBaseTest {
         FirestoreOptions.newBuilder()
             .setRetrySettings(
                 RetrySettings.newBuilder()
-                    .setMaxRpcTimeout(Duration.ofMillis(1))
-                    .setTotalTimeout(Duration.ofMillis(1))
-                    .setInitialRpcTimeout(Duration.ofMillis(1))
+                    .setMaxRpcTimeoutDuration(Duration.ofMillis(1))
+                    .setTotalTimeoutDuration(Duration.ofMillis(1))
+                    .setInitialRpcTimeoutDuration(Duration.ofMillis(1))
                     .build())
             .build();
     firestore = firestoreOptions.getService();

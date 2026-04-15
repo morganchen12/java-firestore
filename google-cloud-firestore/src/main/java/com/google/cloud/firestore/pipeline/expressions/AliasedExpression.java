@@ -41,6 +41,20 @@ public final class AliasedExpression implements Selectable {
     return expr;
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * Creates a new {@link AliasedExpression} that wraps this expression and associates it with the
+   * given alias.
+   *
+   * <p>Aliases are useful for renaming fields in the output of a stage or for giving meaningful
+   * names to calculated values.
+   *
+   * @param alias The alias to assign to this expression.
+   * @return A new {@link Selectable} that wraps this expression and associates it with the provided
+   *     alias.
+   */
+>>>>>>> main
   public Selectable as(String alias) {
     return new AliasedExpression(this.expr, alias);
   }

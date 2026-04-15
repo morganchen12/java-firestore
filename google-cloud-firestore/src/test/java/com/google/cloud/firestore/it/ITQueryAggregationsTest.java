@@ -33,7 +33,6 @@ import com.google.cloud.firestore.*;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -59,8 +58,18 @@ public class ITQueryAggregationsTest extends ITBaseTest {
 
   public static AggregateQuerySnapshot verifyPipelineReturnsSameResult(AggregateQuery query)
       throws ExecutionException, InterruptedException {
+<<<<<<< HEAD
     AggregateQuerySnapshot snapshot = query.get().get();
 
+=======
+
+    AggregateQuerySnapshot snapshot = query.get().get();
+
+    if (getFirestoreEdition() != FirestoreEdition.ENTERPRISE) {
+      return snapshot;
+    }
+
+>>>>>>> main
     List<PipelineResult> pipelineResults =
         query.getQuery().getFirestore().pipeline().createFrom(query).execute().get().getResults();
     assertThat(pipelineResults).hasSize(1);
@@ -96,8 +105,15 @@ public class ITQueryAggregationsTest extends ITBaseTest {
   @Test
   public void allowsAliasesForLongestFieldNames() throws Exception {
     assumeFalse(
+<<<<<<< HEAD
         "Skip this test when running against the Firestore emulator because it does not support long field names.",
         isRunningAgainstFirestoreEmulator(firestore));
+=======
+        "Skip this test when running against the Firestore emulator or enterprise backend because"
+            + " they do not support long field names.",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
+>>>>>>> main
 
     // The longest field name allowed is 1499 characters long.
     // Ensure that sum(longestField) and average(longestField) work.
@@ -133,8 +149,10 @@ public class ITQueryAggregationsTest extends ITBaseTest {
   @Test
   public void aggregateErrorMessageIfIndexIsMissing() throws Exception {
     assumeFalse(
-        "Skip this test when running against the emulator because it does not require composite index creation.",
-        isRunningAgainstFirestoreEmulator(firestore));
+        "Skip this test when running against emulator or Enterprise because they do not require"
+            + " composite index creation.",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
 
     CollectionReference collection = testCollectionWithDocs(testDocs1);
     AggregateQuery aggregateQuery =
@@ -242,8 +260,10 @@ public class ITQueryAggregationsTest extends ITBaseTest {
   @Test
   public void canPerformMaxAggregations() throws Exception {
     assumeTrue(
-        "Skip this test when running against prod because it requires composite index creation.",
-        isRunningAgainstFirestoreEmulator(firestore));
+        "Skip this test when running against standard prod because it requires composite index"
+            + " creation.",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     CollectionReference collection = testCollectionWithDocs(testDocs1);
     AggregateField f1 = sum("pages");
     AggregateField f2 = average("pages");
@@ -276,9 +296,20 @@ public class ITQueryAggregationsTest extends ITBaseTest {
     } catch (Exception e) {
       exception = e;
     }
+<<<<<<< HEAD
     assertThat(exception).isNotNull();
     if (!isRunningAgainstFirestoreEmulator(firestore)) {
       assertThat(exception.getMessage()).contains("maximum number of aggregations");
+=======
+
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertThat(exception).isNotNull();
+      if (!isRunningAgainstFirestoreEmulator(firestore)) {
+        assertThat(exception.getMessage()).contains("maximum number of aggregations");
+      }
+    } else {
+      assertThat(exception).isNull();
+>>>>>>> main
     }
   }
 
@@ -286,7 +317,8 @@ public class ITQueryAggregationsTest extends ITBaseTest {
   public void aggregateQueriesSupportCollectionGroups() throws Exception {
     assumeTrue(
         "Skip this test when running against prod because it requires composite index creation.",
-        isRunningAgainstFirestoreEmulator(firestore));
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     String collectionGroupId = "myColGroupId" + autoId();
     Map<String, Object> data = map("x", 2);
     // Setting documents at the following paths:
@@ -330,8 +362,9 @@ public class ITQueryAggregationsTest extends ITBaseTest {
   @Test
   public void performsAggregationsOnDocumentsWithAllAggregatedFields() throws Exception {
     assumeTrue(
-        "Skip this test when running against prod because it requires composite index creation.",
-        isRunningAgainstFirestoreEmulator(firestore));
+        "Skip if we are running against standard in prod",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     Map<String, Map<String, Object>> testDocs =
         map(
             "a",
@@ -347,17 +380,33 @@ public class ITQueryAggregationsTest extends ITBaseTest {
         verifyPipelineReturnsSameResult(
             collection.aggregate(
                 sum("pages"), average("pages"), average("year"), AggregateField.count()));
+<<<<<<< HEAD
     assertThat(snapshot.get(sum("pages"))).isEqualTo(300);
     assertThat(snapshot.get(average("pages"))).isEqualTo(100);
     assertThat(snapshot.get(average("year"))).isEqualTo(2007);
     assertThat(snapshot.get(AggregateField.count())).isEqualTo(3);
+=======
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertThat(snapshot.get(sum("pages"))).isEqualTo(300);
+      assertThat(snapshot.get(average("pages"))).isEqualTo(100);
+      assertThat(snapshot.get(average("year"))).isEqualTo(2007);
+      assertThat(snapshot.get(AggregateField.count())).isEqualTo(3);
+    } else {
+      assertThat(snapshot.get(sum("pages"))).isEqualTo(350);
+      assertThat(snapshot.get(average("pages"))).isEqualTo(87.5);
+      assertThat(snapshot.get(average("year"))).isEqualTo(2007);
+      assertThat(snapshot.get(AggregateField.count())).isEqualTo(4);
+    }
+>>>>>>> main
   }
 
   @Test
   public void performsAggregationsWhenNaNExistsForSomeFieldValues() throws Exception {
     assumeTrue(
-        "Skip this test when running against prod because it requires composite index creation.",
-        isRunningAgainstFirestoreEmulator(firestore));
+        "Skip this test when running against standard prod because it requires composite index"
+            + " creation.",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     Map<String, Map<String, Object>> testDocs =
         map(
             "a",
@@ -420,7 +469,8 @@ public class ITQueryAggregationsTest extends ITBaseTest {
   public void performsAggregationWhenUsingInOperator() throws Exception {
     assumeTrue(
         "Skip this test when running against prod because it requires composite index creation.",
-        isRunningAgainstFirestoreEmulator(firestore));
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     Map<String, Map<String, Object>> testDocs =
         map(
             "a",
@@ -459,7 +509,8 @@ public class ITQueryAggregationsTest extends ITBaseTest {
   public void performsAggregationWhenUsingArrayContainsAnyOperator() throws Exception {
     assumeTrue(
         "Skip this test when running against prod because it requires composite index creation.",
-        isRunningAgainstFirestoreEmulator(firestore));
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     Map<String, Map<String, Object>> testDocs =
         map(
             "a",
@@ -505,11 +556,28 @@ public class ITQueryAggregationsTest extends ITBaseTest {
                     sum("pages"),
                     average("pages"),
                     AggregateField.count()));
+<<<<<<< HEAD
     assertThat(snapshot.get(sum("rating"))).isEqualTo(0);
     assertThat(snapshot.get(average("rating"))).isEqualTo(null);
     assertThat(snapshot.get(sum("pages"))).isEqualTo(200);
     assertThat(snapshot.get(average("pages"))).isEqualTo(100);
     assertThat(snapshot.get(AggregateField.count())).isEqualTo(2);
+=======
+
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertThat(snapshot.get(sum("rating"))).isEqualTo(0);
+      assertThat(snapshot.get(average("rating"))).isEqualTo(null);
+      assertThat(snapshot.get(sum("pages"))).isEqualTo(200);
+      assertThat(snapshot.get(average("pages"))).isEqualTo(100);
+      assertThat(snapshot.get(AggregateField.count())).isEqualTo(2);
+    } else {
+      assertThat(snapshot.get(sum("rating"))).isNull();
+      assertThat(snapshot.get(average("rating"))).isNull();
+      assertThat(snapshot.get(sum("pages"))).isEqualTo(200);
+      assertThat(snapshot.get(average("pages"))).isEqualTo(100);
+      assertThat(snapshot.get(AggregateField.count())).isEqualTo(2);
+    }
+>>>>>>> main
   }
 
   @Test
@@ -579,10 +647,15 @@ public class ITQueryAggregationsTest extends ITBaseTest {
             "a", map("author", "authorA", "title", "titleA", "rating", Long.MAX_VALUE),
             "b", map("author", "authorB", "title", "titleB", "rating", Long.MAX_VALUE));
     CollectionReference collection = testCollectionWithDocs(testDocs);
-    AggregateQuerySnapshot snapshot = collection.aggregate(sum("rating")).get().get();
-    Object sum = snapshot.get(sum("rating"));
-    assertThat(sum instanceof Double).isTrue();
-    assertThat(sum).isEqualTo((double) Long.MAX_VALUE + (double) Long.MAX_VALUE);
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      AggregateQuerySnapshot snapshot = collection.aggregate(sum("rating")).get().get();
+      Object sum = snapshot.get(sum("rating"));
+      assertThat(sum instanceof Double).isTrue();
+      assertThat(sum).isEqualTo((double) Long.MAX_VALUE + (double) Long.MAX_VALUE);
+    } else {
+      // enterprise will fail the operation
+      assertThrows(ExecutionException.class, () -> collection.aggregate(sum("rating")).get().get());
+    }
   }
 
   @Test
@@ -608,9 +681,20 @@ public class ITQueryAggregationsTest extends ITBaseTest {
             "c", map("author", "authorC", "title", "titleC", "rating", -101),
             "d", map("author", "authorD", "title", "titleD", "rating", -10000));
     CollectionReference collection = testCollectionWithDocs(testDocs);
+<<<<<<< HEAD
     AggregateQuerySnapshot snapshot =
         verifyPipelineReturnsSameResult(collection.aggregate(sum("rating")));
     assertThat(snapshot.get(sum("rating"))).isEqualTo(-10101);
+=======
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      AggregateQuerySnapshot snapshot =
+          verifyPipelineReturnsSameResult(collection.aggregate(sum("rating")));
+      assertThat(snapshot.get(sum("rating"))).isEqualTo(-10101);
+    } else {
+      // enterprise will fail the operation
+      assertThrows(ExecutionException.class, () -> collection.aggregate(sum("rating")).get().get());
+    }
+>>>>>>> main
   }
 
   @Test
@@ -684,7 +768,15 @@ public class ITQueryAggregationsTest extends ITBaseTest {
     AggregateQuerySnapshot snapshot =
         verifyPipelineReturnsSameResult(
             collection.whereGreaterThan("pages", 200).aggregate(sum("pages")));
+<<<<<<< HEAD
     assertThat(snapshot.get(sum("pages"))).isEqualTo(0);
+=======
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertThat(snapshot.get(sum("pages"))).isEqualTo(0);
+    } else {
+      assertThat(snapshot.get(sum("pages"))).isNull();
+    }
+>>>>>>> main
   }
 
   @Test
@@ -891,10 +983,13 @@ public class ITQueryAggregationsTest extends ITBaseTest {
     assertThat(snapshot.get(AggregateField.count())).isEqualTo(4);
   }
 
-  // Currently not allowed because it requires __name__, num index.
-  @Ignore
   @Test
   public void aggregatesWithDocumentReferenceCursors() throws Exception {
+    assumeTrue(
+        "Skip this test when running against standard prod because it requires composite index"
+            + " creation.",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     Map<String, Map<String, Object>> testDocs =
         map(
             "a", map("num", 1),
@@ -1002,10 +1097,13 @@ public class ITQueryAggregationsTest extends ITBaseTest {
     assertThat(snapshot.get(sum("num"))).isEqualTo(7);
   }
 
-  // This is expected to fail because it requires the `__name__, num` index.
-  @Ignore
   @Test
   public void aggregateNoFilterExplicitOrderByDocumentReferenceCursor() throws Exception {
+    assumeTrue(
+        "Skip this test when running against standard prod because it requires composite index"
+            + " creation.",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     CollectionReference collection = addTwoDocsForCursorTesting();
     AggregateQuery query =
         collection
@@ -1016,20 +1114,26 @@ public class ITQueryAggregationsTest extends ITBaseTest {
     assertThat(snapshot.get(sum("num"))).isEqualTo(7);
   }
 
-  // This is expected to fail because it requires the `__name__, num` index.
-  @Ignore
   @Test
   public void aggregateNoFilterNoOrderByDocumentReferenceCursor() throws Exception {
+    assumeTrue(
+        "Skip this test when running against standard prod because it requires composite index"
+            + " creation.",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     CollectionReference collection = addTwoDocsForCursorTesting();
     AggregateQuery query = collection.startAfter(collection.document("a")).aggregate(sum("num"));
     AggregateQuerySnapshot snapshot = verifyPipelineReturnsSameResult(query);
     assertThat(snapshot.get(sum("num"))).isEqualTo(7);
   }
 
-  // This is expected to fail because it requires the `foo, __name__, num` index.
-  @Ignore
   @Test
   public void aggregateNoFilterExplicitOrderByDocumentSnapshotCursor() throws Exception {
+    assumeTrue(
+        "Skip this test when running against standard prod because it requires composite index"
+            + " creation.",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     CollectionReference collection = addTwoDocsForCursorTesting();
     DocumentSnapshot docSnapshot = collection.document("a").get().get();
     AggregateQuery query = collection.orderBy("foo").startAfter(docSnapshot).aggregate(sum("num"));
@@ -1065,10 +1169,13 @@ public class ITQueryAggregationsTest extends ITBaseTest {
     assertThat(snapshot.get(sum("num"))).isEqualTo(7);
   }
 
-  // This is expected to fail because it requires the `__name__, num` index.
-  @Ignore
   @Test
   public void aggregateEqualityFilterExplicitOrderByDocumentReferenceCursor() throws Exception {
+    assumeTrue(
+        "Skip this test when running against standard prod because it requires composite index"
+            + " creation.",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     CollectionReference collection = addTwoDocsForCursorTesting();
     AggregateQuery query =
         collection
@@ -1095,10 +1202,13 @@ public class ITQueryAggregationsTest extends ITBaseTest {
     assertThat(snapshot.get(sum("num"))).isEqualTo(7);
   }
 
-  // This is expected to fail because it requires the `__name__, num` index.
-  @Ignore
   @Test
   public void aggregateEqualityFilterNoOrderByDocumentSnapshotReference() throws Exception {
+    assumeTrue(
+        "Skip this test when running against standard prod because it requires composite index"
+            + " creation.",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     CollectionReference collection = addTwoDocsForCursorTesting();
     DocumentSnapshot docSnapshot = collection.document("a").get().get();
     AggregateQuery query =
@@ -1118,10 +1228,13 @@ public class ITQueryAggregationsTest extends ITBaseTest {
     assertThat(snapshot.get(sum("num"))).isEqualTo(7);
   }
 
-  // This is expected to fail because it requires the `foo, __name__, num` index.
-  @Ignore
   @Test
   public void aggregateInequalityFilterNoOrderByDocumentSnapshotReference2() throws Exception {
+    assumeTrue(
+        "Skip this test when running against standard prod because it requires composite index"
+            + " creation.",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
     CollectionReference collection = addTwoDocsForCursorTesting();
     DocumentSnapshot docSnapshot = collection.document("a").get().get();
     AggregateQuery query =
@@ -1133,9 +1246,9 @@ public class ITQueryAggregationsTest extends ITBaseTest {
   @Test
   public void aggregateQueryShouldFailWithMessageWithConsoleLinkIfMissingIndex() {
     assumeFalse(
-        "Skip this test when running against the Firestore emulator because the Firestore emulator "
-            + "does not use indexes and never fails with a 'missing index' error",
-        isRunningAgainstFirestoreEmulator(firestore));
+        "Only run this test when running against the standard backend",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
 
     CollectionReference collection = testCollection();
     Query compositeIndexQuery = collection.whereEqualTo("field1", 42).whereLessThan("field2", 99);

@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright 2025 Google LLC
+=======
+ * Copyright 2026 Google LLC
+>>>>>>> main
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -2512,7 +2516,11 @@ public class FirestoreAdminClient implements BackgroundResource {
    *     <p>This value should be 4-63 characters. Valid characters are /[a-z][0-9]-/ with first
    *     character a letter and the last a letter or a number. Must not be UUID-like
    *     /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/.
+<<<<<<< HEAD
    *     <p>"(default)" database ID is also valid.
+=======
+   *     <p>"(default)" database ID is also valid if the database is Standard edition.
+>>>>>>> main
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<Database, CreateDatabaseMetadata> createDatabaseAsync(
@@ -2554,7 +2562,11 @@ public class FirestoreAdminClient implements BackgroundResource {
    *     <p>This value should be 4-63 characters. Valid characters are /[a-z][0-9]-/ with first
    *     character a letter and the last a letter or a number. Must not be UUID-like
    *     /[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}/.
+<<<<<<< HEAD
    *     <p>"(default)" database ID is also valid.
+=======
+   *     <p>"(default)" database ID is also valid if the database is Standard edition.
+>>>>>>> main
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final OperationFuture<Database, CreateDatabaseMetadata> createDatabaseAsync(

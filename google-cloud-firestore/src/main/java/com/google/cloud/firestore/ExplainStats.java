@@ -16,7 +16,10 @@
 
 package com.google.cloud.firestore;
 
+<<<<<<< HEAD
 import com.google.api.core.BetaApi;
+=======
+>>>>>>> main
 import com.google.protobuf.Any;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.StringValue;
@@ -26,7 +29,10 @@ import javax.annotation.Nonnull;
  * A wrapper object to access explain stats if explain or analyze was enabled for the Pipeline query
  * execution.
  */
+<<<<<<< HEAD
 @BetaApi
+=======
+>>>>>>> main
 public final class ExplainStats {
 
   private final Any explainStatsData;
@@ -53,7 +59,12 @@ public final class ExplainStats {
       return explainStatsData.unpack(StringValue.class);
     } catch (InvalidProtocolBufferException e) {
       throw new RuntimeException(
+<<<<<<< HEAD
           "Unable to decode explain stats. Did you request an output format that returns a string value, such as 'text' or 'json'?",
+=======
+          "Unable to decode explain stats. Did you request an output format that returns a string"
+              + " value, such as 'text' or 'json'?",
+>>>>>>> main
           e);
     }
   }

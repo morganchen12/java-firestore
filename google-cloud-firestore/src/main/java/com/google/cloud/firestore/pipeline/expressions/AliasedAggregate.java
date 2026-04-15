@@ -16,9 +16,15 @@
 
 package com.google.cloud.firestore.pipeline.expressions;
 
+<<<<<<< HEAD
 import com.google.api.core.BetaApi;
 
 @BetaApi
+=======
+import com.google.api.core.InternalApi;
+
+@InternalApi
+>>>>>>> main
 public class AliasedAggregate {
   private final String alias;
   private final AggregateFunction expr;
@@ -28,10 +34,18 @@ public class AliasedAggregate {
     this.expr = expr;
   }
 
+<<<<<<< HEAD
+=======
+  @InternalApi
+>>>>>>> main
   public String getAlias() {
     return alias;
   }
 
+<<<<<<< HEAD
+=======
+  @InternalApi
+>>>>>>> main
   public AggregateFunction getExpr() {
     return expr;
   }

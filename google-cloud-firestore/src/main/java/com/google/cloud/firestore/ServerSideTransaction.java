@@ -20,6 +20,10 @@ import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import com.google.cloud.firestore.TransactionOptions.TransactionOptionsType;
 import com.google.cloud.firestore.pipeline.stages.PipelineExecuteOptions;
+<<<<<<< HEAD
+=======
+import com.google.cloud.firestore.telemetry.TelemetryConstants;
+>>>>>>> main
 import com.google.cloud.firestore.telemetry.TraceUtil;
 import com.google.common.base.Preconditions;
 import com.google.common.util.concurrent.MoreExecutors;
@@ -109,7 +113,9 @@ final class ServerSideTransaction extends Transaction {
   /** Rolls a transaction back and releases all read locks. */
   ApiFuture<Void> rollback() {
     TraceUtil.Span span =
-        getTraceUtil().startSpan(TraceUtil.SPAN_NAME_TRANSACTION_ROLLBACK, transactionTraceContext);
+        getTraceUtil()
+            .startSpan(
+                TelemetryConstants.METHOD_NAME_TRANSACTION_ROLLBACK, transactionTraceContext);
     try (TraceUtil.Scope ignored = span.makeCurrent()) {
       RollbackRequest req =
           RollbackRequest.newBuilder()
@@ -159,7 +165,8 @@ final class ServerSideTransaction extends Transaction {
   public ApiFuture<DocumentSnapshot> get(@Nonnull DocumentReference documentRef) {
     TraceUtil.Span span =
         getTraceUtil()
-            .startSpan(TraceUtil.SPAN_NAME_TRANSACTION_GET_DOCUMENT, transactionTraceContext);
+            .startSpan(
+                TelemetryConstants.METHOD_NAME_TRANSACTION_GET_DOCUMENT, transactionTraceContext);
     try (TraceUtil.Scope ignored = span.makeCurrent()) {
       Preconditions.checkState(isEmpty(), READ_BEFORE_WRITE_ERROR_MSG);
       ApiFuture<DocumentSnapshot> result =
@@ -192,7 +199,8 @@ final class ServerSideTransaction extends Transaction {
     Preconditions.checkState(isEmpty(), READ_BEFORE_WRITE_ERROR_MSG);
     TraceUtil.Span span =
         getTraceUtil()
-            .startSpan(TraceUtil.SPAN_NAME_TRANSACTION_GET_DOCUMENTS, transactionTraceContext);
+            .startSpan(
+                TelemetryConstants.METHOD_NAME_TRANSACTION_GET_DOCUMENTS, transactionTraceContext);
     try (TraceUtil.Scope ignored = span.makeCurrent()) {
       ApiFuture<List<DocumentSnapshot>> result =
           firestore.getAll(
@@ -220,7 +228,8 @@ final class ServerSideTransaction extends Transaction {
     Preconditions.checkState(isEmpty(), READ_BEFORE_WRITE_ERROR_MSG);
     TraceUtil.Span span =
         getTraceUtil()
-            .startSpan(TraceUtil.SPAN_NAME_TRANSACTION_GET_DOCUMENTS, transactionTraceContext);
+            .startSpan(
+                TelemetryConstants.METHOD_NAME_TRANSACTION_GET_DOCUMENTS, transactionTraceContext);
     try (TraceUtil.Scope ignored = span.makeCurrent()) {
       ApiFuture<List<DocumentSnapshot>> result =
           firestore.getAll(documentReferences, fieldMask, transactionId, /* readTime= */ null);
@@ -265,6 +274,10 @@ final class ServerSideTransaction extends Transaction {
   @Nonnull
   @Override
   public ApiFuture<Pipeline.Snapshot> execute(@Nonnull Pipeline pipeline) {
+<<<<<<< HEAD
+=======
+    Preconditions.checkState(isEmpty(), READ_BEFORE_WRITE_ERROR_MSG);
+>>>>>>> main
     return execute(pipeline, new PipelineExecuteOptions());
   }
 
@@ -272,6 +285,10 @@ final class ServerSideTransaction extends Transaction {
   @Override
   public ApiFuture<Pipeline.Snapshot> execute(
       @Nonnull Pipeline pipeline, @Nonnull PipelineExecuteOptions options) {
+<<<<<<< HEAD
+=======
+    Preconditions.checkState(isEmpty(), READ_BEFORE_WRITE_ERROR_MSG);
+>>>>>>> main
     try (TraceUtil.Scope ignored = transactionTraceContext.makeCurrent()) {
       return pipeline.execute(new PipelineExecuteOptions(), transactionId, null);
     }

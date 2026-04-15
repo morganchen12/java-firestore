@@ -51,6 +51,14 @@ public abstract class ITBaseTest {
   private FirestoreOptions firestoreOptions;
   private boolean backendPrimed = false;
 
+<<<<<<< HEAD
+=======
+  protected enum FirestoreEdition {
+    STANDARD,
+    ENTERPRISE
+  }
+
+>>>>>>> main
   static String getTargetBackend() {
     String targetPropertyName = "FIRESTORE_TARGET_BACKEND";
     String targetBackend = System.getProperty(targetPropertyName);
@@ -61,8 +69,25 @@ public abstract class ITBaseTest {
     return targetBackend;
   }
 
+<<<<<<< HEAD
   @Before
   public void before() throws Exception {
+=======
+  static FirestoreEdition getFirestoreEdition() {
+    String editionPropertyName = "FIRESTORE_EDITION";
+    String firestoreEdition = System.getProperty(editionPropertyName);
+    if (firestoreEdition == null) {
+      firestoreEdition = System.getenv(editionPropertyName);
+    }
+
+    if (firestoreEdition == null) {
+      return FirestoreEdition.STANDARD;
+    }
+    return FirestoreEdition.valueOf(firestoreEdition.toUpperCase());
+  }
+
+  public static FirestoreOptions.Builder getOptionsBuilder() {
+>>>>>>> main
     FirestoreOptions.Builder optionsBuilder = FirestoreOptions.newBuilder();
 
     String dbPropertyName = "FIRESTORE_NAMED_DATABASE";
@@ -92,8 +117,12 @@ public abstract class ITBaseTest {
         optionsBuilder.setEmulatorHost("localhost:8080");
       }
     }
+    return optionsBuilder;
+  }
 
-    firestoreOptions = optionsBuilder.build();
+  @Before
+  public void before() throws Exception {
+    firestoreOptions = getOptionsBuilder().build();
     logger.log(
         Level.INFO,
         "Integration test against " + firestoreOptions.getTransportChannelProvider().getEndpoint());
@@ -151,7 +180,8 @@ public abstract class ITBaseTest {
   public void after() throws Exception {
     Preconditions.checkNotNull(
         firestore,
-        "Error instantiating Firestore. Check that the service account credentials were properly set.");
+        "Error instantiating Firestore. Check that the service account credentials were properly"
+            + " set.");
     firestore.close();
     firestore = null;
     firestoreOptions = null;

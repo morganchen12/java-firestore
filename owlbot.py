@@ -14,6 +14,7 @@
 
 """This script is used to synthesize generated parts of this library."""
 
+import json
 import synthtool as s
 import synthtool.gcp as gcp
 import synthtool.languages.java as java
@@ -79,8 +80,9 @@ java.common_templates(excludes=[
     # firestore uses a different project for its integration tests
     # due to the default project running datastore
     '.kokoro/presubmit/integration.cfg',
-    '.kokoro/presubmit/graalvm-native.cfg',
-    '.kokoro/presubmit/graalvm-native-17.cfg',
+    '.kokoro/presubmit/graalvm-native-a.cfg',
+    '.kokoro/presubmit/graalvm-native-b.cfg',
+    '.kokoro/presubmit/graalvm-native-c.cfg',
     '.kokoro/presubmit/samples.cfg',
     '.kokoro/nightly/integration.cfg',
     '.kokoro/nightly/java11-integration.cfg',
@@ -92,5 +94,28 @@ java.common_templates(excludes=[
     '.kokoro/release/stage.sh',
     '.kokoro/requirements.in',
     '.kokoro/requirements.txt',
+    '.github/CODEOWNERS',
+    '.github/workflows/samples.yaml',
     'renovate.json'
 ])
+
+# Fix for b/442875200: Inject library_path_overrides for FirestoreAdminClient
+# This ensures the doclet links to the correct source directory (google-cloud-firestore-admin)
+# instead of the default artifactId (google-cloud-firestore).
+metadata_path = ".repo-metadata.json"
+try:
+    with open(metadata_path, "r") as f:
+        metadata = json.load(f)
+
+    # Add the override map if it doesn't exist or update it
+    if "library_path_overrides" not in metadata:
+        metadata["library_path_overrides"] = {}
+
+    metadata["library_path_overrides"]["FirestoreAdminClient"] = "google-cloud-firestore-admin"
+
+    # Write the updated metadata back to the file
+    with open(metadata_path, "w") as f:
+        json.dump(metadata, f, indent=2)
+        f.write("\n")
+except Exception as e:
+    print(f"Failed to update .repo-metadata.json: {e}")

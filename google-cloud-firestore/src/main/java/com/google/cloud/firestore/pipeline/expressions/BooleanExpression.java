@@ -16,6 +16,7 @@
 
 package com.google.cloud.firestore.pipeline.expressions;
 
+<<<<<<< HEAD
 import com.google.api.core.BetaApi;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -28,6 +29,21 @@ public class BooleanExpression extends FunctionExpression {
 
   BooleanExpression(String name, ImmutableList<Expression> params) {
     super(name, params);
+=======
+import com.google.common.collect.ImmutableList;
+
+public abstract class BooleanExpression extends Expression {
+  BooleanExpression() {}
+
+  /**
+   * Creates an aggregation that counts the number of stage inputs where the this boolean expression
+   * evaluates to true.
+   *
+   * @return A new {@link AggregateFunction} representing the count aggregation.
+   */
+  public AggregateFunction countIf() {
+    return AggregateFunction.countIf(this);
+>>>>>>> main
   }
 
   /**
@@ -38,7 +54,10 @@ public class BooleanExpression extends FunctionExpression {
    * @param elseExpr The expression to evaluate if the condition is false.
    * @return A new {@link Expression} representing the conditional operation.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public final Expression conditional(Expression thenExpr, Expression elseExpr) {
     return conditional((BooleanExpression) this, thenExpr, elseExpr);
   }
@@ -51,7 +70,10 @@ public class BooleanExpression extends FunctionExpression {
    * @param elseValue Value if the condition is false.
    * @return A new {@link Expression} representing the conditional operation.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public final Expression conditional(Object thenValue, Object elseValue) {
     return conditional((BooleanExpression) this, thenValue, elseValue);
   }
@@ -64,7 +86,10 @@ public class BooleanExpression extends FunctionExpression {
    *     expression produces an error.
    * @return A new {@link Expression} representing the ifError operation.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public final BooleanExpression ifError(BooleanExpression catchExpr) {
     return ifError(this, catchExpr);
   }
@@ -74,7 +99,10 @@ public class BooleanExpression extends FunctionExpression {
    *
    * @return A new {@link BooleanExpression} representing the not operation.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public final BooleanExpression not() {
     return not(this);
   }
@@ -88,6 +116,10 @@ public class BooleanExpression extends FunctionExpression {
    * @return A new [BooleanExpression] representing the raw function.
    */
   public static BooleanExpression rawFunction(String name, Expression... params) {
+<<<<<<< HEAD
     return new BooleanExpression(name, params);
+=======
+    return new BooleanFunctionExpression(name, ImmutableList.copyOf(params));
+>>>>>>> main
   }
 }

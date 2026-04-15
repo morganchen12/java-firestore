@@ -24,17 +24,20 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentChange;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.EventListener;
+import com.google.cloud.firestore.FieldPath;
 import com.google.cloud.firestore.FieldValue;
 import com.google.cloud.firestore.FirestoreException;
 import com.google.cloud.firestore.ListenerRegistration;
 import com.google.cloud.firestore.LocalFirestoreHelper;
 import com.google.cloud.firestore.Query;
+import com.google.cloud.firestore.Query.Direction;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.it.ITQueryWatchTest.QuerySnapshotEventListener.ListenerAssertions;
@@ -644,6 +647,162 @@ public final class ITQueryWatchTest extends ITBaseTest {
     listenerAssertions.hasError();
   }
 
+  @Test
+  public void snapshotListenerSortsQueryByDocumentIdInTheSameOrderAsServer() throws Exception {
+    CollectionReference col = randomColl;
+
+    firestore
+        .batch()
+        .set(col.document("A"), Collections.singletonMap("a", 1))
+        .set(col.document("a"), Collections.singletonMap("a", 1))
+        .set(col.document("Aa"), Collections.singletonMap("a", 1))
+        .set(col.document("7"), Collections.singletonMap("a", 1))
+        .set(col.document("12"), Collections.singletonMap("a", 1))
+        .set(col.document("__id7__"), Collections.singletonMap("a", 1))
+        .set(col.document("__id12__"), Collections.singletonMap("a", 1))
+        .set(col.document("__id-2__"), Collections.singletonMap("a", 1))
+        .set(col.document("_id1__"), Collections.singletonMap("a", 1))
+        .set(col.document("__id1_"), Collections.singletonMap("a", 1))
+        .set(col.document("__id"), Collections.singletonMap("a", 1))
+        .commit()
+        .get();
+
+    Query query = col.orderBy("__name__", Direction.ASCENDING);
+
+    QuerySnapshot snapshot = query.get().get();
+    List<String> queryOrder =
+        snapshot.getDocuments().stream().map(doc -> doc.getId()).collect(Collectors.toList());
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      List<String> expectedOrder =
+          Arrays.asList(
+              "__id-2__",
+              "__id7__",
+              "__id12__",
+              "12",
+              "7",
+              "A",
+              "Aa",
+              "__id",
+              "__id1_",
+              "_id1__",
+              "a");
+      assertThat(queryOrder)
+          .containsExactlyElementsIn(expectedOrder)
+          .inOrder(); // standard backend order
+    } else {
+      List<String> expectedOrder =
+          Arrays.asList(
+              "12",
+              "7",
+              "A",
+              "Aa",
+              "__id",
+              "__id-2__",
+              "__id12__",
+              "__id1_",
+              "__id7__",
+              "_id1__",
+              "a");
+
+      assertThat(queryOrder)
+          .containsExactlyElementsIn(expectedOrder)
+          .inOrder(); // enterprise backend order
+    }
+
+    CountDownLatch latch = new CountDownLatch(1);
+    List<String> listenerOrder = new ArrayList<>();
+
+    ListenerRegistration registration =
+        query.addSnapshotListener(
+            (value, error) -> {
+              listenerOrder.addAll(
+                  value.getDocuments().stream()
+                      .map(doc -> doc.getId())
+                      .collect(Collectors.toList()));
+
+              latch.countDown();
+            });
+
+    latch.await();
+    registration.remove();
+
+    List<String> expectedOrder =
+        Arrays.asList(
+            "__id-2__",
+            "__id7__",
+            "__id12__",
+            "12",
+            "7",
+            "A",
+            "Aa",
+            "__id",
+            "__id1_",
+            "_id1__",
+            "a");
+    // TODO: SDK now implements stardard backend order. We need to change it to Enterprise order
+    assertEquals(expectedOrder, listenerOrder); // Assert order in the SDK
+  }
+
+  @Test
+  public void snapshotListenerSortsFilteredQueryByDocumentIdInTheSameOrderAsServer()
+      throws Exception {
+    CollectionReference col = randomColl;
+
+    firestore
+        .batch()
+        .set(col.document("A"), Collections.singletonMap("a", 1))
+        .set(col.document("a"), Collections.singletonMap("a", 1))
+        .set(col.document("Aa"), Collections.singletonMap("a", 1))
+        .set(col.document("7"), Collections.singletonMap("a", 1))
+        .set(col.document("12"), Collections.singletonMap("a", 1))
+        .set(col.document("__id7__"), Collections.singletonMap("a", 1))
+        .set(col.document("__id12__"), Collections.singletonMap("a", 1))
+        .set(col.document("__id-2__"), Collections.singletonMap("a", 1))
+        .set(col.document("_id1__"), Collections.singletonMap("a", 1))
+        .set(col.document("__id1_"), Collections.singletonMap("a", 1))
+        .set(col.document("__id"), Collections.singletonMap("a", 1))
+        .commit()
+        .get();
+
+    Query query =
+        col.whereGreaterThan(FieldPath.documentId(), "__id7__")
+            .whereLessThanOrEqualTo(FieldPath.documentId(), "A")
+            .orderBy("__name__", Direction.ASCENDING);
+    List<String> expectedOrder = Arrays.asList("__id12__", "12", "7", "A");
+
+    QuerySnapshot snapshot = query.get().get();
+    List<String> queryOrder =
+        snapshot.getDocuments().stream().map(doc -> doc.getId()).collect(Collectors.toList());
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(expectedOrder, queryOrder); // Assert order from backend
+    } else {
+      assertThat(queryOrder).isEmpty();
+    }
+
+    CountDownLatch latch = new CountDownLatch(1);
+    List<String> listenerOrder = new ArrayList<>();
+
+    ListenerRegistration registration =
+        query.addSnapshotListener(
+            (value, error) -> {
+              listenerOrder.addAll(
+                  value.getDocuments().stream()
+                      .map(doc -> doc.getId())
+                      .collect(Collectors.toList()));
+
+              latch.countDown();
+            });
+
+    latch.await();
+    registration.remove();
+
+    if (getFirestoreEdition() == FirestoreEdition.STANDARD) {
+      assertEquals(expectedOrder, listenerOrder); // Assert order in the SDK
+    } else {
+      assertThat(listenerOrder).isEmpty();
+    }
+  }
+
   /**
    * A tuple class used by {@code #queryWatch}. This class represents an event delivered to the
    * registered query listener.
@@ -979,5 +1138,41 @@ public final class ITQueryWatchTest extends ITBaseTest {
     ListenResponse.Builder response = ListenResponse.newBuilder();
     response.setFilter(ExistenceFilter.newBuilder().setCount(documentCount).build());
     return response.build();
+  }
+
+  @Test
+  public void testInequalityIncludesAndSortsMissingFields() throws Exception {
+    setDocument("doc1", map("key", 1));
+    setDocument("doc2", map("key", 2));
+    setDocument("doc3", map("other", 1)); // missing "key"
+    setDocument("doc4", map("key", null));
+
+    final Query query = randomColl.whereNotEqualTo("key", 1);
+    QuerySnapshotEventListener listener =
+        QuerySnapshotEventListener.builder().setInitialEventCount(1).build();
+    ListenerRegistration registration = query.addSnapshotListener(listener);
+
+    try {
+      listener.eventsCountDownLatch.awaitInitialEvents();
+    } finally {
+      registration.remove();
+    }
+
+    ListenerAssertions listenerAssertions = listener.assertions();
+    listenerAssertions.noError();
+
+    if (getFirestoreEdition() == FirestoreEdition.ENTERPRISE) {
+      // Expect doc2, doc3, doc4. doc1 excluded.
+      // Order: Missing/Null (which are equal in sort) < Number.
+      // Missing/Null sorted by __name__.
+      // doc3 < doc4.
+      // So: doc3, doc4, doc2.
+      // TODO: Watch still applies orderby normalization for now
+      List<String> expectedOrder = Arrays.asList("doc2", "doc4");
+      assertEquals(expectedOrder, listenerAssertions.addedIds);
+    } else {
+      List<String> expectedOrder = singletonList("doc2");
+      assertEquals(expectedOrder, listenerAssertions.addedIds);
+    }
   }
 }

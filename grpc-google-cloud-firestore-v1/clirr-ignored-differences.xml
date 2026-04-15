@@ -4,6 +4,10 @@
   <difference>
     <differenceType>7012</differenceType>
     <className>com/google/firestore/v1/FirestoreGrpc$AsyncService</className>
+<<<<<<< HEAD
     <method>void executePipeline(com.google.firestore.v1.ExecutePipelineRequest, io.grpc.stub.StreamObserver)</method>
+=======
+    <method>* executePipeline(*)</method>
+>>>>>>> main
   </difference>
 </differences>

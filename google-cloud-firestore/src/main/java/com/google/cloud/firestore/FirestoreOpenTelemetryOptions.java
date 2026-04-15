@@ -16,7 +16,6 @@
 
 package com.google.cloud.firestore;
 
-import com.google.api.core.BetaApi;
 import io.opentelemetry.api.OpenTelemetry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -25,18 +24,18 @@ import javax.annotation.Nullable;
  * Represents the options that are used to configure the use of OpenTelemetry for telemetry
  * collection in the Firestore SDK.
  */
-@BetaApi
 public class FirestoreOpenTelemetryOptions {
-  private final boolean tracingEnabled;
+  private final boolean exportBuiltinMetricsToGoogleCloudMonitoring;
   private final @Nullable OpenTelemetry openTelemetry;
 
   FirestoreOpenTelemetryOptions(Builder builder) {
-    this.tracingEnabled = builder.tracingEnabled;
+    this.exportBuiltinMetricsToGoogleCloudMonitoring =
+        builder.exportBuiltinMetricsToGoogleCloudMonitoring;
     this.openTelemetry = builder.openTelemetry;
   }
 
-  public boolean isTracingEnabled() {
-    return tracingEnabled;
+  public boolean exportBuiltinMetricsToGoogleCloudMonitoring() {
+    return exportBuiltinMetricsToGoogleCloudMonitoring;
   }
 
   public OpenTelemetry getOpenTelemetry() {
@@ -54,18 +53,18 @@ public class FirestoreOpenTelemetryOptions {
   }
 
   public static class Builder {
-
-    private boolean tracingEnabled;
-
+    private boolean exportBuiltinMetricsToGoogleCloudMonitoring;
     @Nullable private OpenTelemetry openTelemetry;
 
     private Builder() {
-      tracingEnabled = false;
+      // TODO(metrics): default this to true when feature is ready
+      exportBuiltinMetricsToGoogleCloudMonitoring = false;
       openTelemetry = null;
     }
 
     private Builder(FirestoreOpenTelemetryOptions options) {
-      this.tracingEnabled = options.tracingEnabled;
+      this.exportBuiltinMetricsToGoogleCloudMonitoring =
+          options.exportBuiltinMetricsToGoogleCloudMonitoring;
       this.openTelemetry = options.openTelemetry;
     }
 
@@ -74,14 +73,17 @@ public class FirestoreOpenTelemetryOptions {
       return new FirestoreOpenTelemetryOptions(this);
     }
 
+    // TODO(metrics): make this public when feature is ready.
     /**
-     * Sets whether tracing should be enabled.
+     * Sets whether built-in metrics should be exported to Google Cloud Monitoring
      *
-     * @param tracingEnabled Whether tracing should be enabled.
+     * @param exportBuiltinMetrics Whether built-in metrics should be exported to Google Cloud
+     *     Monitoring.
      */
     @Nonnull
-    public FirestoreOpenTelemetryOptions.Builder setTracingEnabled(boolean tracingEnabled) {
-      this.tracingEnabled = tracingEnabled;
+    private FirestoreOpenTelemetryOptions.Builder exportBuiltinMetricsToGoogleCloudMonitoring(
+        boolean exportBuiltinMetrics) {
+      this.exportBuiltinMetricsToGoogleCloudMonitoring = exportBuiltinMetrics;
       return this;
     }
 

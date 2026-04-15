@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright 2025 Google LLC
+=======
+ * Copyright 2026 Google LLC
+>>>>>>> main
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -77,6 +81,10 @@ import com.google.firestore.admin.v1.ListUserCredsResponse;
 import com.google.firestore.admin.v1.LocationName;
 import com.google.firestore.admin.v1.PitrSnapshot;
 import com.google.firestore.admin.v1.ProjectName;
+<<<<<<< HEAD
+=======
+import com.google.firestore.admin.v1.RealtimeUpdatesMode;
+>>>>>>> main
 import com.google.firestore.admin.v1.ResetUserPasswordRequest;
 import com.google.firestore.admin.v1.RestoreDatabaseRequest;
 import com.google.firestore.admin.v1.UpdateBackupScheduleRequest;
@@ -156,6 +164,10 @@ public class FirestoreAdminClientTest {
             .addAllFields(new ArrayList<Index.IndexField>())
             .setMultikey(true)
             .setShardCount(-495377042)
+<<<<<<< HEAD
+=======
+            .setUnique(true)
+>>>>>>> main
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -209,6 +221,10 @@ public class FirestoreAdminClientTest {
             .addAllFields(new ArrayList<Index.IndexField>())
             .setMultikey(true)
             .setShardCount(-495377042)
+<<<<<<< HEAD
+=======
+            .setUnique(true)
+>>>>>>> main
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -350,6 +366,10 @@ public class FirestoreAdminClientTest {
             .addAllFields(new ArrayList<Index.IndexField>())
             .setMultikey(true)
             .setShardCount(-495377042)
+<<<<<<< HEAD
+=======
+            .setUnique(true)
+>>>>>>> main
             .build();
     mockFirestoreAdmin.addResponse(expectedResponse);
 
@@ -391,6 +411,10 @@ public class FirestoreAdminClientTest {
             .addAllFields(new ArrayList<Index.IndexField>())
             .setMultikey(true)
             .setShardCount(-495377042)
+<<<<<<< HEAD
+=======
+            .setUnique(true)
+>>>>>>> main
             .build();
     mockFirestoreAdmin.addResponse(expectedResponse);
 
@@ -986,6 +1010,7 @@ public class FirestoreAdminClientTest {
             .putAllTags(new HashMap<String, String>())
             .setFreeTier(true)
             .setEtag("etag3123477")
+            .setRealtimeUpdatesMode(RealtimeUpdatesMode.forNumber(0))
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -1052,6 +1077,7 @@ public class FirestoreAdminClientTest {
             .putAllTags(new HashMap<String, String>())
             .setFreeTier(true)
             .setEtag("etag3123477")
+            .setRealtimeUpdatesMode(RealtimeUpdatesMode.forNumber(0))
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -1118,6 +1144,7 @@ public class FirestoreAdminClientTest {
             .putAllTags(new HashMap<String, String>())
             .setFreeTier(true)
             .setEtag("etag3123477")
+            .setRealtimeUpdatesMode(RealtimeUpdatesMode.forNumber(0))
             .build();
     mockFirestoreAdmin.addResponse(expectedResponse);
 
@@ -1170,6 +1197,7 @@ public class FirestoreAdminClientTest {
             .putAllTags(new HashMap<String, String>())
             .setFreeTier(true)
             .setEtag("etag3123477")
+            .setRealtimeUpdatesMode(RealtimeUpdatesMode.forNumber(0))
             .build();
     mockFirestoreAdmin.addResponse(expectedResponse);
 
@@ -1300,6 +1328,7 @@ public class FirestoreAdminClientTest {
             .putAllTags(new HashMap<String, String>())
             .setFreeTier(true)
             .setEtag("etag3123477")
+            .setRealtimeUpdatesMode(RealtimeUpdatesMode.forNumber(0))
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -1363,6 +1392,7 @@ public class FirestoreAdminClientTest {
             .putAllTags(new HashMap<String, String>())
             .setFreeTier(true)
             .setEtag("etag3123477")
+            .setRealtimeUpdatesMode(RealtimeUpdatesMode.forNumber(0))
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -1423,6 +1453,7 @@ public class FirestoreAdminClientTest {
             .putAllTags(new HashMap<String, String>())
             .setFreeTier(true)
             .setEtag("etag3123477")
+            .setRealtimeUpdatesMode(RealtimeUpdatesMode.forNumber(0))
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -2277,6 +2308,7 @@ public class FirestoreAdminClientTest {
             .putAllTags(new HashMap<String, String>())
             .setFreeTier(true)
             .setEtag("etag3123477")
+            .setRealtimeUpdatesMode(RealtimeUpdatesMode.forNumber(0))
             .build();
     Operation resultOperation =
         Operation.newBuilder()
@@ -2725,6 +2757,10 @@ public class FirestoreAdminClientTest {
             .putAllTags(new HashMap<String, String>())
             .setFreeTier(true)
             .setEtag("etag3123477")
+<<<<<<< HEAD
+=======
+            .setRealtimeUpdatesMode(RealtimeUpdatesMode.forNumber(0))
+>>>>>>> main
             .build();
     Operation resultOperation =
         Operation.newBuilder()

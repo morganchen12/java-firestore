@@ -17,19 +17,21 @@
 package com.google.cloud.firestore;
 
 import com.google.api.core.ApiFunction;
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
+import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.auth.Credentials;
 import com.google.cloud.ServiceDefaults;
 import com.google.cloud.ServiceOptions;
 import com.google.cloud.TransportOptions;
 import com.google.cloud.firestore.spi.v1.FirestoreRpc;
 import com.google.cloud.firestore.spi.v1.GrpcFirestoreRpc;
+import com.google.cloud.firestore.telemetry.CompositeApiTracerFactory;
+import com.google.cloud.firestore.telemetry.MetricsUtil;
 import com.google.cloud.firestore.v1.FirestoreSettings;
 import com.google.cloud.grpc.GrpcTransportOptions;
 import com.google.common.collect.ImmutableMap;
@@ -37,6 +39,7 @@ import com.google.common.collect.ImmutableSet;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -62,8 +65,10 @@ public final class FirestoreOptions extends ServiceOptions<Firestore, FirestoreO
   private final TransportChannelProvider channelProvider;
   private final CredentialsProvider credentialsProvider;
   private final String emulatorHost;
+  private final boolean alwaysUseImplicitOrderBy;
   private final transient @Nonnull FirestoreOpenTelemetryOptions openTelemetryOptions;
   private final transient @Nonnull com.google.cloud.firestore.telemetry.TraceUtil traceUtil;
+  private final transient @Nonnull com.google.cloud.firestore.telemetry.MetricsUtil metricsUtil;
 
   public static class DefaultFirestoreFactory implements FirestoreFactory {
 
@@ -106,6 +111,23 @@ public final class FirestoreOptions extends ServiceOptions<Firestore, FirestoreO
     return FirestoreDefaults.INSTANCE.getHost();
   }
 
+  @InternalApi
+  @Override
+  public ApiTracerFactory getApiTracerFactory() {
+    List<ApiTracerFactory> apiTracerFactories = new ArrayList<>();
+    // Prefer any direct ApiTracerFactory that might have been set on the builder.
+    if (super.getApiTracerFactory() != null) {
+      apiTracerFactories.add(super.getApiTracerFactory());
+    }
+    // Add Metrics Tracer factory if built-in metrics are enabled.
+    metricsUtil.addMetricsTracerFactory(apiTracerFactories);
+
+    if (apiTracerFactories.isEmpty()) {
+      return null;
+    }
+    return new CompositeApiTracerFactory(apiTracerFactories);
+  }
+
   public String getDatabaseId() {
     return databaseId;
   }
@@ -122,12 +144,20 @@ public final class FirestoreOptions extends ServiceOptions<Firestore, FirestoreO
     return emulatorHost;
   }
 
+  public boolean isAlwaysUseImplicitOrderBy() {
+    return alwaysUseImplicitOrderBy;
+  }
+
   @Nonnull
   com.google.cloud.firestore.telemetry.TraceUtil getTraceUtil() {
     return traceUtil;
   }
 
-  @BetaApi
+  @Nonnull
+  com.google.cloud.firestore.telemetry.MetricsUtil getMetricsUtil() {
+    return metricsUtil;
+  }
+
   @Nonnull
   public FirestoreOpenTelemetryOptions getOpenTelemetryOptions() {
     return openTelemetryOptions;
@@ -139,6 +169,7 @@ public final class FirestoreOptions extends ServiceOptions<Firestore, FirestoreO
     @Nullable private TransportChannelProvider channelProvider = null;
     @Nullable private CredentialsProvider credentialsProvider = null;
     @Nullable private String emulatorHost = null;
+    private boolean alwaysUseImplicitOrderBy = false;
     @Nullable private FirestoreOpenTelemetryOptions openTelemetryOptions = null;
 
     private Builder() {}
@@ -149,6 +180,7 @@ public final class FirestoreOptions extends ServiceOptions<Firestore, FirestoreO
       this.channelProvider = options.channelProvider;
       this.credentialsProvider = options.credentialsProvider;
       this.emulatorHost = options.emulatorHost;
+      this.alwaysUseImplicitOrderBy = options.alwaysUseImplicitOrderBy;
       this.openTelemetryOptions = options.openTelemetryOptions;
     }
 
@@ -209,6 +241,26 @@ public final class FirestoreOptions extends ServiceOptions<Firestore, FirestoreO
     }
 
     /**
+     * Sets whether to always include implicit order by clauses in the query request (e.g., for
+     * inequality queries).
+     *
+     * <p>By default, the SDK only sends explicit order by clauses and relies on the backend to
+     * append implicit ones (unless cursors are used). Firestore Enterprise edition, however, does
+     * not automatically append these clauses because it does not require an index for every query.
+     * This option allows users to opt-in to having the SDK always append the implicit order by
+     * clauses, ensuring behavior consistent with standard edition.
+     *
+     * <p>Setting this option to true against Standard Edition is essentially a no-op as Standard
+     * Edition automatically apply implicit orderby from the backend.
+     *
+     * @param alwaysUseImplicitOrderBy Whether to always include implicit order by clauses.
+     */
+    public Builder setAlwaysUseImplicitOrderBy(boolean alwaysUseImplicitOrderBy) {
+      this.alwaysUseImplicitOrderBy = alwaysUseImplicitOrderBy;
+      return this;
+    }
+
+    /**
      * Sets the database ID to use with this Firestore client.
      *
      * @param databaseId The Firestore database ID to use with this client.
@@ -223,7 +275,6 @@ public final class FirestoreOptions extends ServiceOptions<Firestore, FirestoreO
      *
      * @param openTelemetryOptions The `FirestoreOpenTelemetryOptions` to use.
      */
-    @BetaApi
     @Nonnull
     public Builder setOpenTelemetryOptions(
         @Nonnull FirestoreOpenTelemetryOptions openTelemetryOptions) {
@@ -286,7 +337,7 @@ public final class FirestoreOptions extends ServiceOptions<Firestore, FirestoreO
 
     @Override
     public String getAuthenticationType() {
-      throw new IllegalArgumentException("Not supported");
+      return "Unauthenticated";
     }
 
     @Override
@@ -325,6 +376,9 @@ public final class FirestoreOptions extends ServiceOptions<Firestore, FirestoreO
             ? builder.databaseId
             : FirestoreDefaults.INSTANCE.getDatabaseId();
 
+    // Set up the `MetricsUtil` instance after the database ID has been set.
+    this.metricsUtil = MetricsUtil.getInstance(this);
+
     if (builder.channelProvider == null) {
       ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator =
           this.traceUtil.getChannelConfigurator();
@@ -350,6 +404,7 @@ public final class FirestoreOptions extends ServiceOptions<Firestore, FirestoreO
             : GrpcTransportOptions.setUpCredentialsProvider(this);
 
     this.emulatorHost = builder.emulatorHost;
+    this.alwaysUseImplicitOrderBy = builder.alwaysUseImplicitOrderBy;
   }
 
   private static class FirestoreDefaults implements ServiceDefaults<Firestore, FirestoreOptions> {

@@ -18,7 +18,10 @@ package com.google.cloud.firestore.pipeline.stages;
 
 import static com.google.cloud.firestore.PipelineUtils.encodeValue;
 
+<<<<<<< HEAD
 import com.google.api.core.BetaApi;
+=======
+>>>>>>> main
 import com.google.api.core.InternalApi;
 import com.google.cloud.firestore.PipelineUtils;
 import com.google.cloud.firestore.pipeline.expressions.AggregateFunction;
@@ -32,25 +35,37 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nonnull;
 
+<<<<<<< HEAD
 @BetaApi
+=======
+>>>>>>> main
 public final class Aggregate extends Stage {
 
   private final Map<String, Expression> groups;
   private final Map<String, AggregateFunction> accumulators;
 
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Aggregate withGroups(String... fields) {
     return new Aggregate(
         PipelineUtils.fieldNamesToMap(fields), this.accumulators, new AggregateOptions());
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Aggregate withGroups(Selectable... selectables) {
     return new Aggregate(
         PipelineUtils.selectablesToMap(selectables), this.accumulators, new AggregateOptions());
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public static Aggregate withAccumulators(AliasedAggregate... accumulators) {
     Map<String, AggregateFunction> accumulatorMap = new HashMap<>();
     for (AliasedAggregate accumulator : accumulators) {
@@ -75,7 +90,12 @@ public final class Aggregate extends Stage {
     super("aggregate", options.options);
     if (accumulators.isEmpty()) {
       throw new IllegalArgumentException(
+<<<<<<< HEAD
           "Must specify at least one accumulator for aggregate() stage. There is a distinct() stage if only distinct group values are needed.");
+=======
+          "Must specify at least one accumulator for aggregate() stage. There is a distinct() stage"
+              + " if only distinct group values are needed.");
+>>>>>>> main
     }
 
     this.groups = groups;

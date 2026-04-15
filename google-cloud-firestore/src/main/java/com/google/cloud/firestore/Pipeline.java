@@ -17,6 +17,11 @@
 package com.google.cloud.firestore;
 
 import static com.google.cloud.firestore.pipeline.expressions.Expression.field;
+<<<<<<< HEAD
+=======
+import static com.google.cloud.firestore.telemetry.TraceUtil.ATTRIBUTE_KEY_DOC_COUNT;
+import static com.google.cloud.firestore.telemetry.TraceUtil.ATTRIBUTE_KEY_IS_TRANSACTIONAL;
+>>>>>>> main
 
 import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
@@ -35,10 +40,19 @@ import com.google.cloud.firestore.pipeline.expressions.Expression;
 import com.google.cloud.firestore.pipeline.expressions.Field;
 import com.google.cloud.firestore.pipeline.expressions.FunctionExpression;
 import com.google.cloud.firestore.pipeline.expressions.Ordering;
+<<<<<<< HEAD
+=======
+import com.google.cloud.firestore.pipeline.expressions.PipelineValueExpression;
+>>>>>>> main
 import com.google.cloud.firestore.pipeline.expressions.Selectable;
 import com.google.cloud.firestore.pipeline.stages.AddFields;
 import com.google.cloud.firestore.pipeline.stages.Aggregate;
 import com.google.cloud.firestore.pipeline.stages.AggregateOptions;
+<<<<<<< HEAD
+=======
+import com.google.cloud.firestore.pipeline.stages.Define;
+import com.google.cloud.firestore.pipeline.stages.Delete;
+>>>>>>> main
 import com.google.cloud.firestore.pipeline.stages.Distinct;
 import com.google.cloud.firestore.pipeline.stages.FindNearest;
 import com.google.cloud.firestore.pipeline.stages.FindNearestOptions;
@@ -49,6 +63,10 @@ import com.google.cloud.firestore.pipeline.stages.RawStage;
 import com.google.cloud.firestore.pipeline.stages.RemoveFields;
 import com.google.cloud.firestore.pipeline.stages.ReplaceWith;
 import com.google.cloud.firestore.pipeline.stages.Sample;
+<<<<<<< HEAD
+=======
+import com.google.cloud.firestore.pipeline.stages.Search;
+>>>>>>> main
 import com.google.cloud.firestore.pipeline.stages.Select;
 import com.google.cloud.firestore.pipeline.stages.Sort;
 import com.google.cloud.firestore.pipeline.stages.Stage;
@@ -56,7 +74,17 @@ import com.google.cloud.firestore.pipeline.stages.StageUtils;
 import com.google.cloud.firestore.pipeline.stages.Union;
 import com.google.cloud.firestore.pipeline.stages.Unnest;
 import com.google.cloud.firestore.pipeline.stages.UnnestOptions;
+<<<<<<< HEAD
 import com.google.cloud.firestore.pipeline.stages.Where;
+=======
+import com.google.cloud.firestore.pipeline.stages.Update;
+import com.google.cloud.firestore.pipeline.stages.Where;
+import com.google.cloud.firestore.telemetry.MetricsUtil.MetricsContext;
+import com.google.cloud.firestore.telemetry.TelemetryConstants;
+import com.google.cloud.firestore.telemetry.TelemetryConstants.MetricType;
+import com.google.cloud.firestore.telemetry.TraceUtil;
+import com.google.cloud.firestore.telemetry.TraceUtil.Scope;
+>>>>>>> main
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -66,8 +94,11 @@ import com.google.firestore.v1.ExecutePipelineResponse;
 import com.google.firestore.v1.StructuredPipeline;
 import com.google.firestore.v1.Value;
 import com.google.protobuf.ByteString;
+<<<<<<< HEAD
 import io.opencensus.trace.AttributeValue;
 import io.opencensus.trace.Tracing;
+=======
+>>>>>>> main
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -104,6 +135,7 @@ import javax.annotation.Nullable;
  *     .execute()
  *     .get();
  *
+<<<<<<< HEAD
  * // Example 2: Filter documents where 'genre' is "Science Fiction" and 'published' is after 1950
  * Snapshot results2 = firestore.pipeline()
  *     .collection("books")
@@ -114,25 +146,50 @@ import javax.annotation.Nullable;
  * results2 = firestore.pipeline()
  *     .collection("books")
  *     .where(and(field("genre").eq("Science Fiction"), field("published").gt(1950)))
+=======
+ * // Example 2: Filter documents where 'genre' is "Science Fiction" and
+ * // 'published' is after 1950
+ * Snapshot results2 = firestore.pipeline()
+ *     .collection("books")
+ *     .where(and(equal("genre", "Science Fiction"), greaterThan("published", 1950)))
+ *     .execute()
+ *     .get();
+ * // Same as above but using methods on expressions as opposed to static
+ * // functions.
+ * results2 = firestore.pipeline()
+ *     .collection("books")
+ *     .where(and(field("genre").equal("Science Fiction"), field("published").greaterThan(1950)))
+>>>>>>> main
  *     .execute()
  *     .get();
  *
  * // Example 3: Calculate the average rating of books published after 1980
  * Snapshot results3 = firestore.pipeline()
  *     .collection("books")
+<<<<<<< HEAD
  *     .where(gt("published", 1980))
  *     .aggregate(avg("rating").as("averageRating"))
+=======
+ *     .where(greaterThan("published", 1980))
+ *     .aggregate(average("rating").as("averageRating"))
+>>>>>>> main
  *     .execute()
  *     .get();
  * }</pre>
  */
+<<<<<<< HEAD
 @BetaApi
+=======
+>>>>>>> main
 public final class Pipeline {
   /**
    * A Snapshot contains the results of a pipeline execution. It can be used to access the
    * documents, execution time, and explain stats.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public static final class Snapshot {
 
     private final Pipeline pipeline;
@@ -213,6 +270,24 @@ public final class Pipeline {
   }
 
   /**
+<<<<<<< HEAD
+=======
+   * Adds a search stage to the Pipeline.
+   *
+   * <p>This must be the first stage of the pipeline.
+   *
+   * <p>A limited set of expressions are supported in the search stage.
+   *
+   * @param searchStage An object that specifies how search is performed.
+   * @return A new {@code Pipeline} object with this stage appended to the stage list.
+   */
+  @BetaApi
+  public Pipeline search(Search searchStage) {
+    return append(searchStage);
+  }
+
+  /**
+>>>>>>> main
    * Adds new fields to outputs from previous stages.
    *
    * <p>This stage allows you to compute values on-the-fly based on existing data from previous
@@ -231,6 +306,7 @@ public final class Pipeline {
    *
    * <pre>{@code
    * firestore.pipeline().collection("books")
+<<<<<<< HEAD
    *   .addFields(
    *     field("rating").as("bookRating"), // Rename 'rating' to 'bookRating'
    *     add(5, field("quantity")).as("totalCost")  // Calculate 'totalCost'
@@ -243,6 +319,235 @@ public final class Pipeline {
   @BetaApi
   public Pipeline addFields(Selectable... fields) {
     return append(new AddFields(PipelineUtils.selectablesToMap(fields)));
+=======
+   *     .addFields(
+   *         field("rating").as("bookRating"), // Rename 'rating' to 'bookRating'
+   *         add(5, field("quantity")).as("totalCost") // Calculate 'totalCost'
+   *     );
+   * }</pre>
+   *
+   * @param field The field to add to the documents, specified as {@link Selectable} expressions.
+   * @param additionalFields The additional fields to add to the documents, specified as {@link
+   *     Selectable} expressions.
+   * @return A new Pipeline object with this stage appended to the stage list.
+   */
+  public Pipeline addFields(Selectable field, Selectable... additionalFields) {
+    return append(
+        new AddFields(
+            PipelineUtils.selectablesToMap(
+                ImmutableList.<Selectable>builder()
+                    .add(field)
+                    .add(additionalFields)
+                    .build()
+                    .toArray(new Selectable[0]))));
+  }
+
+  /**
+   * Defines one or more variables in the pipeline's scope. `define` is used to bind a value to a
+   * variable for internal reuse within the pipeline body (accessed via the {@link
+   * Expression#variable(String)} function).
+   *
+   * <p>This stage is useful for declaring reusable values or intermediate calculations that can be
+   * referenced multiple times in later parts of the pipeline, improving readability and
+   * maintainability.
+   *
+   * <p>Each variable is defined using an {@link AliasedExpression}, which pairs an expression with
+   * a name (alias).
+   *
+   * <p>Example:
+   *
+   * <pre>{@code
+   * firestore.pipeline().collection("products")
+   *     .define(
+   *         multiply(field("price"), 0.9).as("discountedPrice"),
+   *         add(field("stock"), 10).as("newStock"))
+   *     .where(lessThan(variable("discountedPrice"), 100))
+   *     .select(field("name"), variable("newStock"));
+   * }</pre>
+   *
+   * @param expression The expression to define using {@link AliasedExpression}.
+   * @param additionalExpressions Additional expressions to define using {@link AliasedExpression}.
+   * @return A new Pipeline object with this stage appended to the stage list.
+   */
+  public Pipeline define(AliasedExpression expression, AliasedExpression... additionalExpressions) {
+    return append(
+        new Define(
+            PipelineUtils.selectablesToMap(
+                ImmutableList.<AliasedExpression>builder()
+                    .add(expression)
+                    .add(additionalExpressions)
+                    .build()
+                    .toArray(new AliasedExpression[0]))));
+  }
+
+  /**
+   * Converts the pipeline into an array expression.
+   *
+   * <p><b>Result Unwrapping:</b> For simpler access, subqueries producing a single field
+   * automatically unwrap that value to the top level, ignoring the inner alias. If the subquery
+   * returns multiple fields, they are preserved as a map.
+   *
+   * <p><b>Example 1: Single field unwrapping</b>
+   *
+   * <pre>{@code
+   * // Get a list of all reviewer names for each book
+   * db.pipeline().collection("books")
+   *     .define(field("id").as("book_id"))
+   *     .addFields(
+   *         db.pipeline().collection("reviews")
+   *             .where(field("book_id").equal(variable("book_id")))
+   *             .select(field("reviewer").as("name"))
+   *             .toArrayExpression()
+   *             .as("reviewers"))
+   * }</pre>
+   *
+   * <p><i>The result set is unwrapped from {@code "reviewers": [{ "name": "Alice" }, { "name":
+   * "Bob" }]} to {@code "reviewers": ["Alice", "Bob"]}.</i>
+   *
+   * <pre>{@code
+   * // Output Document:
+   * [
+   *   {
+   *     "id": "1",
+   *     "title": "1984",
+   *     "reviewers": ["Alice", "Bob"]
+   *   }
+   * ]
+   * }</pre>
+   *
+   * <p><b>Example 2: Multiple fields (Map)</b>
+   *
+   * <pre>{@code
+   * // Get a list of reviews (reviewer and rating) for each book
+   * db.pipeline().collection("books")
+   *     .define(field("id").as("book_id"))
+   *     .addFields(
+   *         db.pipeline().collection("reviews")
+   *             .where(field("book_id").equal(variable("book_id")))
+   *             .select(field("reviewer"), field("rating"))
+   *             .toArrayExpression()
+   *             .as("reviews"))
+   * }</pre>
+   *
+   * <p><i>When the subquery produces multiple fields, they are kept as objects in the array:</i>
+   *
+   * <pre>{@code
+   * // Output Document:
+   * [
+   *   {
+   *     "id": "1",
+   *     "title": "1984",
+   *     "reviews": [
+   *       { "reviewer": "Alice", "rating": 5 },
+   *       { "reviewer": "Bob", "rating": 4 }
+   *     ]
+   *   }
+   * ]
+   * }</pre>
+   *
+   * @return A new {@link Expression} representing the pipeline as an array.
+   */
+  public Expression toArrayExpression() {
+    return new FunctionExpression("array", ImmutableList.of(new PipelineValueExpression(this)));
+  }
+
+  /**
+   * Converts this Pipeline into an expression that evaluates to a single scalar result. Used for
+   * 1:1 lookups or Aggregations when the subquery is expected to return a single value or object.
+   *
+   * <p><b>Runtime Validation:</b> The runtime will validate that the result set contains exactly
+   * one item. It throws a runtime error if the result has more than one item, and evaluates to
+   * {@code null} if the pipeline has zero results.
+   *
+   * <p><b>Result Unwrapping:</b> For simpler access, subqueries producing a single field
+   * automatically unwrap that value to the top level, ignoring the inner alias. If the subquery
+   * returns multiple fields, they are preserved as a map.
+   *
+   * <p><b>Example 1: Single field unwrapping</b>
+   *
+   * <pre>{@code
+   * // Calculate average rating for each restaurant using a subquery
+   * db.pipeline().collection("restaurants")
+   *     .define(field("id").as("rid"))
+   *     .addFields(
+   *         db.pipeline().collection("reviews")
+   *             .where(field("restaurant_id").equal(variable("rid")))
+   *             // Inner aggregation returns a single document
+   *             .aggregate(AggregateFunction.average("rating").as("value"))
+   *             // Convert Pipeline -> Scalar Expression (validates result is 1 item)
+   *             .toScalarExpression()
+   *             .as("average_rating"))
+   * }</pre>
+   *
+   * <p><i>The result set is unwrapped twice: from {@code "average_rating": [{ "value": 4.5 }]} to
+   * {@code "average_rating": { "value": 4.5 }}, and finally to {@code "average_rating": 4.5}.</i>
+   *
+   * <pre>{@code
+   * // Output Document:
+   * [
+   *   {
+   *     "id": "123",
+   *     "name": "The Burger Joint",
+   *     "cuisine": "American",
+   *     "average_rating": 4.5
+   *   },
+   *   {
+   *     "id": "456",
+   *     "name": "Sushi World",
+   *     "cuisine": "Japanese",
+   *     "average_rating": 4.8
+   *   }
+   * ]
+   * }</pre>
+   *
+   * <p><b>Example 2: Multiple fields (Map)</b>
+   *
+   * <pre>{@code
+   * // For each restaurant, calculate review statistics (average rating AND total
+   * // count)
+   * db.pipeline().collection("restaurants")
+   *     .define(field("id").as("rid"))
+   *     .addFields(
+   *         db.pipeline().collection("reviews")
+   *             .where(field("restaurant_id").equal(variable("rid")))
+   *             .aggregate(
+   *                 AggregateFunction.average("rating").as("avg_score"),
+   *                 AggregateFunction.countAll().as("review_count"))
+   *             .toScalarExpression()
+   *             .as("stats"))
+   * }</pre>
+   *
+   * <p><i>When the subquery produces multiple fields, they are wrapped in a map:</i>
+   *
+   * <pre>{@code
+   * // Output Document:
+   * [
+   *   {
+   *     "id": "123",
+   *     "name": "The Burger Joint",
+   *     "cuisine": "American",
+   *     "stats": {
+   *       "avg_score": 4.0,
+   *       "review_count": 3
+   *     }
+   *   },
+   *   {
+   *     "id": "456",
+   *     "name": "Sushi World",
+   *     "cuisine": "Japanese",
+   *     "stats": {
+   *       "avg_score": 4.8,
+   *       "review_count": 120
+   *     }
+   *   }
+   * ]
+   * }</pre>
+   *
+   * @return A new {@link Expression} representing the pipeline as a scalar.
+   */
+  public Expression toScalarExpression() {
+    return new FunctionExpression("scalar", ImmutableList.of(new PipelineValueExpression(this)));
+>>>>>>> main
   }
 
   /**
@@ -252,6 +557,7 @@ public final class Pipeline {
    *
    * <pre>{@code
    * firestore.pipeline().collection("books")
+<<<<<<< HEAD
    *   .removeFields(
    *     "rating", "cost"
    *   );
@@ -266,6 +572,22 @@ public final class Pipeline {
         new RemoveFields(
             ImmutableList.<Field>builder()
                 .addAll(Arrays.stream(fields).map(f -> Field.ofUserPath(f)).iterator())
+=======
+   *     .removeFields(
+   *         "rating", "cost");
+   * }</pre>
+   *
+   * @param field The fields to remove.
+   * @param additionalFields The additional fields to remove.
+   * @return A new Pipeline object with this stage appended to the stage list.
+   */
+  public Pipeline removeFields(String field, String... additionalFields) {
+    return append(
+        new RemoveFields(
+            ImmutableList.<Field>builder()
+                .add(Field.ofUserPath(field))
+                .addAll(Arrays.stream(additionalFields).map(f -> Field.ofUserPath(f)).iterator())
+>>>>>>> main
                 .build()));
   }
 
@@ -276,6 +598,7 @@ public final class Pipeline {
    *
    * <pre>{@code
    * firestore.pipeline().collection("books")
+<<<<<<< HEAD
    *   .removeFields(
    *     field("rating"), field("cost")
    *   );
@@ -289,6 +612,23 @@ public final class Pipeline {
     return append(
         new RemoveFields(
             ImmutableList.<Field>builder().addAll(Arrays.stream(fields).iterator()).build()));
+=======
+   *     .removeFields(
+   *         field("rating"), field("cost"));
+   * }</pre>
+   *
+   * @param field The field to remove.
+   * @param additionalFields The additional fields to remove.
+   * @return A new Pipeline object with this stage appended to the stage list.
+   */
+  public Pipeline removeFields(Field field, Field... additionalFields) {
+    return append(
+        new RemoveFields(
+            ImmutableList.<Field>builder()
+                .add(field)
+                .addAll(Arrays.stream(additionalFields).iterator())
+                .build()));
+>>>>>>> main
   }
 
   /**
@@ -303,8 +643,13 @@ public final class Pipeline {
    * </ul>
    *
    * <p>If no selections are provided, the output of this stage is empty. Use {@link
+<<<<<<< HEAD
    * com.google.cloud.firestore.Pipeline#addFields(Selectable...)} instead if only additions are
    * desired.
+=======
+   * com.google.cloud.firestore.Pipeline#addFields(Selectable, Selectable...)} instead if only
+   * additions are desired.
+>>>>>>> main
    *
    * <p>Example:
    *
@@ -316,6 +661,7 @@ public final class Pipeline {
    *   );
    * }</pre>
    *
+<<<<<<< HEAD
    * @param selections The fields to include in the output documents, specified as {@link
    *     Selectable} expressions.
    * @return A new Pipeline object with this stage appended to the stage list.
@@ -323,19 +669,41 @@ public final class Pipeline {
   @BetaApi
   public Pipeline select(Selectable... selections) {
     return append(new Select(PipelineUtils.selectablesToMap(selections)));
+=======
+   * @param selection The field to include in the output documents, specified as {@link Selectable}
+   *     expressions.
+   * @param additionalSelections The additional fields to include in the output documents,
+   * @return A new Pipeline object with this stage appended to the stage list.
+   */
+  public Pipeline select(Selectable selection, Selectable... additionalSelections) {
+    return append(
+        new Select(
+            PipelineUtils.selectablesToMap(
+                ImmutableList.<Selectable>builder()
+                    .add(selection)
+                    .add(additionalSelections)
+                    .build()
+                    .toArray(new Selectable[0]))));
+>>>>>>> main
   }
 
   /**
    * Selects a set of fields from the outputs of previous stages.
    *
    * <p>If no selections are provided, the output of this stage is empty. Use {@link
+<<<<<<< HEAD
    * com.google.cloud.firestore.Pipeline#addFields(Selectable...)} instead if only additions are
    * desired.
+=======
+   * com.google.cloud.firestore.Pipeline#addFields(Selectable, Selectable...)} instead if only
+   * additions are desired.
+>>>>>>> main
    *
    * <p>Example:
    *
    * <pre>{@code
    * firestore.collection("books")
+<<<<<<< HEAD
    *   .select("name", "address");
    *
    * // The above is a shorthand of this:
@@ -349,6 +717,28 @@ public final class Pipeline {
   @BetaApi
   public Pipeline select(String... fields) {
     return append(new Select(PipelineUtils.fieldNamesToMap(fields)));
+=======
+   *     .select("name", "address");
+   *
+   * // The above is a shorthand of this:
+   * firestore.pipeline().collection("books")
+   *     .select(field("name"), field("address"));
+   * }</pre>
+   *
+   * @param field The name of the field to include in the output documents.
+   * @param additionalFields The additional fields to include in the output documents.
+   * @return A new Pipeline object with this stage appended to the stage list.
+   */
+  public Pipeline select(String field, String... additionalFields) {
+    return append(
+        new Select(
+            PipelineUtils.fieldNamesToMap(
+                ImmutableList.<String>builder()
+                    .add(field)
+                    .add(additionalFields)
+                    .build()
+                    .toArray(new String[0]))));
+>>>>>>> main
   }
 
   /**
@@ -383,7 +773,10 @@ public final class Pipeline {
    * @param condition The {@link BooleanExpression} to apply.
    * @return A new Pipeline object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline where(BooleanExpression condition) {
     return append(new Where(condition));
   }
@@ -408,7 +801,10 @@ public final class Pipeline {
    * @param offset The number of documents to skip.
    * @return A new Pipeline object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline offset(int offset) {
     return append(new Offset(offset));
   }
@@ -438,7 +834,10 @@ public final class Pipeline {
    * @param limit The maximum number of documents to return.
    * @return A new Pipeline object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline limit(int limit) {
     return append(new Limit(limit));
   }
@@ -456,16 +855,24 @@ public final class Pipeline {
    * // Calculate the average rating and the total number of books
    * firestore.pipeline().collection("books")
    *     .aggregate(
+<<<<<<< HEAD
    *         field("rating").avg().as("averageRating"),
    *         countAll().as("totalBooks")
    *     );
+=======
+   *         field("rating").average().as("averageRating"),
+   *         countAll().as("totalBooks"));
+>>>>>>> main
    * }</pre>
    *
    * @param accumulators The {@link AliasedExpression} expressions, each wrapping an {@link
    *     AggregateFunction} and provide a name for the accumulated results.
    * @return A new Pipeline object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline aggregate(AliasedAggregate... accumulators) {
     return append(Aggregate.withAccumulators(accumulators));
   }
@@ -493,22 +900,35 @@ public final class Pipeline {
    * <pre>{@code
    * // Calculate the average rating for each genre.
    * firestore.pipeline().collection("books")
+<<<<<<< HEAD
    *   .aggregate(
    *     Aggregate
    *       .withAccumulators(avg("rating").as("avg_rating"))
    *       .withGroups("genre"));
+=======
+   *     .aggregate(
+   *         Aggregate
+   *             .withAccumulators(average("rating").as("avg_rating"))
+   *             .withGroups("genre"));
+>>>>>>> main
    * }</pre>
    *
    * @param aggregate An {@link Aggregate} object that specifies the grouping fields (if any) and
    *     the aggregation operations to perform.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline aggregate(Aggregate aggregate) {
     return append(aggregate);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline aggregate(Aggregate aggregate, AggregateOptions options) {
     return append(aggregate.withOptions(options));
   }
@@ -530,7 +950,10 @@ public final class Pipeline {
    * @param fields The fields to consider when determining distinct values.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline distinct(String... fields) {
     return append(new Distinct(PipelineUtils.fieldNamesToMap(fields)));
   }
@@ -562,7 +985,10 @@ public final class Pipeline {
    *     value combinations.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline distinct(Selectable... selectables) {
     return append(new Distinct(PipelineUtils.selectablesToMap(selectables)));
   }
@@ -593,7 +1019,10 @@ public final class Pipeline {
    *     distance field name.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline findNearest(
       String fieldName,
       double[] vector,
@@ -631,7 +1060,10 @@ public final class Pipeline {
    *     distance field name.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline findNearest(
       Expression property,
       double[] vector,
@@ -664,7 +1096,10 @@ public final class Pipeline {
    * @param orders One or more {@link Ordering} instances specifying the sorting criteria.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline sort(Ordering... orders) {
     return append(new Sort(ImmutableList.copyOf(orders)));
   }
@@ -684,6 +1119,10 @@ public final class Pipeline {
    * //  "parents": {
    * //    "father": "John Doe Sr.",
    * //    "mother": "Jane Doe"
+<<<<<<< HEAD
+=======
+   * //   }
+>>>>>>> main
    * // }
    *
    * // Emit parents as document.
@@ -699,7 +1138,10 @@ public final class Pipeline {
    * @param fieldName The name of the field containing the nested map.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline replaceWith(String fieldName) {
     return replaceWith(field(fieldName));
   }
@@ -719,6 +1161,10 @@ public final class Pipeline {
    * //  "parents": {
    * //    "father": "John Doe Sr.",
    * //    "mother": "Jane Doe"
+<<<<<<< HEAD
+=======
+   * //  }
+>>>>>>> main
    * // }
    *
    * // Emit parents as document.
@@ -731,10 +1177,16 @@ public final class Pipeline {
    * // }
    * }</pre>
    *
+<<<<<<< HEAD
    * @param field The {@link Selectable} field containing the nested map.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
   @BetaApi
+=======
+   * @param expr The {@link Expression} field containing the nested map.
+   * @return A new {@code Pipeline} object with this stage appended to the stage list.
+   */
+>>>>>>> main
   public Pipeline replaceWith(Expression expr) {
     return append(new ReplaceWith(expr));
   }
@@ -757,7 +1209,10 @@ public final class Pipeline {
    * @param limit The number of documents to emit, if possible.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline sample(int limit) {
     return sample(Sample.withDocLimit(limit));
   }
@@ -783,7 +1238,10 @@ public final class Pipeline {
    * @param sample The {@code Sample} specifies how sampling is performed.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline sample(Sample sample) {
     return append(sample);
   }
@@ -806,8 +1264,17 @@ public final class Pipeline {
    * @param other The other {@code Pipeline} that is part of union.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
   public Pipeline union(Pipeline other) {
+=======
+  public Pipeline union(Pipeline other) {
+    if (other.rpcContext == null) {
+      throw new IllegalArgumentException(
+          "Union only supports combining root pipelines, doesn't support relative scope Pipeline"
+              + " like relative subcollection pipeline");
+    }
+>>>>>>> main
     return append(new Union(other));
   }
 
@@ -842,12 +1309,16 @@ public final class Pipeline {
    * @param fieldName The name of the field containing the array.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline unnest(String fieldName, String alias) {
     //    return unnest(field(fieldName));
     return append(new Unnest(field(fieldName), alias));
   }
 
+<<<<<<< HEAD
   // /**
   //  * Produces a document for each element in array found in previous stage document.
   //  *
@@ -884,6 +1355,8 @@ public final class Pipeline {
   //   return append(new Unnest(field));
   // }
 
+=======
+>>>>>>> main
   /**
    * Produces a document for each element in array found in previous stage document.
    *
@@ -916,7 +1389,10 @@ public final class Pipeline {
    * @param options The {@code UnnestOptions} options.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline unnest(String fieldName, String alias, UnnestOptions options) {
     return append(new Unnest(field(fieldName), alias, options));
   }
@@ -952,11 +1428,15 @@ public final class Pipeline {
    * @param expr The name of the expression containing the array.
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline unnest(Selectable expr) {
     return append(new Unnest(expr));
   }
 
+<<<<<<< HEAD
   // /**
   //  * Produces a document for each element in array found in previous stage document.
   //  *
@@ -996,6 +1476,158 @@ public final class Pipeline {
 
   /**
    * Adds a generic stage to the pipeline.
+=======
+  /**
+   * Produces a document for each element in array found in previous stage document.
+   *
+   * <p>For each previous stage document, this stage will emit zero or more augmented documents. The
+   * input array found in the specified by {@code Selectable} expression parameter, will for each
+   * input array element produce an augmented document. The input array element will augment the
+   * previous stage document by assigning the {@code Selectable} alias the element value.
+   *
+   * <p>Example:
+   *
+   * <pre>{@code
+   * // Input:
+   * // { "title": "The Hitchhiker's Guide to the Galaxy", "tags": [ "comedy", "space",
+   * "adventure" ], ... }
+   *
+   * // Emit a book document for each tag of the book.
+   * firestore.pipeline().collection("books")
+   *     .unnest(field("tags").as("tag"), UnnestOptions.indexField("tagIndex"));
+   *
+   * // Output:
+   * // { "title": "The Hitchhiker's Guide to the Galaxy", "tagIndex": 0, "tag": "comedy",
+   * "tags": [ "comedy", "space", "adventure" ], ... }
+   * // { "title": "The Hitchhiker's Guide to the Galaxy", "tagIndex": 1, "tag": "space", "tags":
+   * [ "comedy", "space", "adventure" ], ... }
+   * // { "title": "The Hitchhiker's Guide to the Galaxy", "tagIndex": 2, "tag": "adventure",
+   * "tags": [ "comedy", "space", "adventure" ], ... }
+   * }</pre>
+   *
+   * @param field The expression that evaluates to the input array.
+   * @param options The {@code UnnestOptions} options.
+   * @return A new {@code Pipeline} object with this stage appended to the stage list.
+   */
+  public Pipeline unnest(Selectable field, UnnestOptions options) {
+    return append(new Unnest(field, options));
+  }
+
+  /**
+   * Performs a delete operation on documents from previous stages.
+   *
+   * <p>Example:
+   *
+   * <pre>{@code
+   * // Delete all documents in the "logs" collection where "status" is "archived"
+   * firestore.pipeline()
+   *     .collection("logs")
+   *     .where(field("status").equal("archived"))
+   *     .delete()
+   *     .execute()
+   *     .get();
+   * }</pre>
+   *
+   * @return A new {@code Pipeline} object with this stage appended to the stage list.
+   */
+  @BetaApi
+  public Pipeline delete() {
+    return append(new Delete());
+  }
+
+  /**
+   * Performs an update operation using documents from previous stages.
+   *
+   * <p>This method updates the documents in place based on the data flowing through the pipeline.
+   * To specify transformations, use {@link #update(Selectable...)}.
+   *
+   * <p>Example 1: Update a collection's schema by adding a new field and removing an old one.
+   *
+   * <pre>{@code
+   * firestore.pipeline()
+   *     .collection("books")
+   *     .addFields(constant("Fiction").as("genre"))
+   *     .removeFields("old_genre")
+   *     .update()
+   *     .execute()
+   *     .get();
+   * }</pre>
+   *
+   * <p>Example 2: Update documents in place with data from literals.
+   *
+   * <pre>{@code
+   * Map<String, Object> updateData = new HashMap<>();
+   * updateData.put("__name__", firestore.collection("books").document("book1"));
+   * updateData.put("status", "Updated");
+   *
+   * firestore.pipeline()
+   *     .literals(updateData)
+   *     .update()
+   *     .execute()
+   *     .get();
+   * }</pre>
+   *
+   * @return A new {@code Pipeline} object with this stage appended to the stage list.
+   */
+  @BetaApi
+  public Pipeline update() {
+    return append(new Update());
+  }
+
+  /**
+   * Performs an update operation using documents from previous stages with specified
+   * transformations.
+   *
+   * <p>Example:
+   *
+   * <pre>{@code
+   * // Update the "status" field to "Discounted" for all books where price > 50
+   * firestore.pipeline()
+   *     .collection("books")
+   *     .where(field("price").greaterThan(50))
+   *     .update(constant("Discounted").as("status"))
+   *     .execute()
+   *     .get();
+   * }</pre>
+   *
+   * @param transformedFields The transformations to apply.
+   * @return A new {@code Pipeline} object with this stage appended to the stage list.
+   */
+  @BetaApi
+  public Pipeline update(Selectable... transformedFields) {
+    return append(new Update().withTransformedFields(transformedFields));
+  }
+
+  /**
+   * Performs an update operation using an {@link Update} stage.
+   *
+   * <p>This method allows you to use a pre-configured {@link Update} stage.
+   *
+   * <p>Example:
+   *
+   * <pre>{@code
+   * Update updateStage = new Update().withTransformedFields(constant("Updated").as("status"));
+   *
+   * firestore.pipeline()
+   *     .collection("books")
+   *     .where(field("title").equal("The Hitchhiker's Guide to the Galaxy"))
+   *     .update(updateStage)
+   *     .execute()
+   *     .get();
+   * }</pre>
+   *
+   * @param update The {@code Update} stage to append.
+   * @return A new {@code Pipeline} object with this stage appended to the stage list.
+   */
+  @BetaApi
+  public Pipeline update(Update update) {
+    return append(update);
+  }
+
+  /**
+   * Performs an insert operation using documents from previous stages. Adds a generic stage to the
+   * pipeline.
+>>>>>>> main
    *
    * <p>This method provides a flexible way to extend the pipeline's functionality by adding custom
    * stages. Each generic stage is defined by a unique `name` and a set of `params` that control its
@@ -1015,7 +1647,10 @@ public final class Pipeline {
    *
    * @return A new {@code Pipeline} object with this stage appended to the stage list.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Pipeline rawStage(RawStage stage) {
     return append(stage);
   }
@@ -1051,16 +1686,29 @@ public final class Pipeline {
    *
    * @return An {@link ApiFuture} representing the asynchronous pipeline execution.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public ApiFuture<Snapshot> execute() {
     return execute(new PipelineExecuteOptions(), null, null);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public ApiFuture<Snapshot> execute(PipelineExecuteOptions options) {
     return execute(options, null, null);
   }
 
+<<<<<<< HEAD
+=======
+  MetricsContext createMetricsContext(String methodName) {
+    return rpcContext.getFirestore().getOptions().getMetricsUtil().createMetricsContext(methodName);
+  }
+
+>>>>>>> main
   /**
    * Executes this pipeline, providing results to the given {@link ApiStreamObserver} as they become
    * available.
@@ -1106,8 +1754,20 @@ public final class Pipeline {
    *
    * @param observer The {@link ApiStreamObserver} to receive pipeline results and events.
    */
+<<<<<<< HEAD
   @BetaApi
   public void execute(ApiStreamObserver<PipelineResult> observer) {
+=======
+  public void execute(ApiStreamObserver<PipelineResult> observer) {
+    if (this.rpcContext == null) {
+      throw new IllegalStateException(
+          "This pipeline was created without a database (e.g., as a subcollection pipeline) and"
+              + " cannot be executed directly. It can only be used as part of another pipeline.");
+    }
+    MetricsContext metricsContext =
+        createMetricsContext(TelemetryConstants.METHOD_NAME_EXECUTE_PIPELINE_EXECUTE);
+
+>>>>>>> main
     executeInternal(
         new PipelineExecuteOptions(),
         null,
@@ -1127,13 +1787,19 @@ public final class Pipeline {
           public void onCompleted() {
             observer.onCompleted();
           }
+<<<<<<< HEAD
         });
+=======
+        },
+        metricsContext);
+>>>>>>> main
   }
 
   ApiFuture<Snapshot> execute(
       @Nonnull PipelineExecuteOptions options,
       @Nullable final ByteString transactionId,
       @Nullable com.google.protobuf.Timestamp readTime) {
+<<<<<<< HEAD
     SettableApiFuture<Snapshot> futureResult = SettableApiFuture.create();
 
     executeInternal(
@@ -1161,13 +1827,71 @@ public final class Pipeline {
         });
 
     return futureResult;
+=======
+    if (this.rpcContext == null) {
+      throw new IllegalStateException(
+          "This pipeline was created without a database (e.g., as a subcollection pipeline) and"
+              + " cannot be executed directly. It can only be used as part of another pipeline.");
+    }
+
+    TraceUtil.Span span =
+        rpcContext
+            .getFirestore()
+            .getOptions()
+            .getTraceUtil()
+            .startSpan(TelemetryConstants.METHOD_NAME_PIPELINE_EXECUTE);
+
+    MetricsContext metricsContext =
+        createMetricsContext(TelemetryConstants.METHOD_NAME_EXECUTE_PIPELINE_EXECUTE);
+
+    try (Scope ignored = span.makeCurrent()) {
+      SettableApiFuture<Snapshot> futureResult = SettableApiFuture.create();
+
+      executeInternal(
+          options,
+          transactionId,
+          readTime,
+          new PipelineResultObserver() {
+            final List<PipelineResult> results = new ArrayList<>();
+
+            @Override
+            public void onCompleted() {
+              futureResult.set(
+                  new Snapshot(Pipeline.this, results, getExecutionTime(), getExplainStats()));
+            }
+
+            @Override
+            public void onNext(PipelineResult result) {
+              results.add(result);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+              futureResult.setException(t);
+            }
+          },
+          metricsContext);
+
+      span.endAtFuture(futureResult);
+      return futureResult;
+    } catch (Exception error) {
+      span.end(error);
+      metricsContext.recordLatency(MetricType.END_TO_END_LATENCY, error);
+      throw error;
+    }
+>>>>>>> main
   }
 
   void executeInternal(
       @Nonnull PipelineExecuteOptions options,
       @Nullable final ByteString transactionId,
       @Nullable com.google.protobuf.Timestamp readTime,
+<<<<<<< HEAD
       PipelineResultObserver observer) {
+=======
+      PipelineResultObserver observer,
+      MetricsContext metricsContext) {
+>>>>>>> main
     ExecutePipelineRequest.Builder request =
         ExecutePipelineRequest.newBuilder()
             .setDatabase(rpcContext.getDatabaseName())
@@ -1204,6 +1928,7 @@ public final class Pipeline {
           public void onError(Throwable t) {
             observer.onError(t);
           }
+<<<<<<< HEAD
         });
   }
 
@@ -1211,6 +1936,16 @@ public final class Pipeline {
   private com.google.firestore.v1.Pipeline toProto() {
     return com.google.firestore.v1.Pipeline.newBuilder()
         .addAllStages(stages.transform(StageUtils::toStageProto))
+=======
+        },
+        metricsContext);
+  }
+
+  @InternalApi
+  public com.google.firestore.v1.Pipeline toProto() {
+    return com.google.firestore.v1.Pipeline.newBuilder()
+        .addAllStages(stages.transform(Stage::toStageProto))
+>>>>>>> main
         .build();
   }
 
@@ -1220,13 +1955,35 @@ public final class Pipeline {
   }
 
   private void pipelineInternalStream(
+<<<<<<< HEAD
       ExecutePipelineRequest request, PipelineResultObserver resultObserver) {
+=======
+      ExecutePipelineRequest request,
+      PipelineResultObserver resultObserver,
+      MetricsContext metricsContext) {
+    TraceUtil traceUtil = rpcContext.getFirestore().getOptions().getTraceUtil();
+
+    // To reduce the size of traces, we only register one event for every 100 responses
+    // that we receive from the server.
+    final int NUM_RESPONSES_PER_TRACE_EVENT = 100;
+
+    TraceUtil.Span currentSpan = traceUtil.currentSpan();
+    currentSpan.addEvent(
+        TelemetryConstants.METHOD_NAME_EXECUTE_PIPELINE,
+        new ImmutableMap.Builder<String, Object>()
+            .put(ATTRIBUTE_KEY_IS_TRANSACTIONAL, request.hasTransaction())
+            .build());
+
+>>>>>>> main
     ResponseObserver<ExecutePipelineResponse> observer =
         new ResponseObserver<ExecutePipelineResponse>() {
           Timestamp executionTime = null;
           boolean firstResponse = false;
           int numDocuments = 0;
+<<<<<<< HEAD
           int docCounterPerTraceUpdate = 0;
+=======
+>>>>>>> main
           boolean hasCompleted = false;
 
           @Override
@@ -1236,6 +1993,16 @@ public final class Pipeline {
 
           @Override
           public void onResponse(ExecutePipelineResponse response) {
+<<<<<<< HEAD
+=======
+            if (!firstResponse) {
+              firstResponse = true;
+              currentSpan.addEvent(
+                  TelemetryConstants.METHOD_NAME_EXECUTE_PIPELINE + ": First Response");
+              metricsContext.recordLatency(MetricType.FIRST_RESPONSE_LATENCY);
+            }
+
+>>>>>>> main
             if (response.hasExplainStats()) {
               resultObserver.setExplainStats(
                   new ExplainStats(response.getExplainStats().getData()));
@@ -1245,6 +2012,7 @@ public final class Pipeline {
               executionTime = Timestamp.fromProto(response.getExecutionTime());
             }
 
+<<<<<<< HEAD
             if (!firstResponse) {
               firstResponse = true;
               Tracing.getTracer()
@@ -1260,6 +2028,16 @@ public final class Pipeline {
                     .getCurrentSpan()
                     .addAnnotation("Firestore.Pipeline: Received " + numDocuments + " results");
                 docCounterPerTraceUpdate = 0;
+=======
+            if (response.getResultsCount() > 0) {
+              numDocuments += response.getResultsCount();
+              if (numDocuments % NUM_RESPONSES_PER_TRACE_EVENT == 0) {
+                currentSpan.addEvent(
+                    TelemetryConstants.METHOD_NAME_EXECUTE_PIPELINE
+                        + ": Received "
+                        + numDocuments
+                        + " results");
+>>>>>>> main
               }
 
               for (Document doc : response.getResultsList()) {
@@ -1270,7 +2048,14 @@ public final class Pipeline {
 
           @Override
           public void onError(Throwable throwable) {
+<<<<<<< HEAD
             Tracing.getTracer().getCurrentSpan().addAnnotation("Firestore.Pipeline: Error");
+=======
+            currentSpan.addEvent(
+                TelemetryConstants.METHOD_NAME_EXECUTE_PIPELINE + ": Error",
+                ImmutableMap.of("error.message", throwable.toString()));
+            metricsContext.recordLatency(MetricType.END_TO_END_LATENCY, throwable);
+>>>>>>> main
             resultObserver.onError(throwable);
           }
 
@@ -1281,12 +2066,20 @@ public final class Pipeline {
             }
             hasCompleted = true;
 
+<<<<<<< HEAD
             Tracing.getTracer()
                 .getCurrentSpan()
                 .addAnnotation(
                     "Firestore.ExecutePipeline: Completed",
                     ImmutableMap.of(
                         "numDocuments", AttributeValue.longAttributeValue(numDocuments)));
+=======
+            metricsContext.recordLatency(MetricType.END_TO_END_LATENCY);
+
+            currentSpan.addEvent(
+                TelemetryConstants.METHOD_NAME_EXECUTE_PIPELINE + ": Completed",
+                ImmutableMap.of(ATTRIBUTE_KEY_DOC_COUNT, numDocuments));
+>>>>>>> main
             resultObserver.onCompleted(executionTime);
           }
         };

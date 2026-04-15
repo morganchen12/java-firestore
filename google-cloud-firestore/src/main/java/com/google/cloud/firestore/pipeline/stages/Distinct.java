@@ -18,14 +18,20 @@ package com.google.cloud.firestore.pipeline.stages;
 
 import static com.google.cloud.firestore.PipelineUtils.encodeValue;
 
+<<<<<<< HEAD
 import com.google.api.core.BetaApi;
+=======
+>>>>>>> main
 import com.google.api.core.InternalApi;
 import com.google.cloud.firestore.pipeline.expressions.Expression;
 import com.google.firestore.v1.Value;
 import java.util.Collections;
 import java.util.Map;
 
+<<<<<<< HEAD
 @BetaApi
+=======
+>>>>>>> main
 public final class Distinct extends Stage {
 
   private final Map<String, Expression> groups;

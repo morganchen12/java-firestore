@@ -16,12 +16,19 @@
 
 package com.google.cloud.firestore.pipeline.expressions;
 
+<<<<<<< HEAD
 import com.google.api.core.BetaApi;
+=======
+>>>>>>> main
 import com.google.common.collect.ImmutableList;
 import com.google.firestore.v1.Value;
 import java.util.stream.Collectors;
 
+<<<<<<< HEAD
 @BetaApi
+=======
+/** A class that represents an aggregate function. */
+>>>>>>> main
 public class AggregateFunction {
   private final String name;
   private final ImmutableList<Expression> params;
@@ -35,82 +42,338 @@ public class AggregateFunction {
     this(name, Expression.field(fieldName));
   }
 
+<<<<<<< HEAD
   @BetaApi
   public static AggregateFunction generic(String name, Expression... expr) {
     return new AggregateFunction(name, expr);
   }
 
   @BetaApi
+=======
+  /**
+   * Creates a raw aggregation function.
+   *
+   * <p>This method provides a way to call aggregation functions that are supported by the Firestore
+   * backend but that are not available as specific factory methods in this class.
+   *
+   * @param name The name of the aggregation function.
+   * @param expr The expressions to pass as arguments to the function.
+   * @return A new {@link AggregateFunction} for the specified function.
+   */
+  public static AggregateFunction rawAggregate(String name, Expression... expr) {
+    return new AggregateFunction(name, expr);
+  }
+
+  /**
+   * Creates an aggregation that counts the total number of stage inputs.
+   *
+   * @return A new {@link AggregateFunction} representing the countAll aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction countAll() {
     return new AggregateFunction("count");
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that counts the number of stage inputs where the input field exists.
+   *
+   * @param fieldName The name of the field to count.
+   * @return A new {@link AggregateFunction} representing the 'count' aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction count(String fieldName) {
     return new AggregateFunction("count", fieldName);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that counts the number of stage inputs with valid evaluations of the
+   * provided {@code expression}.
+   *
+   * @param expression The expression to count.
+   * @return A new {@link AggregateFunction} representing the 'count' aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction count(Expression expression) {
     return new AggregateFunction("count", expression);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that counts the number of distinct values of a field across multiple
+   * stage inputs.
+   *
+   * @param fieldName The name of the field to count the distinct values of.
+   * @return A new {@link AggregateFunction} representing the count distinct aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction countDistinct(String fieldName) {
     return new AggregateFunction("count_distinct", fieldName);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that counts the number of distinct values of an expression across
+   * multiple stage inputs.
+   *
+   * @param expression The expression to count the distinct values of.
+   * @return A new {@link AggregateFunction} representing the count distinct aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction countDistinct(Expression expression) {
     return new AggregateFunction("count_distinct", expression);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that counts the number of stage inputs where the provided boolean
+   * expression evaluates to true.
+   *
+   * @param condition The boolean expression to evaluate on each input.
+   * @return A new {@link AggregateFunction} representing the count aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction countIf(BooleanExpression condition) {
     return new AggregateFunction("count_if", condition);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that calculates the sum of a field's values across multiple stage
+   * inputs.
+   *
+   * @param fieldName The name of the field containing numeric values to sum up.
+   * @return A new {@link AggregateFunction} representing the sum aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction sum(String fieldName) {
     return new AggregateFunction("sum", fieldName);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that calculates the sum of values from an expression across multiple
+   * stage inputs.
+   *
+   * @param expression The expression to sum up.
+   * @return A new {@link AggregateFunction} representing the sum aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction sum(Expression expression) {
     return new AggregateFunction("sum", expression);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that calculates the average (mean) of a field's values across multiple
+   * stage inputs.
+   *
+   * @param fieldName The name of the field containing numeric values to average.
+   * @return A new {@link AggregateFunction} representing the average aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction average(String fieldName) {
     return new AggregateFunction("average", fieldName);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that calculates the average (mean) of values from an expression across
+   * multiple stage inputs.
+   *
+   * @param expression The expression representing the values to average.
+   * @return A new {@link AggregateFunction} representing the average aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction average(Expression expression) {
     return new AggregateFunction("average", expression);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that finds the minimum value of a field across multiple stage inputs.
+   *
+   * @param fieldName The name of the field to find the minimum value of.
+   * @return A new {@link AggregateFunction} representing the minimum aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction minimum(String fieldName) {
     return new AggregateFunction("minimum", fieldName);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that finds the minimum value of an expression across multiple stage
+   * inputs.
+   *
+   * @param expression The expression to find the minimum value of.
+   * @return A new {@link AggregateFunction} representing the minimum aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction minimum(Expression expression) {
     return new AggregateFunction("minimum", expression);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that finds the maximum value of a field across multiple stage inputs.
+   *
+   * @param fieldName The name of the field to find the maximum value of.
+   * @return A new {@link AggregateFunction} representing the maximum aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction maximum(String fieldName) {
     return new AggregateFunction("maximum", fieldName);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that finds the maximum value of an expression across multiple stage
+   * inputs.
+   *
+   * @param expression The expression to find the maximum value of.
+   * @return A new {@link AggregateFunction} representing the maximum aggregation.
+   */
+>>>>>>> main
   public static AggregateFunction maximum(Expression expression) {
     return new AggregateFunction("maximum", expression);
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+  /**
+   * Creates an aggregation that finds the first value of a field across multiple stage inputs.
+   *
+   * @param fieldName The name of the field to find the first value of.
+   * @return A new {@link AggregateFunction} representing the first aggregation.
+   */
+  public static AggregateFunction first(String fieldName) {
+    return new AggregateFunction("first", fieldName);
+  }
+
+  /**
+   * Creates an aggregation that finds the first value of an expression across multiple stage
+   * inputs.
+   *
+   * @param expression The expression to find the first value of.
+   * @return A new {@link AggregateFunction} representing the first aggregation.
+   */
+  public static AggregateFunction first(Expression expression) {
+    return new AggregateFunction("first", expression);
+  }
+
+  /**
+   * Creates an aggregation that finds the last value of a field across multiple stage inputs.
+   *
+   * @param fieldName The name of the field to find the last value of.
+   * @return A new {@link AggregateFunction} representing the last aggregation.
+   */
+  public static AggregateFunction last(String fieldName) {
+    return new AggregateFunction("last", fieldName);
+  }
+
+  /**
+   * Creates an aggregation that finds the last value of an expression across multiple stage inputs.
+   *
+   * @param expression The expression to find the last value of.
+   * @return A new {@link AggregateFunction} representing the last aggregation.
+   */
+  public static AggregateFunction last(Expression expression) {
+    return new AggregateFunction("last", expression);
+  }
+
+  /**
+   * Creates an aggregation that collects all values of a field across multiple stage inputs into an
+   * array.
+   *
+   * <p>If the expression resolves to an absent value, it is converted to `null`. The order of
+   * elements in the output array is not stable and shouldn't be relied upon.
+   *
+   * @param fieldName The name of the field to collect values from.
+   * @return A new {@link AggregateFunction} representing the array_agg aggregation.
+   */
+  public static AggregateFunction arrayAgg(String fieldName) {
+    return new AggregateFunction("array_agg", fieldName);
+  }
+
+  /**
+   * Creates an aggregation that collects all values of an expression across multiple stage inputs
+   * into an array.
+   *
+   * <p>If the expression resolves to an absent value, it is converted to `null`. The order of
+   * elements in the output array is not stable and shouldn't be relied upon.
+   *
+   * @param expression The expression to collect values from.
+   * @return A new {@link AggregateFunction} representing the array_agg aggregation.
+   */
+  public static AggregateFunction arrayAgg(Expression expression) {
+    return new AggregateFunction("array_agg", expression);
+  }
+
+  /**
+   * Creates an aggregation that collects all distinct values of a field across multiple stage
+   * inputs into an array.
+   *
+   * <p>If the expression resolves to an absent value, it is converted to `null`. The order of
+   * elements in the output array is not stable and shouldn't be relied upon.
+   *
+   * @param fieldName The name of the field to collect values from.
+   * @return A new {@link AggregateFunction} representing the array_agg_distinct aggregation.
+   */
+  public static AggregateFunction arrayAggDistinct(String fieldName) {
+    return new AggregateFunction("array_agg_distinct", fieldName);
+  }
+
+  /**
+   * Creates an aggregation that collects all distinct values of an expression across multiple stage
+   * inputs into an array.
+   *
+   * <p>If the expression resolves to an absent value, it is converted to `null`. The order of
+   * elements in the output array is not stable and shouldn't be relied upon.
+   *
+   * @param expression The expression to collect values from.
+   * @return A new {@link AggregateFunction} representing the array_agg_distinct aggregation.
+   */
+  public static AggregateFunction arrayAggDistinct(Expression expression) {
+    return new AggregateFunction("array_agg_distinct", expression);
+  }
+
+  /**
+   * Assigns an alias to this aggregate.
+   *
+   * @param alias The alias to assign to this aggregate.
+   * @return A new {@link AliasedAggregate} that wraps this aggregate and associates it with the
+   *     provided alias.
+   */
+>>>>>>> main
   public AliasedAggregate as(String alias) {
     return new AliasedAggregate(alias, this);
   }

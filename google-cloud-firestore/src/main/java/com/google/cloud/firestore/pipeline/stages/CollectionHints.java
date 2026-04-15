@@ -34,8 +34,11 @@ public final class CollectionHints extends AbstractOptions<CollectionHints> {
   public CollectionHints withForceIndex(String value) {
     return with("force_index", value);
   }
+<<<<<<< HEAD
 
   public CollectionHints withIgnoreIndexFields(String... values) {
     return with("ignore_index_fields", values);
   }
+=======
+>>>>>>> main
 }

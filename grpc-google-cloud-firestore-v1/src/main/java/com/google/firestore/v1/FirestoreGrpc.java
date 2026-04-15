@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright 2025 Google LLC
+=======
+ * Copyright 2026 Google LLC
+>>>>>>> main
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,9 +34,6 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * truly serverless apps.
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: google/firestore/v1/firestore.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class FirestoreGrpc {
 
@@ -1462,8 +1463,13 @@ public final class FirestoreGrpc {
      * </pre>
      */
     public com.google.firestore.v1.Document getDocument(
+<<<<<<< HEAD
         com.google.firestore.v1.GetDocumentRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.v1.GetDocumentRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getGetDocumentMethod(), getCallOptions(), request);
     }
 
@@ -1475,8 +1481,13 @@ public final class FirestoreGrpc {
      * </pre>
      */
     public com.google.firestore.v1.ListDocumentsResponse listDocuments(
+<<<<<<< HEAD
         com.google.firestore.v1.ListDocumentsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.v1.ListDocumentsRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getListDocumentsMethod(), getCallOptions(), request);
     }
 
@@ -1488,8 +1499,13 @@ public final class FirestoreGrpc {
      * </pre>
      */
     public com.google.firestore.v1.Document updateDocument(
+<<<<<<< HEAD
         com.google.firestore.v1.UpdateDocumentRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.v1.UpdateDocumentRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getUpdateDocumentMethod(), getCallOptions(), request);
     }
 
@@ -1501,8 +1517,13 @@ public final class FirestoreGrpc {
      * </pre>
      */
     public com.google.protobuf.Empty deleteDocument(
+<<<<<<< HEAD
         com.google.firestore.v1.DeleteDocumentRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.v1.DeleteDocumentRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getDeleteDocumentMethod(), getCallOptions(), request);
     }
 
@@ -1530,8 +1551,13 @@ public final class FirestoreGrpc {
      * </pre>
      */
     public com.google.firestore.v1.BeginTransactionResponse beginTransaction(
+<<<<<<< HEAD
         com.google.firestore.v1.BeginTransactionRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.v1.BeginTransactionRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getBeginTransactionMethod(), getCallOptions(), request);
     }
 
@@ -1543,8 +1569,13 @@ public final class FirestoreGrpc {
      * </pre>
      */
     public com.google.firestore.v1.CommitResponse commit(
+<<<<<<< HEAD
         com.google.firestore.v1.CommitRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.v1.CommitRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getCommitMethod(), getCallOptions(), request);
     }
 
@@ -1555,8 +1586,14 @@ public final class FirestoreGrpc {
      * Rolls back a transaction.
      * </pre>
      */
+<<<<<<< HEAD
     public com.google.protobuf.Empty rollback(com.google.firestore.v1.RollbackRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+    public com.google.protobuf.Empty rollback(com.google.firestore.v1.RollbackRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getRollbackMethod(), getCallOptions(), request);
     }
 
@@ -1621,8 +1658,13 @@ public final class FirestoreGrpc {
      * </pre>
      */
     public com.google.firestore.v1.PartitionQueryResponse partitionQuery(
+<<<<<<< HEAD
         com.google.firestore.v1.PartitionQueryRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.v1.PartitionQueryRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getPartitionQueryMethod(), getCallOptions(), request);
     }
 
@@ -1666,8 +1708,13 @@ public final class FirestoreGrpc {
      * </pre>
      */
     public com.google.firestore.v1.ListCollectionIdsResponse listCollectionIds(
+<<<<<<< HEAD
         com.google.firestore.v1.ListCollectionIdsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.v1.ListCollectionIdsRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getListCollectionIdsMethod(), getCallOptions(), request);
     }
 
@@ -1686,8 +1733,13 @@ public final class FirestoreGrpc {
      * </pre>
      */
     public com.google.firestore.v1.BatchWriteResponse batchWrite(
+<<<<<<< HEAD
         com.google.firestore.v1.BatchWriteRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.v1.BatchWriteRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getBatchWriteMethod(), getCallOptions(), request);
     }
 
@@ -1699,8 +1751,13 @@ public final class FirestoreGrpc {
      * </pre>
      */
     public com.google.firestore.v1.Document createDocument(
+<<<<<<< HEAD
         com.google.firestore.v1.CreateDocumentRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.v1.CreateDocumentRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getCreateDocumentMethod(), getCallOptions(), request);
     }
   }

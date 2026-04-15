@@ -18,7 +18,10 @@ package com.google.cloud.firestore.pipeline.stages;
 
 import static com.google.cloud.firestore.PipelineUtils.encodeValue;
 
+<<<<<<< HEAD
 import com.google.api.core.BetaApi;
+=======
+>>>>>>> main
 import com.google.api.core.InternalApi;
 import com.google.common.collect.ImmutableList;
 import com.google.firestore.v1.Value;
@@ -40,17 +43,26 @@ public final class Sample extends Stage {
     }
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public static Sample withPercentage(double percentage) {
     return new Sample(percentage, Mode.PERCENT, new SampleOptions());
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public static Sample withDocLimit(int documents) {
     return new Sample(documents, Mode.DOCUMENTS, new SampleOptions());
   }
 
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Sample withOptions(@Nonnull SampleOptions options) {
     return new Sample(size, mode, options);
   }

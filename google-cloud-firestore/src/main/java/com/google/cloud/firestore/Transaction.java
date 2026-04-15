@@ -20,6 +20,10 @@ import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.cloud.firestore.pipeline.stages.PipelineExecuteOptions;
+<<<<<<< HEAD
+=======
+import com.google.cloud.firestore.telemetry.MetricsUtil;
+>>>>>>> main
 import com.google.cloud.firestore.telemetry.TraceUtil;
 import com.google.cloud.firestore.telemetry.TraceUtil.Context;
 import java.util.List;
@@ -49,6 +53,12 @@ public abstract class Transaction extends UpdateBuilder<Transaction> {
   @Nonnull
   TraceUtil getTraceUtil() {
     return firestore.getOptions().getTraceUtil();
+  }
+
+  // TODO(Metrics): implement transaction latency and attempt count metrics
+  @Nonnull
+  MetricsUtil getMetricsUtil() {
+    return firestore.getOptions().getMetricsUtil();
   }
 
   @Nonnull
@@ -138,6 +148,7 @@ public abstract class Transaction extends UpdateBuilder<Transaction> {
   public abstract ApiFuture<AggregateQuerySnapshot> get(@Nonnull AggregateQuery query);
 
   /**
+<<<<<<< HEAD
    * @return The result of the aggregation.
    */
   @Nonnull
@@ -149,6 +160,21 @@ public abstract class Transaction extends UpdateBuilder<Transaction> {
    */
   @Nonnull
   @BetaApi
+=======
+   * Executes the provided pipeline within the transaction context.
+   *
+   * @return The result of the execution.
+   */
+  @Nonnull
+  public abstract ApiFuture<Pipeline.Snapshot> execute(@Nonnull Pipeline pipeline);
+
+  /**
+   * Executes the provided pipeline with specified options, within the transaction context.
+   *
+   * @return The result of the execution.
+   */
+  @Nonnull
+>>>>>>> main
   public abstract ApiFuture<Pipeline.Snapshot> execute(
       @Nonnull Pipeline pipeline, @Nonnull PipelineExecuteOptions options);
 }

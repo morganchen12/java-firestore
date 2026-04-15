@@ -150,10 +150,12 @@ class PipelineSnippets {
   void inputStages() throws ExecutionException, InterruptedException {
     // [START input_stages]
     // Return all restaurants in San Francisco
-    Pipeline.Snapshot results1 = firestore.pipeline().collection("cities/sf/restaurants").execute().get();
+    Pipeline.Snapshot results1 =
+        firestore.pipeline().collection("cities/sf/restaurants").execute().get();
 
     // Return all restaurants
-    Pipeline.Snapshot results2 = firestore.pipeline().collectionGroup("restaurants").execute().get();
+    Pipeline.Snapshot results2 =
+        firestore.pipeline().collectionGroup("restaurants").execute().get();
 
     // Return all documents across all collections in the database (the entire database)
     Pipeline.Snapshot results3 = firestore.pipeline().database().execute().get();
@@ -301,7 +303,12 @@ class PipelineSnippets {
   void sparseIndexes() throws ExecutionException, InterruptedException {
     // [START sparse_index_example]
     Pipeline.Snapshot results =
-        firestore.pipeline().collection("books").where(field("category").like("%fantasy%")).execute().get();
+        firestore
+            .pipeline()
+            .collection("books")
+            .where(field("category").like("%fantasy%"))
+            .execute()
+            .get();
     // [END sparse_index_example]
     System.out.println(results.getResults());
   }
@@ -601,7 +608,12 @@ class PipelineSnippets {
 
     // Number of books with nonnull `ratings` field
     Pipeline.Snapshot countField =
-        firestore.pipeline().collection("books").aggregate(count("ratings").as("count")).execute().get();
+        firestore
+            .pipeline()
+            .collection("books")
+            .aggregate(count("ratings").as("count"))
+            .execute()
+            .get();
     // [END count_function]
     System.out.println(countAll.getResults());
     System.out.println(countField.getResults());
@@ -1200,6 +1212,58 @@ class PipelineSnippets {
     System.out.println(result.getResults());
   }
 
+  void mapSetFunction() throws ExecutionException, InterruptedException {
+    // [START map_set]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("books")
+            .select(mapSet(field("awards"), "pulitzer", true).as("awards"))
+            .execute()
+            .get();
+    // [END map_set]
+    System.out.println(result.getResults());
+  }
+
+  void mapKeysFunction() throws ExecutionException, InterruptedException {
+    // [START map_keys]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("books")
+            .select(mapKeys(field("awards")).as("award_categories"))
+            .execute()
+            .get();
+    // [END map_keys]
+    System.out.println(result.getResults());
+  }
+
+  void mapValuesFunction() throws ExecutionException, InterruptedException {
+    // [START map_values]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("books")
+            .select(mapValues(field("awards")).as("award_details"))
+            .execute()
+            .get();
+    // [END map_values]
+    System.out.println(result.getResults());
+  }
+
+  void mapEntriesFunction() throws ExecutionException, InterruptedException {
+    // [START map_entries]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("books")
+            .select(mapEntries(field("awards")).as("awards_list"))
+            .execute()
+            .get();
+    // [END map_entries]
+    System.out.println(result.getResults());
+  }
+
   void byteLengthFunction() throws ExecutionException, InterruptedException {
     // [START byte_length]
     Pipeline.Snapshot result =
@@ -1280,6 +1344,32 @@ class PipelineSnippets {
     System.out.println(result.getResults());
   }
 
+  void regexFindFunction() throws ExecutionException, InterruptedException {
+    // [START regex_find]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("documents")
+            .select(regexFind(field("email"), "@[A-Za-z0-9.-]+").as("domain"))
+            .execute()
+            .get();
+    // [END regex_find]
+    System.out.println(result.getResults());
+  }
+
+  void regexFindAllFunction() throws ExecutionException, InterruptedException {
+    // [START regex_find_all]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("documents")
+            .select(regexFindAll(field("comment"), "@[A-Za-z0-9_]+").as("mentions"))
+            .execute()
+            .get();
+    // [END regex_find_all]
+    System.out.println(result.getResults());
+  }
+
   void regexMatchFunction() throws ExecutionException, InterruptedException {
     // [START regex_match]
     Pipeline.Snapshot result =
@@ -1354,8 +1444,9 @@ class PipelineSnippets {
             .pipeline()
             .collection("books")
             .where(startsWith(field("title"), "The "))
-            .select(substring(field("title"), constant(4), field("title").charLength())
-            .as("titleWithoutLeadingThe"))
+            .select(
+                substring(field("title"), constant(4), field("title").charLength())
+                    .as("titleWithoutLeadingThe"))
             .execute()
             .get();
     // [END substr_function]
@@ -1385,6 +1476,84 @@ class PipelineSnippets {
             .execute()
             .get();
     // [END trim_function]
+    System.out.println(result.getResults());
+  }
+
+  void strLTrimFunction() throws ExecutionException, InterruptedException {
+    // [START ltrim_function]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("books")
+            .select(ltrim(field("name")).as("ltrimmedName"))
+            .execute()
+            .get();
+    // [END ltrim_function]
+    System.out.println(result.getResults());
+  }
+
+  void strRTrimFunction() throws ExecutionException, InterruptedException {
+    // [START rtrim_function]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("books")
+            .select(rtrim(field("name")).as("rtrimmedName"))
+            .execute()
+            .get();
+    // [END rtrim_function]
+    System.out.println(result.getResults());
+  }
+
+  void strRepeatFunction() throws ExecutionException, InterruptedException {
+    // [START string_repeat_function]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("books")
+            .select(stringRepeat(field("title"), 2).as("repeatedTitle"))
+            .execute()
+            .get();
+    // [END string_repeat_function]
+    System.out.println(result.getResults());
+  }
+
+  void strReplaceAllFunction() throws ExecutionException, InterruptedException {
+    // [START string_replace_all_function]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("books")
+            .select(stringReplaceAll(field("title"), "The", "A").as("replacedTitle"))
+            .execute()
+            .get();
+    // [END string_replace_all_function]
+    System.out.println(result.getResults());
+  }
+
+  void strReplaceOneFunction() throws ExecutionException, InterruptedException {
+    // [START string_replace_one_function]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("books")
+            .select(stringReplaceOne(field("title"), "The", "A").as("replacedTitle"))
+            .execute()
+            .get();
+    // [END string_replace_one_function]
+    System.out.println(result.getResults());
+  }
+
+  void strIndexOfFunction() throws ExecutionException, InterruptedException {
+    // [START string_index_of_function]
+    Pipeline.Snapshot result =
+        firestore
+            .pipeline()
+            .collection("books")
+            .select(stringIndexOf(field("title"), "The").as("indexOfThe"))
+            .execute()
+            .get();
+    // [END string_index_of_function]
     System.out.println(result.getResults());
   }
 
@@ -2015,7 +2184,12 @@ class PipelineSnippets {
   void samplePercentageExample() throws ExecutionException, InterruptedException {
     // [START sample_percentage]
     Pipeline.Snapshot sampled =
-        firestore.pipeline().collection("cities").sample(Sample.withPercentage(0.5)).execute().get();
+        firestore
+            .pipeline()
+            .collection("cities")
+            .sample(Sample.withPercentage(0.5))
+            .execute()
+            .get();
     // [END sample_percentage]
     System.out.println(sampled.getResults());
   }

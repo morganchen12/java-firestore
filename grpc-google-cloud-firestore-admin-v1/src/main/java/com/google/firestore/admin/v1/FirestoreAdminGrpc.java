@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright 2025 Google LLC
+=======
+ * Copyright 2026 Google LLC
+>>>>>>> main
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,9 +47,6 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * service `google.longrunning.Operations`.
  * </pre>
  */
-@javax.annotation.Generated(
-    value = "by gRPC proto compiler",
-    comments = "Source: google/firestore/admin/v1/firestore_admin.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class FirestoreAdminGrpc {
 
@@ -2808,8 +2809,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation createIndex(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.CreateIndexRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.CreateIndexRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getCreateIndexMethod(), getCallOptions(), request);
     }
 
@@ -2821,8 +2827,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.ListIndexesResponse listIndexes(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.ListIndexesRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.ListIndexesRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getListIndexesMethod(), getCallOptions(), request);
     }
 
@@ -2834,8 +2845,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.Index getIndex(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.GetIndexRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.GetIndexRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getGetIndexMethod(), getCallOptions(), request);
     }
 
@@ -2847,8 +2863,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.protobuf.Empty deleteIndex(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.DeleteIndexRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.DeleteIndexRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getDeleteIndexMethod(), getCallOptions(), request);
     }
 
@@ -2860,8 +2881,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.Field getField(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.GetFieldRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.GetFieldRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getGetFieldMethod(), getCallOptions(), request);
     }
 
@@ -2886,8 +2912,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation updateField(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.UpdateFieldRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.UpdateFieldRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getUpdateFieldMethod(), getCallOptions(), request);
     }
 
@@ -2906,8 +2937,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.ListFieldsResponse listFields(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.ListFieldsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.ListFieldsRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getListFieldsMethod(), getCallOptions(), request);
     }
 
@@ -2928,8 +2964,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation exportDocuments(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.ExportDocumentsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.ExportDocumentsRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getExportDocumentsMethod(), getCallOptions(), request);
     }
 
@@ -2945,8 +2987,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation importDocuments(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.ImportDocumentsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.ImportDocumentsRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getImportDocumentsMethod(), getCallOptions(), request);
     }
 
@@ -2964,8 +3012,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation bulkDeleteDocuments(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.BulkDeleteDocumentsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.BulkDeleteDocumentsRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getBulkDeleteDocumentsMethod(), getCallOptions(), request);
     }
 
@@ -2977,8 +3031,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation createDatabase(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.CreateDatabaseRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.CreateDatabaseRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getCreateDatabaseMethod(), getCallOptions(), request);
     }
 
@@ -2990,8 +3050,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.Database getDatabase(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.GetDatabaseRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.GetDatabaseRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getGetDatabaseMethod(), getCallOptions(), request);
     }
 
@@ -3003,8 +3068,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.ListDatabasesResponse listDatabases(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.ListDatabasesRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.ListDatabasesRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getListDatabasesMethod(), getCallOptions(), request);
     }
 
@@ -3016,8 +3086,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation updateDatabase(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.UpdateDatabaseRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.UpdateDatabaseRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getUpdateDatabaseMethod(), getCallOptions(), request);
     }
 
@@ -3029,8 +3105,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation deleteDatabase(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.DeleteDatabaseRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.DeleteDatabaseRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getDeleteDatabaseMethod(), getCallOptions(), request);
     }
 
@@ -3042,8 +3124,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.UserCreds createUserCreds(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.CreateUserCredsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.CreateUserCredsRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getCreateUserCredsMethod(), getCallOptions(), request);
     }
 
@@ -3056,8 +3144,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.UserCreds getUserCreds(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.GetUserCredsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.GetUserCredsRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getGetUserCredsMethod(), getCallOptions(), request);
     }
 
@@ -3070,8 +3163,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.ListUserCredsResponse listUserCreds(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.ListUserCredsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.ListUserCredsRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getListUserCredsMethod(), getCallOptions(), request);
     }
 
@@ -3083,8 +3181,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.UserCreds enableUserCreds(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.EnableUserCredsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.EnableUserCredsRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getEnableUserCredsMethod(), getCallOptions(), request);
     }
 
@@ -3096,8 +3200,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.UserCreds disableUserCreds(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.DisableUserCredsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.DisableUserCredsRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getDisableUserCredsMethod(), getCallOptions(), request);
     }
 
@@ -3109,8 +3219,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.UserCreds resetUserPassword(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.ResetUserPasswordRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.ResetUserPasswordRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getResetUserPasswordMethod(), getCallOptions(), request);
     }
 
@@ -3122,8 +3238,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.protobuf.Empty deleteUserCreds(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.DeleteUserCredsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.DeleteUserCredsRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getDeleteUserCredsMethod(), getCallOptions(), request);
     }
 
@@ -3135,8 +3257,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.Backup getBackup(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.GetBackupRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.GetBackupRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getGetBackupMethod(), getCallOptions(), request);
     }
 
@@ -3148,8 +3275,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.ListBackupsResponse listBackups(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.ListBackupsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.ListBackupsRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getListBackupsMethod(), getCallOptions(), request);
     }
 
@@ -3161,8 +3293,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.protobuf.Empty deleteBackup(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.DeleteBackupRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.DeleteBackupRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getDeleteBackupMethod(), getCallOptions(), request);
     }
 
@@ -3188,8 +3325,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation restoreDatabase(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.RestoreDatabaseRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.RestoreDatabaseRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getRestoreDatabaseMethod(), getCallOptions(), request);
     }
 
@@ -3203,8 +3346,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.BackupSchedule createBackupSchedule(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.CreateBackupScheduleRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.CreateBackupScheduleRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getCreateBackupScheduleMethod(), getCallOptions(), request);
     }
 
@@ -3216,8 +3365,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.BackupSchedule getBackupSchedule(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.GetBackupScheduleRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.GetBackupScheduleRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getGetBackupScheduleMethod(), getCallOptions(), request);
     }
 
@@ -3229,8 +3384,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.ListBackupSchedulesResponse listBackupSchedules(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.ListBackupSchedulesRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.ListBackupSchedulesRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getListBackupSchedulesMethod(), getCallOptions(), request);
     }
 
@@ -3242,8 +3403,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.firestore.admin.v1.BackupSchedule updateBackupSchedule(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.UpdateBackupScheduleRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.UpdateBackupScheduleRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getUpdateBackupScheduleMethod(), getCallOptions(), request);
     }
 
@@ -3255,8 +3422,14 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.protobuf.Empty deleteBackupSchedule(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.DeleteBackupScheduleRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.DeleteBackupScheduleRequest request)
+        throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getDeleteBackupScheduleMethod(), getCallOptions(), request);
     }
 
@@ -3282,8 +3455,13 @@ public final class FirestoreAdminGrpc {
      * </pre>
      */
     public com.google.longrunning.Operation cloneDatabase(
+<<<<<<< HEAD
         com.google.firestore.admin.v1.CloneDatabaseRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
+=======
+        com.google.firestore.admin.v1.CloneDatabaseRequest request) throws io.grpc.StatusException {
+      return io.grpc.stub.ClientCalls.blockingV2UnaryCall(
+>>>>>>> main
           getChannel(), getCloneDatabaseMethod(), getCallOptions(), request);
     }
   }

@@ -247,6 +247,10 @@ class UserDataConverter {
       case REFERENCE_VALUE:
         String pathName = v.getReferenceValue();
         return new DocumentReference(rpcContext, ResourcePath.create(pathName));
+      case FIELD_REFERENCE_VALUE:
+        return v.getFieldReferenceValue();
+      case VARIABLE_REFERENCE_VALUE:
+        return v.getVariableReferenceValue();
       case GEO_POINT_VALUE:
         return new GeoPoint(
             v.getGeoPointValue().getLatitude(), v.getGeoPointValue().getLongitude());
@@ -271,7 +275,8 @@ class UserDataConverter {
     switch (mapRepresentation) {
       case UNKNOWN:
         LOGGER.warning(
-            "Parsing unknown map type as generic map. This map type may be supported in a newer SDK version.");
+            "Parsing unknown map type as generic map. This map type may be supported in a newer SDK"
+                + " version.");
       case NONE:
         Map<String, Object> outputMap = new HashMap<>();
         for (Map.Entry<String, Value> entry : inputMap.entrySet()) {

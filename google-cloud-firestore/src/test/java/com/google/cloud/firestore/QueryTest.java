@@ -67,6 +67,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import io.grpc.Status;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -82,7 +83,6 @@ import org.mockito.Captor;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.threeten.bp.Duration;
 
 @RunWith(MockitoJUnitRunner.class)
 public class QueryTest {
@@ -123,7 +123,7 @@ public class QueryTest {
   public void before() {
     clock = new MockClock();
     doReturn(clock).when(firestoreMock).getClock();
-    doReturn(Duration.ZERO).when(firestoreMock).getTotalRequestTimeout();
+    doReturn(Duration.ZERO).when(firestoreMock).getTotalRequestTimeoutDuration();
 
     query = firestoreMock.collection(COLLECTION_ID);
   }
@@ -595,6 +595,59 @@ public class QueryTest {
         query(
             order("__name__", StructuredQuery.Direction.ASCENDING),
             startAt(documentBoundary, true));
+
+    assertEquals(queryRequest, runQuery.getValue());
+  }
+
+  @Test
+  public void withAlwaysUseImplicitOrderBy() throws Exception {
+    doAnswer(queryResponse())
+        .when(firestoreMock)
+        .streamRequest(runQuery.capture(), streamObserverCapture.capture(), any());
+
+    doReturn(
+            FirestoreOptions.newBuilder()
+                .setProjectId("test-project")
+                .setAlwaysUseImplicitOrderBy(true)
+                .build())
+        .when(firestoreMock)
+        .getOptions();
+
+    query.whereEqualTo("a", "b").whereGreaterThanOrEqualTo("foo", "bar").get().get();
+
+    RunQueryRequest queryRequest =
+        query(
+            filter(Operator.EQUAL, "a", "b"),
+            filter(Operator.GREATER_THAN_OR_EQUAL, "foo", "bar"),
+            order("foo", Direction.ASCENDING),
+            order("__name__", StructuredQuery.Direction.ASCENDING));
+
+    assertEquals(queryRequest, runQuery.getValue());
+  }
+
+  @Test
+  public void withAlwaysUseImplicitOrderByAndLimitToLast() throws Exception {
+    doAnswer(queryResponse())
+        .when(firestoreMock)
+        .streamRequest(runQuery.capture(), streamObserverCapture.capture(), any());
+
+    doReturn(
+            FirestoreOptions.newBuilder()
+                .setProjectId("test-project")
+                .setAlwaysUseImplicitOrderBy(true)
+                .build())
+        .when(firestoreMock)
+        .getOptions();
+
+    query.whereEqualTo("a", "b").whereGreaterThanOrEqualTo("foo", "bar").limitToLast(1).get().get();
+
+    RunQueryRequest queryRequest =
+        query(
+            filter(Operator.EQUAL, "a", "b"),
+            filter(Operator.GREATER_THAN_OR_EQUAL, "foo", "bar"),
+            order("foo", Direction.DESCENDING),
+            order("__name__", Direction.DESCENDING),
+            limit(1));
 
     assertEquals(queryRequest, runQuery.getValue());
   }
@@ -1130,7 +1183,7 @@ public class QueryTest {
 
   @Test
   public void doesNotRetryWithTimeout() {
-    doReturn(Duration.ofMinutes(1)).when(firestoreMock).getTotalRequestTimeout();
+    doReturn(Duration.ofMinutes(1)).when(firestoreMock).getTotalRequestTimeoutDuration();
 
     doAnswer(
             invocation -> {

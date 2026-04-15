@@ -30,7 +30,10 @@ import com.google.api.core.InternalApi;
 import com.google.cloud.firestore.Query.ComparisonFilterInternal;
 import com.google.cloud.firestore.Query.CompositeFilterInternal;
 import com.google.cloud.firestore.Query.FilterInternal;
+<<<<<<< HEAD
 import com.google.cloud.firestore.Query.LimitType;
+=======
+>>>>>>> main
 import com.google.cloud.firestore.Query.UnaryFilterInternal;
 import com.google.cloud.firestore.pipeline.expressions.AggregateFunction;
 import com.google.cloud.firestore.pipeline.expressions.AliasedAggregate;
@@ -40,7 +43,10 @@ import com.google.cloud.firestore.pipeline.expressions.Expression;
 import com.google.cloud.firestore.pipeline.expressions.Field;
 import com.google.cloud.firestore.pipeline.expressions.Selectable;
 import com.google.common.collect.Lists;
+<<<<<<< HEAD
 import com.google.firestore.v1.Cursor;
+=======
+>>>>>>> main
 import com.google.firestore.v1.MapValue;
 import com.google.firestore.v1.Value;
 import java.util.HashMap;
@@ -110,7 +116,11 @@ public class PipelineUtils {
         case EQUAL:
           return and(field.exists(), field.equal(value));
         case NOT_EQUAL:
+<<<<<<< HEAD
           return and(field.exists(), field.notEqual(value));
+=======
+          return field.notEqual(value);
+>>>>>>> main
         case ARRAY_CONTAINS:
           return and(field.exists(), field.arrayContains(value));
         case IN:
@@ -121,8 +131,12 @@ public class PipelineUtils {
           return and(field.exists(), arrayContainsAny(field, Lists.newArrayList(valuesListAny)));
         case NOT_IN:
           List<Value> notInValues = value.getArrayValue().getValuesList();
+<<<<<<< HEAD
           return and(
               field.exists(), not(Expression.equalAny(field, Lists.newArrayList(notInValues))));
+=======
+          return not(Expression.equalAny(field, Lists.newArrayList(notInValues)));
+>>>>>>> main
         default:
           // Handle OPERATOR_UNSPECIFIED and UNRECOGNIZED cases as needed
           throw new IllegalArgumentException("Unsupported operator: " + comparisonFilter.operator);
@@ -174,6 +188,7 @@ public class PipelineUtils {
   }
 
   @InternalApi
+<<<<<<< HEAD
   static Pipeline toPaginatedPipeline(
       Pipeline pipeline,
       Cursor start,
@@ -198,6 +213,24 @@ public class PipelineUtils {
         return countAll().as(f.getAlias());
       case "average":
         return Field.ofServerPath(fieldPath).average().as(f.getAlias());
+=======
+  static AliasedAggregate toPipelineAggregatorTarget(AggregateField f) {
+    String operator = f.getOperator();
+    String fieldPath = f.getFieldPath();
+    String alias = f.getAlias();
+    if (alias.contains(".")) {
+      alias = "`" + alias + "`";
+    }
+
+    switch (operator) {
+      case "sum":
+        return Field.ofServerPath(fieldPath).sum().as(alias);
+
+      case "count":
+        return countAll().as(alias);
+      case "average":
+        return Field.ofServerPath(fieldPath).average().as(alias);
+>>>>>>> main
       default:
         // Handle the 'else' case appropriately in your Java code
         throw new IllegalArgumentException("Unsupported operator: " + operator);

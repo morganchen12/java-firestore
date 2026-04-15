@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // Copyright 2025 Google LLC
+=======
+// Copyright 2026 Google LLC
+>>>>>>> main
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,6 +23,10 @@ package google.firestore.admin.v1;
 import "google/api/resource.proto";
 import "google/firestore/admin/v1/index.proto";
 import "google/firestore/admin/v1/snapshot.proto";
+<<<<<<< HEAD
+=======
+import "google/protobuf/duration.proto";
+>>>>>>> main
 import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "Google.Cloud.Firestore.Admin.V1";
@@ -96,6 +104,10 @@ message FieldOperationMetadata {
 
     // Specifies how the TTL configuration is changing.
     ChangeType change_type = 1;
+
+    // The offset, relative to the timestamp value in the TTL-enabled field,
+    // used determine the document's expiration time.
+    google.protobuf.Duration expiration_offset = 3;
   }
 
   // The time this operation started.

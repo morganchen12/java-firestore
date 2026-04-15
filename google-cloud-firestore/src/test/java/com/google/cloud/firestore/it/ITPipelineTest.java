@@ -16,12 +16,25 @@
 
 package com.google.cloud.firestore.it;
 
+<<<<<<< HEAD
 import static com.google.cloud.firestore.it.ITQueryTest.map;
 import static com.google.cloud.firestore.it.TestHelper.isRunningAgainstFirestoreEmulator;
+=======
+import static com.google.cloud.firestore.FieldValue.vector;
+import static com.google.cloud.firestore.it.ITQueryTest.map;
+import static com.google.cloud.firestore.it.TestHelper.isRunningAgainstFirestoreEmulator;
+import static com.google.cloud.firestore.pipeline.expressions.AggregateFunction.arrayAgg;
+import static com.google.cloud.firestore.pipeline.expressions.AggregateFunction.arrayAggDistinct;
+>>>>>>> main
 import static com.google.cloud.firestore.pipeline.expressions.AggregateFunction.count;
 import static com.google.cloud.firestore.pipeline.expressions.AggregateFunction.countAll;
 import static com.google.cloud.firestore.pipeline.expressions.AggregateFunction.countDistinct;
 import static com.google.cloud.firestore.pipeline.expressions.AggregateFunction.countIf;
+<<<<<<< HEAD
+=======
+import static com.google.cloud.firestore.pipeline.expressions.AggregateFunction.first;
+import static com.google.cloud.firestore.pipeline.expressions.AggregateFunction.last;
+>>>>>>> main
 import static com.google.cloud.firestore.pipeline.expressions.AggregateFunction.sum;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.add;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.and;
@@ -29,8 +42,29 @@ import static com.google.cloud.firestore.pipeline.expressions.Expression.array;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayContains;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayContainsAll;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayContainsAny;
+<<<<<<< HEAD
 import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayGet;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayReverse;
+=======
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayFilter;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayFirst;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayFirstN;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayGet;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayIndexOf;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayIndexOfAll;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayLast;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayLastIndexOf;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayLastN;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayMaximum;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayMaximumN;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayMinimum;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayMinimumN;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayReverse;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arraySlice;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arraySliceToEnd;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayTransform;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.arrayTransformWithIndex;
+>>>>>>> main
 import static com.google.cloud.firestore.pipeline.expressions.Expression.ceil;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.concat;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.conditional;
@@ -49,6 +83,7 @@ import static com.google.cloud.firestore.pipeline.expressions.Expression.ln;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.log;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.logicalMaximum;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.logicalMinimum;
+<<<<<<< HEAD
 import static com.google.cloud.firestore.pipeline.expressions.Expression.mapMerge;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.mapRemove;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.notEqual;
@@ -57,11 +92,28 @@ import static com.google.cloud.firestore.pipeline.expressions.Expression.or;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.pow;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.regexMatch;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.round;
+=======
+import static com.google.cloud.firestore.pipeline.expressions.Expression.ltrim;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.mapMerge;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.mapRemove;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.multiply;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.nor;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.notEqual;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.nullValue;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.or;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.parent;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.pow;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.rand;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.regexMatch;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.round;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.rtrim;
+>>>>>>> main
 import static com.google.cloud.firestore.pipeline.expressions.Expression.sqrt;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.startsWith;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.stringConcat;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.substring;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.subtract;
+<<<<<<< HEAD
 import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampAdd;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampToUnixMicros;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampToUnixMillis;
@@ -73,6 +125,28 @@ import static com.google.cloud.firestore.pipeline.expressions.Expression.vector;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.vectorLength;
 import static com.google.cloud.firestore.pipeline.expressions.Expression.xor;
 import static com.google.common.truth.Truth.assertThat;
+=======
+import static com.google.cloud.firestore.pipeline.expressions.Expression.switchOn;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampAdd;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampDiff;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampExtract;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampExtractWithTimezone;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampToUnixMicros;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampToUnixMillis;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampToUnixSeconds;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampTruncate;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.timestampTruncateWithTimezone;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.trunc;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.truncToPrecision;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.unixMicrosToTimestamp;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.unixMillisToTimestamp;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.unixSecondsToTimestamp;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.variable;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.vectorLength;
+import static com.google.cloud.firestore.pipeline.expressions.Expression.xor;
+import static com.google.common.truth.Truth.assertThat;
+import static java.util.Collections.emptyList;
+>>>>>>> main
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assume.assumeFalse;
 
@@ -81,7 +155,12 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.Blob;
 import com.google.cloud.firestore.CollectionReference;
+<<<<<<< HEAD
 import com.google.cloud.firestore.FieldValue;
+=======
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+>>>>>>> main
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.FirestoreOptions;
 import com.google.cloud.firestore.GeoPoint;
@@ -108,6 +187,10 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import java.util.Date;
+<<<<<<< HEAD
+=======
+import java.util.HashMap;
+>>>>>>> main
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -122,7 +205,11 @@ import org.junit.runners.JUnit4;
 @RunWith(JUnit4.class)
 public class ITPipelineTest extends ITBaseTest {
   private CollectionReference collection;
+<<<<<<< HEAD
   private Map<String, Map<String, Object>> bookDocs;
+=======
+  static Map<String, Map<String, Object>> bookDocs;
+>>>>>>> main
 
   public CollectionReference testCollectionWithDocs(Map<String, Map<String, Object>> docs)
       throws ExecutionException, InterruptedException, TimeoutException {
@@ -139,10 +226,23 @@ public class ITPipelineTest extends ITBaseTest {
 
   @Before
   public void setup() throws Exception {
+<<<<<<< HEAD
+=======
+    assumeFalse(
+        "This test suite only runs against the Enterprise edition.",
+        !getFirestoreEdition().equals(FirestoreEdition.ENTERPRISE));
+>>>>>>> main
     if (collection != null) {
       return;
     }
 
+<<<<<<< HEAD
+=======
+    collection = testCollectionWithDocs(bookDocs);
+  }
+
+  static {
+>>>>>>> main
     bookDocs =
         ImmutableMap.<String, Map<String, Object>>builder()
             .put(
@@ -157,8 +257,12 @@ public class ITPipelineTest extends ITBaseTest {
                     .put("awards", ImmutableMap.of("hugo", true, "nebula", false))
                     .put(
                         "embedding",
+<<<<<<< HEAD
                         FieldValue.vector(
                             new double[] {10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}))
+=======
+                        vector(new double[] {10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}))
+>>>>>>> main
                     .build())
             .put(
                 "book2",
@@ -172,8 +276,12 @@ public class ITPipelineTest extends ITBaseTest {
                     .put("awards", ImmutableMap.of("none", true))
                     .put(
                         "embedding",
+<<<<<<< HEAD
                         FieldValue.vector(
                             new double[] {1.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}))
+=======
+                        vector(new double[] {1.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}))
+>>>>>>> main
                     .build())
             .put(
                 "book3",
@@ -187,8 +295,12 @@ public class ITPipelineTest extends ITBaseTest {
                     .put("awards", ImmutableMap.of("nobel", true, "nebula", false))
                     .put(
                         "embedding",
+<<<<<<< HEAD
                         FieldValue.vector(
                             new double[] {1.0, 1.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}))
+=======
+                        vector(new double[] {1.0, 1.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}))
+>>>>>>> main
                     .build())
             .put(
                 "book4",
@@ -203,8 +315,12 @@ public class ITPipelineTest extends ITBaseTest {
                     .put("cost", Double.NaN)
                     .put(
                         "embedding",
+<<<<<<< HEAD
                         FieldValue.vector(
                             new double[] {1.0, 1.0, 1.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}))
+=======
+                        vector(new double[] {1.0, 1.0, 1.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}))
+>>>>>>> main
                     .build())
             .put(
                 "book5",
@@ -218,8 +334,12 @@ public class ITPipelineTest extends ITBaseTest {
                     .put("awards", ImmutableMap.of("arthur c. clarke", true, "booker prize", false))
                     .put(
                         "embedding",
+<<<<<<< HEAD
                         FieldValue.vector(
                             new double[] {1.0, 1.0, 1.0, 1.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0}))
+=======
+                        vector(new double[] {1.0, 1.0, 1.0, 1.0, 10.0, 1.0, 1.0, 1.0, 1.0, 1.0}))
+>>>>>>> main
                     .build())
             .put(
                 "book6",
@@ -233,8 +353,12 @@ public class ITPipelineTest extends ITBaseTest {
                     .put("awards", ImmutableMap.of("none", true))
                     .put(
                         "embedding",
+<<<<<<< HEAD
                         FieldValue.vector(
                             new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 10.0, 1.0, 1.0, 1.0, 1.0}))
+=======
+                        vector(new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 10.0, 1.0, 1.0, 1.0, 1.0}))
+>>>>>>> main
                     .build())
             .put(
                 "book7",
@@ -248,8 +372,12 @@ public class ITPipelineTest extends ITBaseTest {
                     .put("awards", ImmutableMap.of("pulitzer", true))
                     .put(
                         "embedding",
+<<<<<<< HEAD
                         FieldValue.vector(
                             new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10.0, 1.0, 1.0, 1.0}))
+=======
+                        vector(new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10.0, 1.0, 1.0, 1.0}))
+>>>>>>> main
                     .build())
             .put(
                 "book8",
@@ -263,8 +391,12 @@ public class ITPipelineTest extends ITBaseTest {
                     .put("awards", ImmutableMap.of("prometheus", true))
                     .put(
                         "embedding",
+<<<<<<< HEAD
                         FieldValue.vector(
                             new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10.0, 1.0, 1.0}))
+=======
+                        vector(new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10.0, 1.0, 1.0}))
+>>>>>>> main
                     .build())
             .put(
                 "book9",
@@ -278,8 +410,12 @@ public class ITPipelineTest extends ITBaseTest {
                     .put("awards", ImmutableMap.of("none", true))
                     .put(
                         "embedding",
+<<<<<<< HEAD
                         FieldValue.vector(
                             new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10.0, 1.0}))
+=======
+                        vector(new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10.0, 1.0}))
+>>>>>>> main
                     .build())
             .put(
                 "book10",
@@ -293,8 +429,12 @@ public class ITPipelineTest extends ITBaseTest {
                     .put("awards", ImmutableMap.of("hugo", true, "nebula", true))
                     .put(
                         "embedding",
+<<<<<<< HEAD
                         FieldValue.vector(
                             new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10.0}))
+=======
+                        vector(new double[] {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 10.0}))
+>>>>>>> main
                     .build())
             .put(
                 "book11",
@@ -304,7 +444,10 @@ public class ITPipelineTest extends ITBaseTest {
                     .put("timestamp", new Date())
                     .build())
             .build();
+<<<<<<< HEAD
     collection = testCollectionWithDocs(bookDocs);
+=======
+>>>>>>> main
   }
 
   @Test
@@ -334,7 +477,11 @@ public class ITPipelineTest extends ITBaseTest {
             "bytes",
             com.google.cloud.firestore.Blob.fromBytes(refBytes),
             "vector",
+<<<<<<< HEAD
             FieldValue.vector(refVector));
+=======
+            vector(refVector));
+>>>>>>> main
 
     List<Object> refArray =
         Lists.newArrayList(
@@ -346,7 +493,11 @@ public class ITPipelineTest extends ITBaseTest {
             refGeoPoint,
             Timestamp.of(refDate),
             com.google.cloud.firestore.Blob.fromBytes(refBytes),
+<<<<<<< HEAD
             FieldValue.vector(refVector));
+=======
+            vector(refVector));
+>>>>>>> main
 
     Pipeline pipeline =
         firestore
@@ -362,7 +513,11 @@ public class ITPipelineTest extends ITBaseTest {
                 constant(refDate).as("date"),
                 constant(refGeoPoint).as("geoPoint"),
                 constant(com.google.cloud.firestore.Blob.fromBytes(refBytes)).as("bytes"),
+<<<<<<< HEAD
                 vector(refVector).as("vector"),
+=======
+                constant(vector(refVector)).as("vector"),
+>>>>>>> main
                 Expression.map(refMap).as("map"),
                 array(refArray).as("array"));
 
@@ -378,7 +533,11 @@ public class ITPipelineTest extends ITBaseTest {
     assertThat(data.get("timestamp")).isEqualTo(refTimestamp);
     assertThat(data.get("date")).isEqualTo(Timestamp.of(refDate));
     assertThat(data.get("bytes")).isEqualTo(com.google.cloud.firestore.Blob.fromBytes(refBytes));
+<<<<<<< HEAD
     assertThat(data.get("vector")).isEqualTo(FieldValue.vector(refVector));
+=======
+    assertThat(data.get("vector")).isEqualTo(vector(refVector));
+>>>>>>> main
     assertThat(stringOfOrderedKeyValues((Map<String, Object>) data.get("map")))
         .isEqualTo(stringOfOrderedKeyValues(refMap));
     assertThat(data.get("array").toString()).isEqualTo(refArray.toString());
@@ -588,6 +747,135 @@ public class ITPipelineTest extends ITBaseTest {
   }
 
   @Test
+<<<<<<< HEAD
+=======
+  public void testFirstAndLastAccumulators() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("published").greaterThan(0))
+            .sort(field("published").ascending())
+            .aggregate(
+                first("rating").as("firstBookRating"),
+                first("title").as("firstBookTitle"),
+                last("rating").as("lastBookRating"),
+                last("title").as("lastBookTitle"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    assertThat(result.get("firstBookRating")).isEqualTo(4.5);
+    assertThat(result.get("firstBookTitle")).isEqualTo("Pride and Prejudice");
+    assertThat(result.get("lastBookRating")).isEqualTo(4.1);
+    assertThat(result.get("lastBookTitle")).isEqualTo("The Handmaid's Tale");
+  }
+
+  @Test
+  public void testFirstAndLastAccumulatorsWithInstanceMethod() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("published").greaterThan(0))
+            .sort(field("published").ascending())
+            .aggregate(
+                field("rating").first().as("firstBookRating"),
+                field("title").first().as("firstBookTitle"),
+                field("rating").last().as("lastBookRating"),
+                field("title").last().as("lastBookTitle"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    assertThat(result.get("firstBookRating")).isEqualTo(4.5);
+    assertThat(result.get("firstBookTitle")).isEqualTo("Pride and Prejudice");
+    assertThat(result.get("lastBookRating")).isEqualTo(4.1);
+    assertThat(result.get("lastBookTitle")).isEqualTo("The Handmaid's Tale");
+  }
+
+  @Test
+  public void testArrayAggAccumulators() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("published").greaterThan(0))
+            .sort(field("published").ascending())
+            .aggregate(arrayAgg("rating").as("allRatings"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    assertThat((List<?>) result.get("allRatings"))
+        .containsExactly(4.5, 4.3, 4.0, 4.2, 4.7, 4.2, 4.6, 4.3, 4.2, 4.1)
+        .inOrder();
+  }
+
+  @Test
+  public void testArrayAggAccumulatorsWithInstanceMethod() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("published").greaterThan(0))
+            .sort(field("published").ascending())
+            .aggregate(field("rating").arrayAgg().as("allRatings"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    assertThat((List<?>) result.get("allRatings"))
+        .containsExactly(4.5, 4.3, 4.0, 4.2, 4.7, 4.2, 4.6, 4.3, 4.2, 4.1)
+        .inOrder();
+  }
+
+  @Test
+  public void testArrayAggDistinctAccumulators() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("published").greaterThan(0))
+            .aggregate(arrayAggDistinct("rating").as("allDistinctRatings"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    List<?> distinctRatings = (List<?>) result.get("allDistinctRatings");
+    List<Double> sortedRatings =
+        distinctRatings.stream().map(o -> (Double) o).sorted().collect(Collectors.toList());
+
+    assertThat(sortedRatings).containsExactly(4.0, 4.1, 4.2, 4.3, 4.5, 4.6, 4.7).inOrder();
+  }
+
+  @Test
+  public void testArrayAggDistinctAccumulatorsWithInstanceMethod() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("published").greaterThan(0))
+            .aggregate(field("rating").arrayAggDistinct().as("allDistinctRatings"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    List<?> distinctRatings = (List<?>) result.get("allDistinctRatings");
+    List<Double> sortedRatings =
+        distinctRatings.stream().map(o -> (Double) o).sorted().collect(Collectors.toList());
+
+    assertThat(sortedRatings).containsExactly(4.0, 4.1, 4.2, 4.3, 4.5, 4.6, 4.7).inOrder();
+  }
+
+  @Test
+>>>>>>> main
   public void selectSpecificFields() throws Exception {
     List<PipelineResult> results =
         firestore
@@ -709,6 +997,83 @@ public class ITPipelineTest extends ITBaseTest {
   }
 
   @Test
+<<<<<<< HEAD
+=======
+  public void whereByNorCondition() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(
+                nor(
+                    equal("genre", "Romance"),
+                    equal("genre", "Dystopian"),
+                    equal("genre", "Fantasy"),
+                    greaterThan("published", 1949)))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .containsExactlyElementsIn(
+            Lists.newArrayList(
+                map("title", "Crime and Punishment"),
+                map("title", "The Great Gatsby"),
+                map("title", "Timestamp Book")));
+  }
+
+  @Test
+  public void selectWithSwitchOn() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .limit(1)
+            .replaceWith(Expression.map(map("value", 2)))
+            .select(
+                switchOn(equal(field("value"), 2), constant("two"), constant("NA")).as("result1"),
+                switchOn(equal(field("value"), 3), constant("three"), constant("NA")).as("result2"),
+                switchOn(
+                        equal(field("value"), 1),
+                        constant("one"),
+                        equal(field("value"), 2),
+                        constant("two"),
+                        equal(field("value"), 3),
+                        constant("three"),
+                        constant("default"))
+                    .as("result3"))
+            .execute()
+            .get()
+            .getResults();
+    assertThat(data(results))
+        .isEqualTo(Lists.newArrayList(map("result1", "two", "result2", "NA", "result3", "two")));
+  }
+
+  @Test
+  public void testSwitchOnWithNoDefaultValueAndNoMatchingCondition() throws Exception {
+    ExecutionException exception =
+        assertThrows(
+            ExecutionException.class,
+            () ->
+                firestore
+                    .pipeline()
+                    .createFrom(collection)
+                    .limit(1)
+                    .replaceWith(Expression.map(map("value", 5)))
+                    .select(
+                        switchOn(
+                                equal(field("value"), 1), constant("one"),
+                                equal(field("value"), 2), constant("two"))
+                            .as("result"))
+                    .execute()
+                    .get()
+                    .getResults());
+    assertThat(exception).hasMessageThat().contains("all switch cases evaluate to false");
+  }
+
+  @Test
+>>>>>>> main
   public void testPipelineWithOffsetAndLimit() throws Exception {
     List<PipelineResult> results =
         firestore
@@ -796,6 +1161,793 @@ public class ITPipelineTest extends ITBaseTest {
   }
 
   @Test
+<<<<<<< HEAD
+=======
+  public void testArrayFirst() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(arrayFirst("tags").equal("adventure"))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("tags").arrayFirst().equal("adventure"))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    // Test with empty/null/non-existent arrays
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(
+                Expression.map(map("empty", emptyList(), "nullval", Expression.nullValue())))
+            .select(
+                arrayFirst("empty").as("emptyResult"),
+                arrayFirst("nullval").as("nullResult"),
+                arrayFirst("nonExistent").as("absentResult"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                // no emptyResult as arrayFirst returns UNSET for empty arrays
+                map("nullResult", null, "absentResult", null)));
+  }
+
+  @Test
+  public void testArrayFirstN() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(arrayFirstN("tags", 2).equal(Lists.newArrayList("adventure", "magic")))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(
+                field("tags")
+                    .arrayFirstN(4)
+                    .equal(Lists.newArrayList("adventure", "magic", "epic")))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    // Test with empty/null/non-existent arrays
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(
+                Expression.map(map("empty", emptyList(), "nullval", Expression.nullValue())))
+            .select(
+                arrayFirstN("empty", 2).as("emptyResult"),
+                arrayFirstN("nullval", 2).as("nullResult"),
+                arrayFirstN("nonExistent", 2).as("absentResult"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map("emptyResult", emptyList(), "nullResult", null, "absentResult", null)));
+  }
+
+  @Test
+  public void testArrayLast() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(arrayLast("tags").equal("epic"))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("tags").arrayLast().equal("epic"))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    // Test with empty/null/non-existent arrays
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(
+                Expression.map(map("empty", emptyList(), "nullval", Expression.nullValue())))
+            .select(
+                arrayLast("empty").as("emptyResult"),
+                arrayLast("nullval").as("nullResult"),
+                arrayLast("nonExistent").as("absentResult"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                // no emptyResult as arrayLast returns UNSET for empty arrays
+                map("nullResult", null, "absentResult", null)));
+  }
+
+  @Test
+  public void testArrayLastN() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(arrayLastN("tags", 2).equal(Lists.newArrayList("magic", "epic")))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(
+                field("tags").arrayLastN(4).equal(Lists.newArrayList("adventure", "magic", "epic")))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    // Test with empty/null/non-existent arrays
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(
+                Expression.map(map("empty", emptyList(), "nullval", Expression.nullValue())))
+            .select(
+                arrayLastN("empty", 2).as("emptyResult"),
+                arrayLastN("nullval", 2).as("nullResult"),
+                arrayLastN("nonExistent", 2).as("absentResult"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map("emptyResult", emptyList(), "nullResult", null, "absentResult", null)));
+  }
+
+  @Test
+  public void testArrayMinimum() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(arrayMinimum("tags").equal("adventure"))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map("title", "The Hitchhiker's Guide to the Galaxy"),
+                map("title", "The Lord of the Rings")));
+
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("tags").arrayMinimum().equal("adventure"))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map("title", "The Hitchhiker's Guide to the Galaxy"),
+                map("title", "The Lord of the Rings")));
+
+    // Test with empty/null/non-existent arrays
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(
+                Expression.map(
+                    map(
+                        "empty",
+                        emptyList(),
+                        "nullval",
+                        Expression.nullValue(),
+                        "mixed",
+                        Lists.newArrayList(1, "2", 3, "10"))))
+            .select(
+                arrayMinimum("empty").as("emptyResult"),
+                arrayMinimum("nullval").as("nullResult"),
+                arrayMinimum("nonExistent").as("absentResult"),
+                arrayMinimum("mixed").as("mixedResult"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "emptyResult",
+                    null,
+                    "nullResult",
+                    null,
+                    "absentResult",
+                    null,
+                    "mixedResult",
+                    1L)));
+  }
+
+  @Test
+  public void testArrayMinimumN() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(arrayMinimumN("tags", 2).equal(Lists.newArrayList("adventure", "epic")))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(
+                field("tags")
+                    .arrayMinimumN(4)
+                    .equal(Lists.newArrayList("adventure", "epic", "magic")))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+  }
+
+  @Test
+  public void testArrayMaximum() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(arrayMaximum("tags").equal("magic"))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("tags").arrayMaximum().equal("magic"))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    // Test with empty/null/non-existent and mixed types
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(
+                Expression.map(
+                    map(
+                        "empty",
+                        emptyList(),
+                        "nullval",
+                        Expression.nullValue(),
+                        "mixed",
+                        Lists.newArrayList(1, "2", 3, "10"))))
+            .select(
+                arrayMaximum("empty").as("emptyResult"),
+                arrayMaximum("nullval").as("nullResult"),
+                arrayMaximum("nonExistent").as("absentResult"),
+                arrayMaximum("mixed").as("mixedResult"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "emptyResult",
+                    null,
+                    "nullResult",
+                    null,
+                    "absentResult",
+                    null,
+                    "mixedResult",
+                    "2")));
+  }
+
+  @Test
+  public void testArrayMaximumN() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(arrayMaximumN("tags", 2).equal(Lists.newArrayList("magic", "epic")))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(
+                field("tags")
+                    .arrayMaximumN(4)
+                    .equal(Lists.newArrayList("magic", "epic", "adventure")))
+            .select("title")
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("title", "The Lord of the Rings")));
+  }
+
+  @Test
+  public void testArrayFilter() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .select(
+                field("tags")
+                    .arrayFilter("tag", notEqual(variable("tag"), "magic"))
+                    .as("notMagicTags"),
+                arrayFilter("tags", "tag", notEqual(variable("tag"), "epic")).as("notEpicTags"),
+                arrayFilter("tags", "tag", equal(variable("tag"), "fantasy")).as("noMatchingTags"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    assertThat((List<?>) result.get("notMagicTags")).containsExactly("adventure", "epic").inOrder();
+    assertThat((List<?>) result.get("notEpicTags")).containsExactly("adventure", "magic").inOrder();
+    assertThat((List<?>) result.get("noMatchingTags")).isEmpty();
+  }
+
+  @Test
+  public void testArrayFilterWithMixedTypesAndNulls() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .limit(1)
+            .replaceWith(
+                Expression.map(
+                    ImmutableMap.of(
+                        "arr",
+                        ImmutableList.of(
+                            1,
+                            "foo",
+                            Expression.nullValue(),
+                            20.0,
+                            "bar",
+                            30,
+                            "40",
+                            Expression.nullValue()))))
+            .select(
+                field("arr")
+                    .arrayFilter("element", greaterThan(variable("element"), 10))
+                    .as("filtered"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    assertThat((List<?>) result.get("filtered")).containsExactly(20.0, 30L).inOrder();
+  }
+
+  @Test
+  public void testSupportsArrayTransformAndArrayTransformWithIndex() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .limit(1)
+            .replaceWith(Expression.map(map("arr", Lists.newArrayList(10, 20, 30))))
+            .select(
+                arrayTransform("arr", "element", multiply(variable("element"), 10))
+                    .as("staticTransform"),
+                field("arr")
+                    .arrayTransform("element", multiply(variable("element"), 10))
+                    .as("instanceTransform"),
+                arrayTransformWithIndex(
+                        "arr", "element", "i", add(variable("element"), variable("i")))
+                    .as("staticTransformWithIndex"),
+                field("arr")
+                    .arrayTransformWithIndex(
+                        "element", "i", add(variable("element"), variable("i")))
+                    .as("instanceTransformWithIndex"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    assertThat((List<?>) result.get("staticTransform")).containsExactly(100L, 200L, 300L).inOrder();
+    assertThat((List<?>) result.get("instanceTransform"))
+        .containsExactly(100L, 200L, 300L)
+        .inOrder();
+    assertThat((List<?>) result.get("staticTransformWithIndex"))
+        .containsExactly(10L, 21L, 32L)
+        .inOrder();
+    assertThat((List<?>) result.get("instanceTransformWithIndex"))
+        .containsExactly(10L, 21L, 32L)
+        .inOrder();
+  }
+
+  @Test
+  public void testSupportsArrayTransformWithEmptyArrayAndNulls() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .limit(1)
+            .replaceWith(
+                Expression.map(map("arr", Lists.newArrayList(1, null, 3), "empty", emptyList())))
+            .select(
+                field("arr")
+                    .arrayTransform("element", add(variable("element"), 1))
+                    .as("transformedWithNulls"),
+                field("empty")
+                    .arrayTransform("element", add(variable("element"), 1))
+                    .as("transformedEmpty"),
+                field("arr")
+                    .arrayTransformWithIndex(
+                        "element", "idx", add(variable("element"), variable("idx")))
+                    .as("transformedWithIndex"),
+                field("empty")
+                    .arrayTransformWithIndex(
+                        "element", "idx", add(variable("element"), variable("idx")))
+                    .as("transformedEmptyWithIndex"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    assertThat((List<?>) result.get("transformedWithNulls"))
+        .containsExactly(2L, null, 4L)
+        .inOrder();
+    assertThat((List<?>) result.get("transformedEmpty")).isEmpty();
+    assertThat((List<?>) result.get("transformedWithIndex"))
+        .containsExactly(1L, null, 5L)
+        .inOrder();
+    assertThat((List<?>) result.get("transformedEmptyWithIndex")).isEmpty();
+  }
+
+  @Test
+  public void testArraySlice() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .select(
+                arraySlice("tags", 1, 1).as("staticMethodSlice"),
+                arraySliceToEnd("tags", 1).as("staticMethodSliceToEnd"),
+                field("tags").arraySlice(1, 1).as("instanceMethodSlice"),
+                field("tags").arraySliceToEnd(1).as("instanceMethodSliceToEnd"),
+                field("tags").arraySlice(1, 10).as("overflowLength"),
+                field("tags").arraySlice(-1, 1).as("negativeOffset"),
+                field("tags").arraySliceToEnd(-1).as("negativeOffsetSliceToEnd"),
+                field("tags").arraySliceToEnd(10).as("overflowOffset"),
+                field("tags").arraySliceToEnd(-10).as("negativeOverflowOffset"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    assertThat((List<?>) result.get("staticMethodSlice")).containsExactly("magic").inOrder();
+    assertThat((List<?>) result.get("staticMethodSliceToEnd"))
+        .containsExactly("magic", "epic")
+        .inOrder();
+    assertThat((List<?>) result.get("instanceMethodSlice")).containsExactly("magic").inOrder();
+    assertThat((List<?>) result.get("instanceMethodSliceToEnd"))
+        .containsExactly("magic", "epic")
+        .inOrder();
+    assertThat((List<?>) result.get("overflowLength")).containsExactly("magic", "epic").inOrder();
+    assertThat((List<?>) result.get("overflowOffset")).isEmpty();
+    assertThat((List<?>) result.get("negativeOffset")).containsExactly("epic").inOrder();
+    assertThat((List<?>) result.get("negativeOffsetSliceToEnd")).containsExactly("epic").inOrder();
+    assertThat((List<?>) result.get("negativeOverflowOffset"))
+        .containsExactly("adventure", "magic", "epic")
+        .inOrder();
+  }
+
+  @Test
+  public void arraySliceThrowsErrorForNegativeLength() throws Exception {
+    ExecutionException exception =
+        assertThrows(
+            ExecutionException.class,
+            () ->
+                firestore
+                    .pipeline()
+                    .createFrom(collection)
+                    .where(equal("title", "The Lord of the Rings"))
+                    .select(arraySlice("tags", 1, -1).as("negativeLengthSlice"))
+                    .execute()
+                    .get());
+    assertThat(exception).hasMessageThat().contains("length must be non-negative");
+  }
+
+  @Test
+  public void testArrayIndexOf() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .select(
+                arrayIndexOf("tags", "adventure").as("indexFirst"),
+                arrayIndexOf(field("tags"), "magic").as("indexSecond"),
+                field("tags").arrayIndexOf("epic").as("indexLast"),
+                arrayIndexOf("tags", "nonexistent").as("indexNone"),
+                arrayIndexOf("empty", "anything").as("indexEmpty"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "indexFirst",
+                    0L,
+                    "indexSecond",
+                    1L,
+                    "indexLast",
+                    2L,
+                    "indexNone",
+                    -1L,
+                    "indexEmpty",
+                    null)));
+
+    // Test with duplicate values
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(Expression.map(map("arr", Lists.newArrayList(1, 2, 3, 2, 1))))
+            .select(arrayIndexOf("arr", 2).as("firstIndex"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("firstIndex", 1L)));
+
+    // Test with null value
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(
+                Expression.map(map("arr", Lists.newArrayList(1, null, 3, 2, 1), "nullArr", null)))
+            .select(
+                arrayIndexOf("arr", null).as("nullIndex"),
+                arrayIndexOf("nullArr", null).as("nullIndexNull"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(Lists.newArrayList(map("nullIndex", 1L, "nullIndexNull", null)));
+  }
+
+  @Test
+  public void testArrayLastIndexOf() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .select(
+                arrayLastIndexOf("tags", "adventure").as("lastIndexFirst"),
+                arrayLastIndexOf(field("tags"), "magic").as("lastIndexSecond"),
+                field("tags").arrayLastIndexOf("epic").as("lastIndexLast"),
+                arrayLastIndexOf("tags", "nonexistent").as("lastIndexNone"),
+                arrayLastIndexOf("empty", "anything").as("lastIndexEmpty"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "lastIndexFirst",
+                    0L,
+                    "lastIndexSecond",
+                    1L,
+                    "lastIndexLast",
+                    2L,
+                    "lastIndexNone",
+                    -1L,
+                    "lastIndexEmpty",
+                    null)));
+
+    // Test with duplicate values
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(Expression.map(map("arr", Lists.newArrayList(1, 2, 3, 2, 1))))
+            .select(arrayLastIndexOf("arr", 2).as("lastIndex"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results)).isEqualTo(Lists.newArrayList(map("lastIndex", 3L)));
+
+    // Test with null value
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(
+                Expression.map(map("arr", Lists.newArrayList(1, null, 3, 2, 1), "nullArr", null)))
+            .select(
+                arrayLastIndexOf("arr", null).as("nullIndex"),
+                arrayLastIndexOf("nullArr", null).as("nullIndexNull"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(Lists.newArrayList(map("nullIndex", 1L, "nullIndexNull", null)));
+  }
+
+  @Test
+  public void testArrayIndexOfAll() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .select(
+                arrayIndexOfAll("tags", "adventure").as("indicesFirst"),
+                arrayIndexOfAll(field("tags"), "magic").as("indicesSecond"),
+                field("tags").arrayIndexOfAll("epic").as("indicesLast"),
+                arrayIndexOfAll("tags", "nonexistent").as("indicesNone"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "indicesFirst",
+                    Lists.newArrayList(0L),
+                    "indicesSecond",
+                    Lists.newArrayList(1L),
+                    "indicesLast",
+                    Lists.newArrayList(2L),
+                    "indicesNone",
+                    Lists.newArrayList())));
+
+    // Test with duplicate values
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(Expression.map(map("arr", Lists.newArrayList(1, 2, 3, 2, 1))))
+            .select(arrayIndexOfAll("arr", 2).as("indices"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(Lists.newArrayList(map("indices", Lists.newArrayList(1L, 3L))));
+
+    // Test with null values
+    results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Lord of the Rings"))
+            .replaceWith(
+                Expression.map(
+                    map("arr", Lists.newArrayList(1, null, 3, null, 1), "nullArr", null)))
+            .select(
+                arrayIndexOfAll("arr", null).as("indices"),
+                arrayIndexOfAll("nullArr", null).as("indicesNull"),
+                arrayIndexOfAll("nonExistentArray", null).as("indicesNonExistent"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "indices",
+                    Lists.newArrayList(1L, 3L),
+                    "indicesNull",
+                    null,
+                    "indicesNonExistent",
+                    null)));
+  }
+
+  @Test
+>>>>>>> main
   public void testArrayConcat() throws Exception {
     List<PipelineResult> results =
         firestore
@@ -1017,6 +2169,187 @@ public class ITPipelineTest extends ITBaseTest {
   }
 
   @Test
+<<<<<<< HEAD
+=======
+  public void testLTrim() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Hitchhiker's Guide to the Galaxy"))
+            .addFields(constant(" The Hitchhiker's Guide to the Galaxy ").as("spacedTitle"))
+            .addFields(constant("\"alice\"").as("userNameWithQuotes"))
+            .addFields(
+                constant(Blob.fromBytes(new byte[] {0x00, 0x01, 0x02, 0x00, 0x00})).as("bytes"))
+            .select(
+                ltrim("spacedTitle").as("ltrimmedTitle"),
+                field("userNameWithQuotes").ltrimValue("\"").as("userName"),
+                field("bytes").ltrimValue(constant(Blob.fromBytes(new byte[] {0x00}))).as("bytes"))
+            .limit(1)
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "ltrimmedTitle", "The Hitchhiker's Guide to the Galaxy ",
+                    "userName", "alice\"",
+                    "bytes", Blob.fromBytes(new byte[] {0x01, 0x02, 0x00, 0x00}))));
+  }
+
+  @Test
+  public void testRTrim() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Hitchhiker's Guide to the Galaxy"))
+            .addFields(constant(" The Hitchhiker's Guide to the Galaxy ").as("spacedTitle"))
+            .addFields(constant("\"alice\"").as("userNameWithQuotes"))
+            .addFields(
+                constant(Blob.fromBytes(new byte[] {0x00, 0x01, 0x02, 0x00, 0x00})).as("bytes"))
+            .select(
+                rtrim("spacedTitle").as("rtrimmedTitle"),
+                field("userNameWithQuotes").rtrimValue("\"").as("userName"),
+                field("bytes").rtrimValue(constant(Blob.fromBytes(new byte[] {0x00}))).as("bytes"))
+            .limit(1)
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "rtrimmedTitle", " The Hitchhiker's Guide to the Galaxy",
+                    "userName", "\"alice",
+                    "bytes", Blob.fromBytes(new byte[] {0x00, 0x01, 0x02}))));
+  }
+
+  @Test
+  public void testStringRepeat() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Hitchhiker's Guide to the Galaxy"))
+            .addFields(constant(Blob.fromBytes(new byte[] {0x01, 0x02, 0x03})).as("bytes"))
+            .select(
+                field("title").stringRepeat(2).as("repeatedTitle"),
+                Expression.stringRepeat(field("title"), 2).as("repeatedTitleStatic"),
+                field("bytes").stringRepeat(2).as("repeatedBytes"))
+            .limit(1)
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "repeatedTitle",
+                    "The Hitchhiker's Guide to the GalaxyThe Hitchhiker's Guide to the Galaxy",
+                    "repeatedTitleStatic",
+                    "The Hitchhiker's Guide to the GalaxyThe Hitchhiker's Guide to the Galaxy",
+                    "repeatedBytes",
+                    Blob.fromBytes(new byte[] {0x01, 0x02, 0x03, 0x01, 0x02, 0x03}))));
+  }
+
+  @Test
+  public void testStringReplaceAll() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Hitchhiker's Guide to the Galaxy"))
+            .addFields(constant(Blob.fromBytes(new byte[] {0x01, 0x02, 0x02})).as("bytes"))
+            .select(
+                field("title").stringReplaceAll("e", "X").as("replacedAll"),
+                Expression.stringReplaceAll(field("title"), "e", "X").as("replacedAllStatic"),
+                field("bytes")
+                    .stringReplaceAll(
+                        constant(Blob.fromBytes(new byte[] {0x02})),
+                        constant(Blob.fromBytes(new byte[] {0x03})))
+                    .as("replacedMultipleBytes"))
+            .limit(1)
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "replacedAll",
+                    "ThX HitchhikXr's GuidX to thX Galaxy",
+                    "replacedAllStatic",
+                    "ThX HitchhikXr's GuidX to thX Galaxy",
+                    "replacedMultipleBytes",
+                    Blob.fromBytes(new byte[] {0x01, 0x03, 0x03}))));
+  }
+
+  @Test
+  public void testStringReplaceOne() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Hitchhiker's Guide to the Galaxy"))
+            .addFields(constant(Blob.fromBytes(new byte[] {0x01, 0x02, 0x02})).as("bytes"))
+            .select(
+                field("title").stringReplaceOne("e", "X").as("replacedOne"),
+                Expression.stringReplaceOne("title", "e", "X").as("replacedOneStatic"),
+                field("bytes")
+                    .stringReplaceOne(
+                        constant(Blob.fromBytes(new byte[] {0x02})),
+                        constant(Blob.fromBytes(new byte[] {0x03})))
+                    .as("replacedOneByte"))
+            .limit(1)
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "replacedOne",
+                    "ThX Hitchhiker's Guide to the Galaxy",
+                    "replacedOneStatic",
+                    "ThX Hitchhiker's Guide to the Galaxy",
+                    "replacedOneByte",
+                    Blob.fromBytes(new byte[] {0x01, 0x03, 0x02}))));
+  }
+
+  @Test
+  public void testStringIndexOf() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(equal("title", "The Hitchhiker's Guide to the Galaxy"))
+            .addFields(constant(Blob.fromBytes(new byte[] {0x01, 0x02, 0x03})).as("bytes"))
+            .select(
+                field("title").stringIndexOf("Guide").as("indexOfGuide"),
+                Expression.stringIndexOf(field("title"), "Guide").as("indexOfGuideStatic"),
+                field("bytes")
+                    .stringIndexOf(constant(Blob.fromBytes(new byte[] {0x02})))
+                    .as("indexOfByte"))
+            .limit(1)
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map("indexOfGuide", 17L, "indexOfGuideStatic", 17L, "indexOfByte", 1L)));
+  }
+
+  @Test
+>>>>>>> main
   public void testLike() throws Exception {
     assumeFalse(
         "LIKE is not supported against the emulator.",
@@ -1055,6 +2388,59 @@ public class ITPipelineTest extends ITBaseTest {
   }
 
   @Test
+<<<<<<< HEAD
+=======
+  public void testRegexFind() throws Exception {
+    assumeFalse(
+        "Regexes are not supported against the emulator",
+        isRunningAgainstFirestoreEmulator(firestore));
+
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .select(field("title").regexFind("^\\w+").as("firstWordInTitle"))
+            .sort(field("firstWordInTitle").ascending())
+            .limit(3)
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map("firstWordInTitle", "1984"),
+                map("firstWordInTitle", "Crime"),
+                map("firstWordInTitle", "Dune")));
+  }
+
+  @Test
+  public void testRegexFindAll() throws Exception {
+    assumeFalse(
+        "Regexes are not supported against the emulator",
+        isRunningAgainstFirestoreEmulator(firestore));
+
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .select(field("title").regexFindAll("\\w+").as("wordsInTitle"))
+            .sort(field("wordsInTitle").ascending())
+            .limit(3)
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map("wordsInTitle", Lists.newArrayList("1984")),
+                map("wordsInTitle", Lists.newArrayList("Crime", "and", "Punishment")),
+                map("wordsInTitle", Lists.newArrayList("Dune"))));
+  }
+
+  @Test
+>>>>>>> main
   public void testRegexMatches() throws Exception {
     assumeFalse(
         "LIKE is not supported against the emulator.",
@@ -1168,7 +2554,13 @@ public class ITPipelineTest extends ITBaseTest {
         firestore
             .pipeline()
             .createFrom(collection)
+<<<<<<< HEAD
             .where(Expression.notEqualAny("genre", Lists.newArrayList("Romance", "Dystopian")))
+=======
+            .where(
+                Expression.notEqualAny(
+                    "genre", Lists.newArrayList("Science Fiction", "Romance", "Dystopian", null)))
+>>>>>>> main
             .select("genre")
             .distinct("genre")
             .execute()
@@ -1176,7 +2568,15 @@ public class ITPipelineTest extends ITBaseTest {
             .getResults();
     assertThat(data(results))
         .containsExactly(
+<<<<<<< HEAD
             map("genre", "Science Fiction"),
+=======
+            // This is somewhat surprising because the pipeline did ask specifically for genre not
+            // equal to null,
+            // however at the later distinct stage, UNSET is grouped as null and thus null appears
+            // in the result.
+            map("genre", null),
+>>>>>>> main
             map("genre", "Magical Realism"),
             map("genre", "Fantasy"),
             map("genre", "Psychological Thriller"),
@@ -1241,6 +2641,7 @@ public class ITPipelineTest extends ITBaseTest {
             .sort(field("rating").descending())
             .limit(1)
             .select(
+<<<<<<< HEAD
                 field("rating").isNull().as("ratingIsNull"),
                 field("rating").isNaN().as("ratingIsNaN"),
                 arrayGet("title", 0).isError().as("isError"),
@@ -1248,6 +2649,16 @@ public class ITPipelineTest extends ITBaseTest {
                 field("foo").isAbsent().as("isAbsent"),
                 field("title").isNotNull().as("titleIsNotNull"),
                 field("cost").isNotNaN().as("costIsNotNan"),
+=======
+                field("rating").equal(nullValue()).as("ratingIsNull"),
+                field("rating").equal(Double.NaN).as("ratingIsNaN"),
+                // arrayGet("title", 0) evaluates to ERROR
+                arrayGet("title", 0).isError().as("isError"),
+                arrayGet("title", 0).ifError(constant("was error")).as("ifError"),
+                field("foo").isAbsent().as("isAbsent"),
+                field("title").notEqual(nullValue()).as("titleIsNotNull"),
+                field("cost").notEqual(Double.NaN).as("costIsNotNan"),
+>>>>>>> main
                 field("fooBarBaz").exists().as("fooBarBazExists"),
                 field("title").exists().as("titleExists"))
             .execute()
@@ -1331,6 +2742,208 @@ public class ITPipelineTest extends ITBaseTest {
   }
 
   @Test
+<<<<<<< HEAD
+=======
+  public void testMapSet() throws Exception {
+    Map<String, Object> docData = new HashMap<>();
+    docData.put("existingField", ImmutableMap.of("foo", 1L));
+
+    Pipeline.Snapshot results =
+        firestore
+            .pipeline()
+            .collection(collection.getPath())
+            .replaceWith(Expression.map(docData))
+            .limit(1)
+            .select(
+                Expression.mapSet("existingField", "bar", 2).as("modifiedField"),
+                Expression.mapSet(Expression.map(ImmutableMap.of()), "a", 1).as("simple"),
+                Expression.mapSet(Expression.map(ImmutableMap.of("a", 1)), "b", 2).as("add"),
+                Expression.mapSet(Expression.map(ImmutableMap.of("a", 1)), "a", 2).as("overwrite"),
+                Expression.mapSet(Expression.map(ImmutableMap.of("a", 1, "b", 2)), "a", 3, "c", 4)
+                    .as("multi"),
+                Expression.mapSet(
+                        Expression.map(ImmutableMap.of("a", 1)), "a", field("non_existent"))
+                    .as("remove"),
+                Expression.mapSet(Expression.map(ImmutableMap.of("a", 1)), "b", null).as("setNull"),
+                Expression.mapSet(
+                        Expression.map(ImmutableMap.of("a", ImmutableMap.of("b", 1))), "a.b", 2)
+                    .as("setDotted"),
+                Expression.mapSet(Expression.map(ImmutableMap.of()), "", "empty").as("setEmptyKey"),
+                Expression.mapSet(
+                        Expression.map(ImmutableMap.of("a", 1)),
+                        "b",
+                        Expression.add(constant(1), constant(2)))
+                    .as("setExprVal"),
+                Expression.mapSet(
+                        Expression.map(ImmutableMap.of()), "obj", ImmutableMap.of("hidden", true))
+                    .as("setNestedMap"),
+                Expression.mapSet(Expression.map(ImmutableMap.of()), "~!@#$%^&*()_+", "special")
+                    .as("setSpecialChars"),
+                field("existingField").mapSet("instanceKey", 100).as("instanceSetField"),
+                Expression.map(ImmutableMap.of("x", 1))
+                    .mapSet(constant("y"), constant(2))
+                    .as("instanceSetConstant"))
+            .execute()
+            .get();
+
+    List<PipelineResult> resultList = results.getResults();
+    assertThat(resultList).isNotEmpty();
+    Map<String, Object> data = resultList.get(0).getData();
+
+    assertThat((Map<?, ?>) data.get("modifiedField")).containsExactly("foo", 1L, "bar", 2L);
+    assertThat((Map<?, ?>) data.get("simple")).containsExactly("a", 1L);
+    assertThat((Map<?, ?>) data.get("add")).containsExactly("a", 1L, "b", 2L);
+    assertThat((Map<?, ?>) data.get("overwrite")).containsExactly("a", 2L);
+    assertThat((Map<?, ?>) data.get("multi")).containsExactly("a", 3L, "b", 2L, "c", 4L);
+    assertThat((Map<?, ?>) data.get("remove")).isEmpty();
+    assertThat((Map<?, ?>) data.get("setNull")).containsExactly("a", 1L, "b", null);
+
+    Map<?, ?> setDotted = (Map<?, ?>) data.get("setDotted");
+    assertThat(setDotted).containsEntry("a.b", 2L);
+    assertThat((Map<?, ?>) setDotted.get("a")).containsExactly("b", 1L);
+
+    assertThat((Map<?, ?>) data.get("setEmptyKey")).containsExactly("", "empty");
+    assertThat((Map<?, ?>) data.get("setExprVal")).containsExactly("a", 1L, "b", 3L);
+    assertThat((Map<?, ?>) data.get("setNestedMap"))
+        .isEqualTo(ImmutableMap.of("obj", ImmutableMap.of("hidden", true)));
+    assertThat((Map<?, ?>) data.get("setSpecialChars")).containsExactly("~!@#$%^&*()_+", "special");
+
+    assertThat((Map<?, ?>) data.get("instanceSetField"))
+        .containsExactly("foo", 1L, "instanceKey", 100L);
+    assertThat((Map<?, ?>) data.get("instanceSetConstant")).containsExactly("x", 1L, "y", 2L);
+  }
+
+  @Test
+  public void testMapKeys() throws Exception {
+    Map<String, Object> docData = new HashMap<>();
+    docData.put("existingField", ImmutableMap.of("foo", 1L));
+
+    Pipeline.Snapshot results =
+        firestore
+            .pipeline()
+            .collection(collection.getPath())
+            .replaceWith(Expression.map(docData))
+            .limit(1)
+            .select(
+                Expression.mapKeys("existingField").as("existingKeys"),
+                Expression.mapKeys(Expression.map(ImmutableMap.of("a", 1, "b", 2))).as("keys"),
+                Expression.mapKeys(Expression.map(ImmutableMap.of())).as("empty_keys"),
+                Expression.mapKeys(
+                        Expression.map(ImmutableMap.of("a", ImmutableMap.of("nested", true))))
+                    .as("nested_keys"),
+                field("existingField").mapKeys().as("instanceExistingKeys"),
+                Expression.map(ImmutableMap.of("x", 10, "y", 20)).mapKeys().as("instanceKeys"))
+            .execute()
+            .get();
+
+    List<PipelineResult> resultList = results.getResults();
+    assertThat(resultList).isNotEmpty();
+    Map<String, Object> data = resultList.get(0).getData();
+
+    assertThat((List<?>) data.get("existingKeys")).containsExactly("foo");
+    assertThat((List<?>) data.get("keys")).containsExactly("a", "b");
+    assertThat((List<?>) data.get("empty_keys")).isEmpty();
+    assertThat((List<?>) data.get("nested_keys")).containsExactly("a");
+
+    assertThat((List<?>) data.get("instanceExistingKeys")).containsExactly("foo");
+    assertThat((List<?>) data.get("instanceKeys")).containsExactly("x", "y");
+  }
+
+  @Test
+  public void testMapValues() throws Exception {
+    Map<String, Object> docData = new HashMap<>();
+    docData.put("existingField", ImmutableMap.of("foo", 1L));
+
+    Pipeline.Snapshot results =
+        firestore
+            .pipeline()
+            .collection(collection.getPath())
+            .replaceWith(Expression.map(docData))
+            .limit(1)
+            .select(
+                Expression.mapValues("existingField").as("existingValues"),
+                Expression.mapValues(Expression.map(ImmutableMap.of("a", 1, "b", 2))).as("values"),
+                Expression.mapValues(Expression.map(ImmutableMap.of())).as("empty_values"),
+                Expression.mapValues(
+                        Expression.map(ImmutableMap.of("a", ImmutableMap.of("nested", true))))
+                    .as("nested_values"),
+                field("existingField").mapValues().as("instanceExistingValues"),
+                Expression.map(ImmutableMap.of("x", 10, "y", 20)).mapValues().as("instanceValues"))
+            .execute()
+            .get();
+
+    List<PipelineResult> resultList = results.getResults();
+    assertThat(resultList).isNotEmpty();
+    Map<String, Object> data = resultList.get(0).getData();
+
+    assertThat((List<?>) data.get("existingValues")).containsExactly(1L);
+    assertThat((List<?>) data.get("values")).containsExactly(1L, 2L);
+    assertThat((List<?>) data.get("empty_values")).isEmpty();
+    assertThat((List<?>) data.get("nested_values"))
+        .containsExactly(ImmutableMap.of("nested", true));
+
+    assertThat((List<?>) data.get("instanceExistingValues")).containsExactly(1L);
+    assertThat((List<?>) data.get("instanceValues")).containsExactly(10L, 20L);
+  }
+
+  @Test
+  public void testMapEntries() throws Exception {
+    Map<String, Object> docData = new HashMap<>();
+    docData.put("existingField", ImmutableMap.of("foo", 1L));
+
+    Pipeline.Snapshot results =
+        firestore
+            .pipeline()
+            .collection(collection.getPath())
+            .replaceWith(Expression.map(docData))
+            .limit(1)
+            .select(
+                Expression.mapEntries("existingField").as("existingEntries"),
+                Expression.mapEntries(Expression.map(ImmutableMap.of("a", 1, "b", 2)))
+                    .as("entries"),
+                Expression.mapEntries(Expression.map(ImmutableMap.of())).as("empty_entries"),
+                Expression.mapEntries(
+                        Expression.map(ImmutableMap.of("a", ImmutableMap.of("nested", true))))
+                    .as("nested_entries"),
+                field("existingField").mapEntries().as("instanceExistingEntries"),
+                Expression.map(ImmutableMap.of("x", 10, "y", 20))
+                    .mapEntries()
+                    .as("instanceEntries"))
+            .execute()
+            .get();
+
+    List<PipelineResult> resultList = results.getResults();
+    assertThat(resultList).isNotEmpty();
+    Map<String, Object> data = resultList.get(0).getData();
+
+    assertThat((List<?>) data.get("existingEntries"))
+        .containsExactly(ImmutableMap.of("k", "foo", "v", 1L));
+
+    @SuppressWarnings("unchecked")
+    List<Map<String, Object>> entries = (List<Map<String, Object>>) data.get("entries");
+    assertThat(entries).hasSize(2);
+
+    // Map entry order is not guaranteed, so we check containment instead of strict ordering
+    assertThat(entries).contains(ImmutableMap.of("k", "a", "v", 1L));
+    assertThat(entries).contains(ImmutableMap.of("k", "b", "v", 2L));
+
+    assertThat((List<?>) data.get("empty_entries")).isEmpty();
+    assertThat((List<?>) data.get("nested_entries"))
+        .containsExactly(ImmutableMap.of("k", "a", "v", ImmutableMap.of("nested", true)));
+
+    assertThat((List<?>) data.get("instanceExistingEntries"))
+        .containsExactly(ImmutableMap.of("k", "foo", "v", 1L));
+
+    @SuppressWarnings("unchecked")
+    List<Map<String, Object>> instanceEntries =
+        (List<Map<String, Object>>) data.get("instanceEntries");
+    assertThat(instanceEntries).hasSize(2);
+    assertThat(instanceEntries).contains(ImmutableMap.of("k", "x", "v", 10L));
+    assertThat(instanceEntries).contains(ImmutableMap.of("k", "y", "v", 20L));
+  }
+
+  @Test
+>>>>>>> main
   public void testDataManipulationExpressions() throws Exception {
     List<PipelineResult> results =
         firestore
@@ -1403,6 +3016,7 @@ public class ITPipelineTest extends ITBaseTest {
             .collection(collection.getPath())
             .where(equal("title", "Timestamp Book"))
             .select(
+<<<<<<< HEAD
                 Expression.timestampTruncate(field("timestamp"), "year").as("trunc_year"),
                 Expression.timestampTruncate(field("timestamp"), "month").as("trunc_month"),
                 Expression.timestampTruncate(field("timestamp"), "day").as("trunc_day"),
@@ -1412,19 +3026,38 @@ public class ITPipelineTest extends ITBaseTest {
             .execute()
             .get()
             .getResults();
+=======
+                timestampTruncate(field("timestamp"), "year").as("standalone_str"),
+                field("timestamp").timestampTruncate("month").as("fluid_str"),
+                timestampTruncate(field("timestamp"), constant("day")).as("standalone_expr"),
+                field("timestamp").timestampTruncate(constant("hour")).as("fluid_expr"))
+            .execute()
+            .get()
+            .getResults();
+
+>>>>>>> main
     assertThat(results).hasSize(1);
     Map<String, Object> data = results.get(0).getData();
     Date originalDate = (Date) bookDocs.get("book11").get("timestamp");
     java.util.Calendar cal = java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("UTC"));
+<<<<<<< HEAD
     cal.setTime(originalDate);
 
+=======
+
+    cal.setTime(originalDate);
+>>>>>>> main
     cal.set(java.util.Calendar.MONTH, java.util.Calendar.JANUARY);
     cal.set(java.util.Calendar.DAY_OF_MONTH, 1);
     cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
     cal.set(java.util.Calendar.MINUTE, 0);
     cal.set(java.util.Calendar.SECOND, 0);
     cal.set(java.util.Calendar.MILLISECOND, 0);
+<<<<<<< HEAD
     assertThat(data.get("trunc_year")).isEqualTo(Timestamp.of(cal.getTime()));
+=======
+    assertThat(data.get("standalone_str")).isEqualTo(Timestamp.of(cal.getTime()));
+>>>>>>> main
 
     cal.setTime(originalDate);
     cal.set(java.util.Calendar.DAY_OF_MONTH, 1);
@@ -1432,19 +3065,28 @@ public class ITPipelineTest extends ITBaseTest {
     cal.set(java.util.Calendar.MINUTE, 0);
     cal.set(java.util.Calendar.SECOND, 0);
     cal.set(java.util.Calendar.MILLISECOND, 0);
+<<<<<<< HEAD
     assertThat(data.get("trunc_month")).isEqualTo(Timestamp.of(cal.getTime()));
+=======
+    assertThat(data.get("fluid_str")).isEqualTo(Timestamp.of(cal.getTime()));
+>>>>>>> main
 
     cal.setTime(originalDate);
     cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
     cal.set(java.util.Calendar.MINUTE, 0);
     cal.set(java.util.Calendar.SECOND, 0);
     cal.set(java.util.Calendar.MILLISECOND, 0);
+<<<<<<< HEAD
     assertThat(data.get("trunc_day")).isEqualTo(Timestamp.of(cal.getTime()));
+=======
+    assertThat(data.get("standalone_expr")).isEqualTo(Timestamp.of(cal.getTime()));
+>>>>>>> main
 
     cal.setTime(originalDate);
     cal.set(java.util.Calendar.MINUTE, 0);
     cal.set(java.util.Calendar.SECOND, 0);
     cal.set(java.util.Calendar.MILLISECOND, 0);
+<<<<<<< HEAD
     assertThat(data.get("trunc_hour")).isEqualTo(Timestamp.of(cal.getTime()));
 
     cal.setTime(originalDate);
@@ -1455,6 +3097,153 @@ public class ITPipelineTest extends ITBaseTest {
     cal.setTime(originalDate);
     cal.set(java.util.Calendar.MILLISECOND, 0);
     assertThat(data.get("trunc_second")).isEqualTo(Timestamp.of(cal.getTime()));
+=======
+    assertThat(data.get("fluid_expr")).isEqualTo(Timestamp.of(cal.getTime()));
+  }
+
+  @Test
+  public void testTimestampTruncWithTimezone() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .collection(collection.getPath())
+            .where(equal("title", "Timestamp Book"))
+            .select(
+                timestampTruncateWithTimezone(field("timestamp"), "year", "America/Los_Angeles")
+                    .as("st_str_str"),
+                field("timestamp")
+                    .timestampTruncateWithTimezone("month", "America/Los_Angeles")
+                    .as("fl_str_str"),
+                timestampTruncateWithTimezone(
+                        field("timestamp"), constant("day"), constant("America/Los_Angeles"))
+                    .as("st_expr_expr"),
+                field("timestamp")
+                    .timestampTruncateWithTimezone(
+                        constant("hour"), constant("America/Los_Angeles"))
+                    .as("fl_expr_expr"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(results).hasSize(1);
+    Map<String, Object> data = results.get(0).getData();
+    Date originalDate = (Date) bookDocs.get("book11").get("timestamp");
+    java.util.Calendar cal =
+        java.util.Calendar.getInstance(java.util.TimeZone.getTimeZone("America/Los_Angeles"));
+
+    cal.setTime(originalDate);
+    cal.set(java.util.Calendar.MONTH, java.util.Calendar.JANUARY);
+    cal.set(java.util.Calendar.DAY_OF_MONTH, 1);
+    cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+    cal.set(java.util.Calendar.MINUTE, 0);
+    cal.set(java.util.Calendar.SECOND, 0);
+    cal.set(java.util.Calendar.MILLISECOND, 0);
+    assertThat(data.get("st_str_str")).isEqualTo(Timestamp.of(cal.getTime()));
+
+    cal.setTime(originalDate);
+    cal.set(java.util.Calendar.DAY_OF_MONTH, 1);
+    cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+    cal.set(java.util.Calendar.MINUTE, 0);
+    cal.set(java.util.Calendar.SECOND, 0);
+    cal.set(java.util.Calendar.MILLISECOND, 0);
+    assertThat(data.get("fl_str_str")).isEqualTo(Timestamp.of(cal.getTime()));
+  }
+
+  @Test
+  public void testTimestampDiff() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .limit(1)
+            .replaceWith(
+                Expression.map(
+                    ImmutableMap.of(
+                        "end", Timestamp.ofTimeSecondsAndNanos(1741437296, 123456789),
+                        "start", Timestamp.ofTimeSecondsAndNanos(1741428000, 0))))
+            .select(
+                timestampDiff("end", "start", "hour").as("diff_hour"),
+                field("end").timestampDiff(field("start"), "minute").as("diff_minute"),
+                timestampDiff(field("end"), "start", "second").as("diff_second"),
+                field("start").timestampDiff("end", "hour").as("diff_hour_neg"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> data = data(results).get(0);
+    assertThat(data.get("diff_hour")).isEqualTo(2L);
+    assertThat(data.get("diff_minute")).isEqualTo(154L);
+    assertThat(data.get("diff_second")).isEqualTo(9296L);
+    assertThat(data.get("diff_hour_neg")).isEqualTo(-2L);
+  }
+
+  @Test
+  public void testTimestampExtract() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .limit(1)
+            .replaceWith(
+                Expression.map(
+                    ImmutableMap.of("ts", Timestamp.ofTimeSecondsAndNanos(1741437296, 123456789))))
+            .select(
+                timestampExtract("ts", "year").as("year"),
+                field("ts").timestampExtract("month").as("month"),
+                timestampExtract(field("ts"), constant("day")).as("day"),
+                field("ts").timestampExtract(constant("hour")).as("hour"),
+                timestampExtract("ts", constant("minute")).as("minute"),
+                field("ts").timestampExtract("second").as("second"),
+                timestampExtract(field("ts"), "millisecond").as("millis"),
+                field("ts").timestampExtract("microsecond").as("micros"),
+                timestampExtract(field("ts"), "dayofyear").as("day_of_year"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> data = data(results).get(0);
+    assertThat(data.get("year")).isEqualTo(2025L);
+    assertThat(data.get("month")).isEqualTo(3L);
+    assertThat(data.get("day")).isEqualTo(8L);
+    assertThat(data.get("hour")).isEqualTo(12L);
+    assertThat(data.get("minute")).isEqualTo(34L);
+    assertThat(data.get("second")).isEqualTo(56L);
+    assertThat(data.get("millis")).isEqualTo(123L);
+    assertThat(data.get("micros")).isEqualTo(123456L);
+    assertThat(data.get("day_of_year")).isEqualTo(67L);
+  }
+
+  @Test
+  public void testTimestampExtractWithTimezone() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .limit(1)
+            .replaceWith(
+                Expression.map(
+                    ImmutableMap.of("ts", Timestamp.ofTimeSecondsAndNanos(1741437296, 123456789))))
+            .select(
+                timestampExtractWithTimezone("ts", "hour", "America/Los_Angeles").as("st_str_str"),
+                field("ts")
+                    .timestampExtractWithTimezone("hour", "America/Los_Angeles")
+                    .as("fl_str_str"),
+                timestampExtractWithTimezone(
+                        field("ts"), constant("hour"), constant("America/Los_Angeles"))
+                    .as("st_expr_expr"),
+                field("ts")
+                    .timestampExtractWithTimezone(constant("hour"), constant("America/Los_Angeles"))
+                    .as("fl_expr_expr"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> data = data(results).get(0);
+    assertThat(data.get("st_str_str")).isEqualTo(4L);
+    assertThat(data.get("fl_str_str")).isEqualTo(4L);
+    assertThat(data.get("st_expr_expr")).isEqualTo(4L);
+    assertThat(data.get("fl_expr_expr")).isEqualTo(4L);
+>>>>>>> main
   }
 
   @Test
@@ -1506,6 +3295,134 @@ public class ITPipelineTest extends ITBaseTest {
   }
 
   @Test
+<<<<<<< HEAD
+=======
+  public void testRand() throws Exception {
+    assumeFalse(
+        "Rand is not supported against the emulator.",
+        isRunningAgainstFirestoreEmulator(firestore));
+
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .select(rand().as("randomNumber"))
+            .limit(1)
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(results).hasSize(1);
+    Object randomNumber = results.get(0).getData().get("randomNumber");
+    assertThat(randomNumber).isInstanceOf(Double.class);
+    assertThat((Double) randomNumber).isAtLeast(0.0);
+    assertThat((Double) randomNumber).isLessThan(1.0);
+  }
+
+  @Test
+  public void testTrunc() throws Exception {
+    assumeFalse(
+        "Trunc is not supported against the emulator.",
+        isRunningAgainstFirestoreEmulator(firestore));
+
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("title").equal("Pride and Prejudice"))
+            .limit(1)
+            .select(trunc("rating").as("truncatedRating"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    assertThat(result.get("truncatedRating")).isEqualTo(4.0);
+  }
+
+  @Test
+  public void testTruncWithInstanceMethod() throws Exception {
+    assumeFalse(
+        "Trunc is not supported against the emulator.",
+        isRunningAgainstFirestoreEmulator(firestore));
+
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .where(field("title").equal("Pride and Prejudice"))
+            .limit(1)
+            .select(field("rating").trunc().as("truncatedRating"))
+            .execute()
+            .get()
+            .getResults();
+
+    Map<String, Object> result = data(results).get(0);
+    assertThat(result.get("truncatedRating")).isEqualTo(4.0);
+  }
+
+  @Test
+  public void testTruncToPrecision() throws Exception {
+    assumeFalse(
+        "Trunc is not supported against the emulator.",
+        isRunningAgainstFirestoreEmulator(firestore));
+
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .limit(1)
+            .select(
+                truncToPrecision(constant(4.123456), 0).as("p0"),
+                truncToPrecision(constant(4.123456), 1).as("p1"),
+                truncToPrecision(constant(4.123456), 2).as("p2"),
+                truncToPrecision(constant(4.123456), 4).as("p4"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "p0", 4.0,
+                    "p1", 4.1,
+                    "p2", 4.12,
+                    "p4", 4.1234)));
+  }
+
+  @Test
+  public void testTruncToPrecisionWithInstanceMethod() throws Exception {
+    assumeFalse(
+        "Trunc is not supported against the emulator.",
+        isRunningAgainstFirestoreEmulator(firestore));
+
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .createFrom(collection)
+            .limit(1)
+            .select(
+                constant(4.123456).truncToPrecision(0).as("p0"),
+                constant(4.123456).truncToPrecision(1).as("p1"),
+                constant(4.123456).truncToPrecision(constant(2)).as("p2"),
+                constant(4.123456).truncToPrecision(4).as("p4"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .isEqualTo(
+            Lists.newArrayList(
+                map(
+                    "p0", 4.0,
+                    "p1", 4.1,
+                    "p2", 4.12,
+                    "p4", 4.1234)));
+  }
+
+  @Test
+>>>>>>> main
   public void testConcat() throws Exception {
     // String concat
     List<PipelineResult> results =
@@ -1673,6 +3590,95 @@ public class ITPipelineTest extends ITBaseTest {
   }
 
   @Test
+<<<<<<< HEAD
+=======
+  public void testIfNull() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .collection(collection.getPath())
+            .limit(1)
+            .replaceWith(Expression.map(map("title", "foo", "name", null)))
+            .select(
+                Expression.ifNull("title", "default title").as("staticMethod"),
+                field("title").ifNull("default title").as("instanceMethod"),
+                field("name").ifNull(field("title")).as("nameOrTitle"),
+                field("name").ifNull("default name").as("fieldIsNull"),
+                field("absent").ifNull("default name").as("fieldIsAbsent"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .containsExactly(
+            map(
+                "staticMethod", "foo",
+                "instanceMethod", "foo",
+                "nameOrTitle", "foo",
+                "fieldIsNull", "default name",
+                "fieldIsAbsent", "default name"));
+  }
+
+  @Test
+  public void testCoalesce() throws Exception {
+    assumeFalse(
+        "Coalesce is not supported against the emulator.",
+        isRunningAgainstFirestoreEmulator(firestore));
+
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .collection(collection.getPath())
+            .limit(1)
+            .replaceWith(
+                Expression.map(
+                    map(
+                        "numberValue",
+                        1L,
+                        "stringValue",
+                        "hello",
+                        "booleanValue",
+                        false,
+                        "nullValue",
+                        null,
+                        "nullValue2",
+                        null)))
+            .select(
+                Expression.coalesce(field("numberValue"), field("stringValue")).as("staticMethod"),
+                field("numberValue").coalesce(field("stringValue")).as("instanceMethod"),
+                Expression.coalesce(field("nullValue"), field("stringValue")).as("firstIsNull"),
+                Expression.coalesce(field("nullValue"), field("nullValue2"), field("booleanValue"))
+                    .as("lastIsNotNull"),
+                Expression.coalesce(field("nullValue"), field("nullValue2")).as("allFieldsNull"),
+                Expression.coalesce(field("nullValue"), field("nullValue2"), constant("default"))
+                    .as("allFieldsNullWithDefault"),
+                Expression.coalesce(field("absentField"), field("numberValue"), constant("default"))
+                    .as("withAbsentField"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(data(results))
+        .containsExactly(
+            map(
+                "staticMethod",
+                1L,
+                "instanceMethod",
+                1L,
+                "firstIsNull",
+                "hello",
+                "lastIsNotNull",
+                false,
+                "allFieldsNull",
+                null,
+                "allFieldsNullWithDefault",
+                "default",
+                "withAbsentField",
+                1L));
+  }
+
+  @Test
+>>>>>>> main
   public void testJoin() throws Exception {
     // Test join with a constant delimiter
     List<PipelineResult> results =
@@ -1772,7 +3778,11 @@ public class ITPipelineTest extends ITBaseTest {
             .pipeline()
             .collection(collection.getPath())
             .limit(1)
+<<<<<<< HEAD
             .select(vectorLength(vector(new double[] {1.0, 2.0, 3.0})).as("vectorLength"))
+=======
+            .select(vectorLength(constant(vector(new double[] {1.0, 2.0, 3.0}))).as("vectorLength"))
+>>>>>>> main
             .execute()
             .get()
             .getResults();
@@ -1993,9 +4003,16 @@ public class ITPipelineTest extends ITBaseTest {
             .pipeline()
             .collection(collection.getPath())
             .select(
+<<<<<<< HEAD
                 cosineDistance(vector(sourceVector), targetVector).as("cosineDistance"),
                 dotProduct(vector(sourceVector), targetVector).as("dotProductDistance"),
                 euclideanDistance(vector(sourceVector), targetVector).as("euclideanDistance"))
+=======
+                cosineDistance(constant(vector(sourceVector)), targetVector).as("cosineDistance"),
+                dotProduct(constant(vector(sourceVector)), targetVector).as("dotProductDistance"),
+                euclideanDistance(constant(vector(sourceVector)), targetVector)
+                    .as("euclideanDistance"))
+>>>>>>> main
             .limit(1)
             .execute()
             .get()
@@ -2025,8 +4042,13 @@ public class ITPipelineTest extends ITBaseTest {
     assertThat(data(results))
         .isEqualTo(
             Lists.newArrayList(
+<<<<<<< HEAD
                 map("title", "The Hitchhiker's Guide to the Galaxy", "awards.hugo", true),
                 map("title", "Dune", "awards.hugo", true)));
+=======
+                map("title", "The Hitchhiker's Guide to the Galaxy", "awards", map("hugo", true)),
+                map("title", "Dune", "awards", map("hugo", true))));
+>>>>>>> main
   }
 
   @Test
@@ -2049,8 +4071,17 @@ public class ITPipelineTest extends ITBaseTest {
               assertThat(data(results))
                   .isEqualTo(
                       Lists.newArrayList(
+<<<<<<< HEAD
                           map("title", "The Hitchhiker's Guide to the Galaxy", "awards.hugo", true),
                           map("title", "Dune", "awards.hugo", true)));
+=======
+                          map(
+                              "title",
+                              "The Hitchhiker's Guide to the Galaxy",
+                              "awards",
+                              map("hugo", true)),
+                          map("title", "Dune", "awards", map("hugo", true))));
+>>>>>>> main
 
               transaction.update(collection.document("book1"), map("foo", "bar"));
 
@@ -2231,7 +4262,13 @@ public class ITPipelineTest extends ITBaseTest {
                 RawStage.ofName("find_nearest")
                     .withArguments(
                         field("embedding"),
+<<<<<<< HEAD
                         vector(new double[] {10.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0}),
+=======
+                        constant(
+                            vector(
+                                new double[] {10.0, 1.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0})),
+>>>>>>> main
                         "euclidean")
                     .withOptions(
                         new RawOptions()
@@ -2525,9 +4562,15 @@ public class ITPipelineTest extends ITBaseTest {
                 Aggregate.withAccumulators(AggregateFunction.average("rating").as("avg_rating"))
                     .withGroups("genre"),
                 new AggregateOptions()
+<<<<<<< HEAD
                     .withHints(new AggregateHints().withForceStreamableEnabled()));
 
     pipeline.execute(opts).get();
+=======
+                    .withHints(new AggregateHints().with("test_option", "test_value")));
+
+    assertThrows(ExecutionException.class, () -> pipeline.execute(opts).get());
+>>>>>>> main
   }
 
   @Test
@@ -2557,6 +4600,10 @@ public class ITPipelineTest extends ITBaseTest {
         firestore
             .pipeline()
             .collection(collection.getPath())
+<<<<<<< HEAD
+=======
+            .where(field("author").equal("Douglas Adams"))
+>>>>>>> main
             .limit(1)
             .select(
                 Expression.type("title").as("string_type"),
@@ -2583,6 +4630,92 @@ public class ITPipelineTest extends ITBaseTest {
   }
 
   @Test
+<<<<<<< HEAD
+=======
+  public void testIsType() throws Exception {
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .collection(collection.getPath())
+            .replaceWith(
+                Expression.map(
+                    map(
+                        "int",
+                        1,
+                        "float",
+                        1.1,
+                        "str",
+                        "a string",
+                        "bool",
+                        true,
+                        "null",
+                        null,
+                        "geoPoint",
+                        new GeoPoint(0.1, 0.2),
+                        "timestamp",
+                        Timestamp.ofTimeSecondsAndNanos(123456, 0),
+                        "bytes",
+                        com.google.cloud.firestore.Blob.fromBytes(new byte[] {1, 2, 3}),
+                        "docRef",
+                        collection.document("bar"),
+                        "vector",
+                        vector(new double[] {1.0, 2.0, 3.0}),
+                        "map",
+                        Expression.map(map("numberK", 1, "stringK", "a string")),
+                        "array",
+                        array(1, 2, true))))
+            .select(
+                Expression.isType("int", "int64").as("isInt64"),
+                Expression.isType("int", "number").as("isInt64IsNumber"),
+                Expression.isType("int", "decimal128").as("isInt64IsDecimal128"),
+                Expression.isType("float", "float64").as("isFloat64"),
+                Expression.isType("float", "number").as("isFloat64IsNumber"),
+                Expression.isType("float", "decimal128").as("isFloat64IsDecimal128"),
+                Expression.isType("str", "string").as("isStr"),
+                Expression.isType("str", "int64").as("isStrNum"),
+                Expression.isType("int", "string").as("isNumStr"),
+                Expression.isType("bool", "boolean").as("isBool"),
+                Expression.isType("null", "null").as("isNull"),
+                Expression.isType("geoPoint", "geo_point").as("isGeoPoint"),
+                Expression.isType("timestamp", "timestamp").as("isTimestamp"),
+                Expression.isType("bytes", "bytes").as("isBytes"),
+                Expression.isType("docRef", "reference").as("isDocRef"),
+                Expression.isType("vector", "vector").as("isVector"),
+                Expression.isType("map", "map").as("isMap"),
+                Expression.isType("array", "array").as("isArray"),
+                Expression.isType(constant(1), "int64").as("exprIsInt64"),
+                field("int").isType("int64").as("staticIsInt64"))
+            .limit(1)
+            .execute()
+            .get()
+            .getResults();
+    assertThat(data(results))
+        .containsExactly(
+            map(
+                "isInt64", true,
+                "isInt64IsNumber", true,
+                "isInt64IsDecimal128", false,
+                "isFloat64", true,
+                "isFloat64IsNumber", true,
+                "isFloat64IsDecimal128", false,
+                "isStr", true,
+                "isStrNum", false,
+                "isNumStr", false,
+                "isBool", true,
+                "isNull", true,
+                "isGeoPoint", true,
+                "isTimestamp", true,
+                "isBytes", true,
+                "isDocRef", true,
+                "isVector", true,
+                "isMap", true,
+                "isArray", true,
+                "exprIsInt64", true,
+                "staticIsInt64", true));
+  }
+
+  @Test
+>>>>>>> main
   public void testExplainWithError() {
     assumeFalse(
         "Explain with error is not supported against the emulator.",
@@ -2696,4 +4829,156 @@ public class ITPipelineTest extends ITBaseTest {
             });
     assertThat(exception).hasMessageThat().contains("Duplicate alias or field name");
   }
+<<<<<<< HEAD
+=======
+
+  @Test
+  public void testSupportsParent() throws Exception {
+    DocumentReference docRef =
+        collection.document("book4").collection("reviews").document("review1");
+
+    Pipeline pipeline =
+        firestore
+            .pipeline()
+            .collection(collection.getPath())
+            .limit(1)
+            .select(
+                parent(docRef).as("parentRefStatic"),
+                constant(docRef).parent().as("parentRefInstance"))
+            .select(
+                field("parentRefStatic").documentId().as("parentIdStatic"),
+                field("parentRefInstance").documentId().as("parentIdInstance"));
+
+    List<PipelineResult> results = pipeline.execute().get().getResults();
+    assertThat(results).hasSize(1);
+    Map<String, Object> data = results.get(0).getData();
+
+    assertThat(data.get("parentIdStatic")).isEqualTo("book4");
+    assertThat(data.get("parentIdInstance")).isEqualTo("book4");
+  }
+
+  @Test
+  public void testDeleteStage() throws Exception {
+    CollectionReference dmlCol = testCollectionWithDocs(bookDocs);
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .collection(dmlCol.getPath())
+            .where(equal(field("__name__").documentId(), "book1"))
+            .delete()
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(results).hasSize(1);
+    assertThat(results.get(0).getData().get("documents_modified")).isEqualTo(1L);
+    assertThat(dmlCol.document("book1").get().get().exists()).isFalse();
+  }
+
+  @Test
+  public void testDeleteMultipleDocuments() throws Exception {
+    CollectionReference dmlCol = testCollectionWithDocs(bookDocs);
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .collection(dmlCol.getPath())
+            .where(equal(field("genre"), "Science Fiction"))
+            .delete()
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(results).hasSize(1);
+    assertThat(results.get(0).getData().get("documents_modified")).isEqualTo(2L);
+    assertThat(dmlCol.document("book1").get().get().exists()).isFalse();
+    assertThat(dmlCol.document("book10").get().get().exists()).isFalse();
+  }
+
+  @Test
+  public void testUpdateMultipleDocuments() throws Exception {
+    CollectionReference dmlCol = testCollectionWithDocs(bookDocs);
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .collection(dmlCol.getPath())
+            .where(equal(field("genre"), "Science Fiction"))
+            .removeFields("awards")
+            .update(constant("Updated").as("status"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(results).hasSize(1);
+    assertThat(results.get(0).getData().get("documents_modified")).isEqualTo(2L);
+    assertThat(dmlCol.document("book1").get().get().get("status")).isEqualTo("Updated");
+    assertThat(dmlCol.document("book1").get().get().get("awards")).isNull();
+
+    assertThat(dmlCol.document("book10").get().get().get("status")).isEqualTo("Updated");
+    assertThat(dmlCol.document("book10").get().get().get("awards")).isNull();
+  }
+
+  @Test
+  public void testUpdateWithExpressions() throws Exception {
+    CollectionReference dmlCol = testCollectionWithDocs(bookDocs);
+    List<PipelineResult> results =
+        firestore
+            .pipeline()
+            .collection(dmlCol.getPath())
+            .where(equal(field("__name__").documentId(), "book1"))
+            .update(
+                com.google.cloud.firestore.pipeline.expressions.Expression.add(
+                        field("rating"), constant(1.0))
+                    .as("rating"))
+            .execute()
+            .get()
+            .getResults();
+
+    assertThat(results).hasSize(1);
+    DocumentSnapshot doc = dmlCol.document("book1").get().get();
+    assertThat(doc.get("rating")).isEqualTo(5.2);
+  }
+
+  @Test
+  public void testUpdateNonExistingDocumentModifiesZeroDocuments() throws Exception {
+    CollectionReference dmlCol = firestore.collection(LocalFirestoreHelper.autoId());
+
+    java.util.Map<String, Object> book = new java.util.HashMap<>();
+    book.put("title", "Non Existing");
+    book.put("__name__", dmlCol.document("nonExisting"));
+
+    List<PipelineResult> results =
+        firestore.pipeline().literals(book).update().execute().get().getResults();
+
+    assertThat(results).hasSize(1);
+    assertThat(results.get(0).getData().get("documents_modified")).isEqualTo(0L);
+  }
+
+  @Test
+  public void testLiteralsStage() throws Exception {
+    java.util.Map<String, Object> data1 = new java.util.HashMap<>();
+    data1.put("foo", "bar");
+    java.util.Map<String, Object> data2 = new java.util.HashMap<>();
+    data2.put("baz", "qux");
+
+    List<PipelineResult> results =
+        firestore.pipeline().literals(data1, data2).execute().get().getResults();
+
+    assertThat(results).hasSize(2);
+    assertThat(results.get(0).getData()).isEqualTo(data1);
+    assertThat(results.get(1).getData()).isEqualTo(data2);
+  }
+
+  @Test
+  public void testLiteralsWithExpressions() throws Exception {
+    java.util.Map<String, Object> data = new java.util.HashMap<>();
+    data.put("base", 10);
+    data.put("doubled", multiply(constant(10), constant(2)));
+
+    List<PipelineResult> results = firestore.pipeline().literals(data).execute().get().getResults();
+
+    assertThat(results).hasSize(1);
+    assertThat(results.get(0).getData().get("base")).isEqualTo(10L);
+    assertThat(results.get(0).getData().get("doubled")).isEqualTo(20L);
+  }
+>>>>>>> main
 }

@@ -1,5 +1,9 @@
 /*
+<<<<<<< HEAD
  * Copyright 2017 Google LLC
+=======
+ * Copyright 2025 Google LLC
+>>>>>>> main
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +20,15 @@
 
 package com.google.cloud.firestore;
 
+<<<<<<< HEAD
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.cloud.Timestamp;
+=======
+import com.google.api.core.InternalExtensionOnly;
+import com.google.cloud.Timestamp;
+import com.google.cloud.firestore.encoding.CustomClassMapper;
+>>>>>>> main
 import com.google.common.base.Preconditions;
 import com.google.firestore.v1.Document;
 import com.google.firestore.v1.Value;
@@ -43,9 +53,13 @@ import javax.annotation.Nullable;
  * that does so.
  */
 @InternalExtensionOnly
+<<<<<<< HEAD
 @BetaApi
 public final class PipelineResult {
 
+=======
+public final class PipelineResult {
+>>>>>>> main
   private final FirestoreRpcContext<?> rpcContext;
   @Nullable private final DocumentReference docRef;
   @Nullable private final Map<String, Value> fields;
@@ -80,7 +94,10 @@ public final class PipelineResult {
    * corresponding to a Firestore document.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public String getId() {
     return docRef.getId();
   }
@@ -100,7 +117,10 @@ public final class PipelineResult {
 
   /** Returns the time at which the pipeline producing this result is executed. */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Timestamp getExecutionTime() {
     return executionTime;
   }
@@ -110,7 +130,10 @@ public final class PipelineResult {
    * corresponding to a Firestore document.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Timestamp getUpdateTime() {
     return updateTime;
   }
@@ -120,7 +143,10 @@ public final class PipelineResult {
    * corresponding to a Firestore document.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Timestamp getCreateTime() {
     return createTime;
   }
@@ -131,7 +157,10 @@ public final class PipelineResult {
    *
    * @return whether the document existed in this snapshot.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public boolean exists() {
     return fields != null;
   }
@@ -143,7 +172,10 @@ public final class PipelineResult {
    * @return The fields of the document as a Map or null if the result doesn't exist.
    */
   @Nonnull
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Map<String, Object> getData() {
     if (fields == null) {
       return null;
@@ -165,7 +197,10 @@ public final class PipelineResult {
    *     exist.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   <T> T toObject(@Nonnull Class<T> valueType) {
     Map<String, Object> data = getData();
     return data == null ? null : CustomClassMapper.convertToCustomClass(data, valueType, docRef);
@@ -178,7 +213,10 @@ public final class PipelineResult {
    * @param field the path to the field.
    * @return true iff the field exists.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public boolean contains(@Nonnull String field) {
     return contains(FieldPath.fromDotSeparatedString(field));
   }
@@ -190,7 +228,10 @@ public final class PipelineResult {
    * @param fieldPath the path to the field.
    * @return true iff the field exists.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public boolean contains(@Nonnull FieldPath fieldPath) {
     return this.extractField(fieldPath) != null;
   }
@@ -202,7 +243,10 @@ public final class PipelineResult {
    * @return The value at the given field or null.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Object get(@Nonnull String field) {
     return get(FieldPath.fromDotSeparatedString(field));
   }
@@ -216,7 +260,10 @@ public final class PipelineResult {
    * @return The value at the given field or null.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public <T> T get(@Nonnull String field, @Nonnull Class<T> valueType) {
     return get(FieldPath.fromDotSeparatedString(field), valueType);
   }
@@ -228,7 +275,10 @@ public final class PipelineResult {
    * @return The value at the given field or null.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Object get(@Nonnull FieldPath fieldPath) {
     Value value = extractField(fieldPath);
 
@@ -248,7 +298,10 @@ public final class PipelineResult {
    * @return The value at the given field or null.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public <T> T get(@Nonnull FieldPath fieldPath, Class<T> valueType) {
     Object data = get(fieldPath);
     return data == null ? null : CustomClassMapper.convertToCustomClass(data, valueType, docRef);
@@ -282,7 +335,10 @@ public final class PipelineResult {
    * @return The value of the field.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Boolean getBoolean(@Nonnull String field) {
     return (Boolean) get(field);
   }
@@ -295,7 +351,10 @@ public final class PipelineResult {
    * @return The value of the field.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Double getDouble(@Nonnull String field) {
     Number number = (Number) get(field);
     return number == null ? null : number.doubleValue();
@@ -309,7 +368,10 @@ public final class PipelineResult {
    * @return The value of the field.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public String getString(@Nonnull String field) {
     return (String) get(field);
   }
@@ -322,7 +384,10 @@ public final class PipelineResult {
    * @return The value of the field.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Long getLong(@Nonnull String field) {
     Number number = (Number) get(field);
     return number == null ? null : number.longValue();
@@ -336,7 +401,10 @@ public final class PipelineResult {
    * @return The value of the field.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Date getDate(@Nonnull String field) {
     Timestamp timestamp = getTimestamp(field);
     return timestamp == null ? null : timestamp.toDate();
@@ -350,7 +418,10 @@ public final class PipelineResult {
    * @return The value of the field.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Timestamp getTimestamp(@Nonnull String field) {
     return (Timestamp) get(field);
   }
@@ -363,7 +434,10 @@ public final class PipelineResult {
    * @return The value of the field.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public Blob getBlob(@Nonnull String field) {
     return (Blob) get(field);
   }
@@ -376,7 +450,10 @@ public final class PipelineResult {
    * @return The value of the field.
    */
   @Nullable
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public GeoPoint getGeoPoint(@Nonnull String field) {
     return (GeoPoint) get(field);
   }
@@ -386,7 +463,10 @@ public final class PipelineResult {
    *
    * @return The reference to the document.
    */
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public DocumentReference getReference() {
     return docRef;
   }
@@ -427,7 +507,10 @@ public final class PipelineResult {
    * @return Whether this DocumentSnapshot is equal to the provided object.
    */
   @Override
+<<<<<<< HEAD
   @BetaApi
+=======
+>>>>>>> main
   public boolean equals(Object obj) {
     if (this == obj) {
       return true;

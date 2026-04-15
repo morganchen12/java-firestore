@@ -21,6 +21,7 @@ import static com.google.cloud.firestore.it.TestHelper.await;
 import static com.google.cloud.firestore.it.TestHelper.isRunningAgainstFirestoreEmulator;
 import static com.google.common.truth.Truth.assertThat;
 import static java.util.Collections.singletonMap;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assume.assumeFalse;
 import static org.junit.Assume.assumeTrue;
@@ -106,6 +107,10 @@ public class ITQueryCountTest extends ITBaseTest {
 
   @Test
   public void countShouldRespectStartAtAndEndAtWithDocumentSnapshotCursor() throws Exception {
+    // TODO(pipeline): Enable this test against production when adding implicitOrderBy.
+    assumeTrue(
+        "Skip this test when running against enterprise prod because it does not work yet.",
+        getFirestoreEdition() != FirestoreEdition.ENTERPRISE);
     CollectionReference collection = createCollectionWithDocuments(10).collection();
     List<QueryDocumentSnapshot> documentSnapshots = collection.get().get().getDocuments();
     AggregateQuerySnapshot snapshot =
@@ -120,6 +125,10 @@ public class ITQueryCountTest extends ITBaseTest {
 
   @Test
   public void countShouldRespectStartAtAndEndAtWithDocumentReferenceCursor() throws Exception {
+    // TODO: Enable this test against production when adding implicitOrderBy.
+    assumeTrue(
+        "Skip this test when running against enterprise prod because it does not work yet.",
+        getFirestoreEdition() != FirestoreEdition.ENTERPRISE);
     CollectionReference collection = createCollectionWithDocuments(10).collection();
     List<QueryDocumentSnapshot> documentSnapshots = collection.get().get().getDocuments();
     AggregateQuerySnapshot snapshot =
@@ -136,6 +145,10 @@ public class ITQueryCountTest extends ITBaseTest {
   @Test
   public void countShouldRespectStartAfterAndEndBeforeWithDocumentSnapshotCursor()
       throws Exception {
+    // TODO(pipeline): Enable this test against production when adding implicitOrderBy.
+    assumeTrue(
+        "Skip this test when running against enterprise prod because it does not work yet.",
+        getFirestoreEdition() != FirestoreEdition.ENTERPRISE);
     CollectionReference collection = createCollectionWithDocuments(10).collection();
     List<QueryDocumentSnapshot> documentSnapshots = collection.get().get().getDocuments();
     AggregateQuerySnapshot snapshot =
@@ -151,6 +164,10 @@ public class ITQueryCountTest extends ITBaseTest {
   @Test
   public void countShouldRespectStartAfterAndEndBeforeWithDocumentReferenceCursor()
       throws Exception {
+    // TODO: Enable this test against production when adding implicitOrderBy.
+    assumeTrue(
+        "Skip this test when running against enterprise prod because it does not work yet.",
+        getFirestoreEdition() != FirestoreEdition.ENTERPRISE);
     CollectionReference collection = createCollectionWithDocuments(10).collection();
     List<QueryDocumentSnapshot> documentSnapshots = collection.get().get().getDocuments();
     AggregateQuerySnapshot snapshot =
@@ -373,9 +390,10 @@ public class ITQueryCountTest extends ITBaseTest {
   @Test
   public void countQueryShouldFailWithMessageWithConsoleLinkIfMissingIndex() {
     assumeFalse(
-        "Skip this test when running against the Firestore emulator because the Firestore emulator "
-            + "does not use indexes and never fails with a 'missing index' error",
-        isRunningAgainstFirestoreEmulator(firestore));
+        "Skip this test when running against the Firestore emulator or enterprise because they "
+            + "do not use indexes and never fails with a 'missing index' error",
+        isRunningAgainstFirestoreEmulator(firestore)
+            || getFirestoreEdition() == FirestoreEdition.ENTERPRISE);
 
     CollectionReference collection = createEmptyCollection();
     Query compositeIndexQuery = collection.whereEqualTo("field1", 42).whereLessThan("field2", 99);

@@ -4,7 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <artifactId>google-cloud-firestore-admin</artifactId>
+<<<<<<< HEAD
   <version>99.99.0-PRIVATEPREVIEW</version><!-- {x-version-update:google-cloud-firestore-admin:current} -->
+=======
+  <version>3.41.0</version><!-- {x-version-update:google-cloud-firestore-admin:current} -->
+>>>>>>> main
   <packaging>jar</packaging>
   <name>Google Cloud Firestore Admin Client</name>
   <url>https://github.com/googleapis/java-firestore</url>
@@ -14,7 +18,11 @@
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>google-cloud-firestore-parent</artifactId>
+<<<<<<< HEAD
     <version>99.99.0-PRIVATEPREVIEW</version><!-- {x-version-update:google-cloud-firestore:current} -->
+=======
+    <version>3.41.0</version><!-- {x-version-update:google-cloud-firestore:current} -->
+>>>>>>> main
   </parent>
   <dependencies>
     <dependency>
@@ -63,14 +71,9 @@
       <artifactId>guava</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.threeten</groupId>
-      <artifactId>threetenbp</artifactId>
-    </dependency>
-    <dependency>
       <groupId>io.grpc</groupId>
       <artifactId>grpc-stub</artifactId>
     </dependency>
-
 
     <!-- Test dependencies -->
     <dependency>
@@ -100,6 +103,11 @@
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>grpc-google-common-protos</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.http-client</groupId>
+      <artifactId>google-http-client</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

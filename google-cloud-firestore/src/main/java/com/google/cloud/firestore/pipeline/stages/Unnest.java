@@ -55,6 +55,20 @@ public final class Unnest extends Stage {
     }
   }
 
+<<<<<<< HEAD
+=======
+  public Unnest(@Nonnull Selectable field, @Nonnull UnnestOptions options) {
+    super("unnest", options.options);
+    if (field instanceof AliasedExpression) {
+      this.expr = ((AliasedExpression) field).getExpr();
+      this.alias = field(((AliasedExpression) field).getAlias());
+    } else {
+      this.expr = (Field) field;
+      this.alias = (Field) field;
+    }
+  }
+
+>>>>>>> main
   @Override
   Iterable<Value> toStageArgs() {
     return ImmutableList.of(encodeValue(expr), encodeValue(alias));

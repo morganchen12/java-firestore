@@ -30,7 +30,11 @@ import javax.annotation.Nullable;
  * <p>Field references are used to access document field values in expressions and to specify fields
  * for sorting, filtering, and projecting data in Firestore pipelines.
  *
+<<<<<<< HEAD
  * <p>You can create a `Field` instance using the static {@link #of(String)} method:
+=======
+ * <p>You can create a `Field` instance using the static {@link #field(String)} method:
+>>>>>>> main
  *
  * <pre>{@code
  * // Create a Field instance for the 'name' field
@@ -40,7 +44,10 @@ import javax.annotation.Nullable;
  * Field cityField = Field.of("address.city");
  * }</pre>
  */
+<<<<<<< HEAD
 @BetaApi
+=======
+>>>>>>> main
 public final class Field extends Expression implements Selectable {
   public static final String DOCUMENT_ID = "__name__";
   private final FieldPath path;
@@ -90,6 +97,35 @@ public final class Field extends Expression implements Selectable {
     return Value.newBuilder().setFieldReferenceValue(path.toString()).build();
   }
 
+<<<<<<< HEAD
+=======
+  /**
+   * Evaluates to the distance in meters between the location specified by this field and the query
+   * location.
+   *
+   * <p>This Expression can only be used within a {@code Search} stage.
+   *
+   * @param location Compute distance to this {@link com.google.cloud.firestore.GeoPoint}.
+   * @return A new {@link Expression} representing the geoDistance operation.
+   */
+  @BetaApi
+  public Expression geoDistance(com.google.cloud.firestore.GeoPoint location) {
+    return Expression.geoDistance(this, location);
+  }
+
+  /**
+   * Perform a full-text search on this field.
+   *
+   * <p>This Expression can only be used within a {@code Search} stage.
+   *
+   * @param rquery Define the search query using the rquery DTS.
+   */
+  @InternalApi
+  BooleanExpression matches(String rquery) {
+    return Expression.matches(this, rquery);
+  }
+
+>>>>>>> main
   @Override
   public boolean equals(Object o) {
     if (this == o) {

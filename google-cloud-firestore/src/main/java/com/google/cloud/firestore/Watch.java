@@ -60,6 +60,8 @@ import javax.annotation.Nullable;
  * synchronization.
  */
 final class Watch implements BidiStreamObserver<ListenRequest, ListenResponse> {
+  private static final Logger LOGGER = Logger.getLogger(Watch.class.getName());
+
   /**
    * Target ID used by watch. Watch uses a fixed target id since we only support one target per
    * stream. The actual target ID we use is arbitrary.
@@ -115,8 +117,6 @@ final class Watch implements BidiStreamObserver<ListenRequest, ListenResponse> {
     List<QueryDocumentSnapshot> updates = new ArrayList<>();
   }
 
-  private static final Logger LOGGER = Logger.getLogger(Watch.class.getName());
-
   /**
    * @param firestore The Firestore Database client.
    * @param query The query that is used to order the document snapshots returned by this watch.
@@ -162,7 +162,7 @@ final class Watch implements BidiStreamObserver<ListenRequest, ListenResponse> {
     Target.Builder target = Target.newBuilder();
     target.setQuery(
         QueryTarget.newBuilder()
-            .setStructuredQuery(query.buildQuery())
+            .setStructuredQuery(query.buildQuery(/* forceImplicitOrderBy= */ true))
             .setParent(query.options.getParentPath().getName())
             .build());
     target.setTargetId(WATCH_TARGET_ID);
@@ -474,7 +474,7 @@ final class Watch implements BidiStreamObserver<ListenRequest, ListenResponse> {
     if (!hasPushed || !changes.isEmpty()) {
       final QuerySnapshot querySnapshot =
           QuerySnapshot.withChanges(query, readTime, documentSet, changes);
-      LOGGER.info(querySnapshot.toString());
+      LOGGER.fine(querySnapshot::toString);
       userCallbackExecutor.execute(() -> listener.onEvent(querySnapshot, null));
       hasPushed = true;
     }

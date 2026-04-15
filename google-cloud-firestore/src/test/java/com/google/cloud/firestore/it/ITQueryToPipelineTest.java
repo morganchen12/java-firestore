@@ -18,6 +18,10 @@ package com.google.cloud.firestore.it;
 
 import static com.google.cloud.firestore.it.ITQueryTest.map;
 import static org.junit.Assert.assertEquals;
+<<<<<<< HEAD
+=======
+import static org.junit.Assume.assumeTrue;
+>>>>>>> main
 
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentSnapshot;
@@ -57,7 +61,15 @@ public class ITQueryToPipelineTest extends ITBaseTest {
   }
 
   @Before
+<<<<<<< HEAD
   public void setup() throws Exception {}
+=======
+  public void setup() throws Exception {
+    assumeTrue(
+        "This test suite only runs against the Enterprise edition.",
+        getFirestoreEdition().equals(FirestoreEdition.ENTERPRISE));
+  }
+>>>>>>> main
 
   private Object normalizeNumbers(Object value) {
     if (value instanceof Number) {
@@ -604,7 +616,15 @@ public class ITQueryToPipelineTest extends ITBaseTest {
     Query query1 = collRef.whereNotIn("bar", Arrays.asList(2L)).orderBy("foo");
     List<PipelineResult> snapshot =
         firestore.pipeline().createFrom(query1).execute().get().getResults();
+<<<<<<< HEAD
     verifyResults(snapshot, map("foo", 3L, "bar", 10L));
+=======
+    if (getFirestoreEdition() == FirestoreEdition.ENTERPRISE) {
+      verifyResults(snapshot, map("foo", 2L), map("foo", 3L, "bar", 10L));
+    } else {
+      verifyResults(snapshot, map("foo", 3L, "bar", 10L));
+    }
+>>>>>>> main
   }
 
   @Test
@@ -623,4 +643,67 @@ public class ITQueryToPipelineTest extends ITBaseTest {
         firestore.pipeline().createFrom(query1).execute().get().getResults();
     verifyResults(snapshot, map("foo", 1L, "bar", 2L), map("foo", 3L, "bar", 10L));
   }
+<<<<<<< HEAD
+=======
+
+  @Test
+  public void testNotEqualIncludesMissingField() throws Exception {
+    CollectionReference collRef =
+        testCollectionWithDocs(
+            ImmutableMap.of(
+                "1", map("foo", 1L, "bar", 1L),
+                "2", map("foo", 2L) // Missing "bar"
+                ));
+    Query query1 = collRef.whereNotEqualTo("bar", 1L);
+    List<PipelineResult> snapshot =
+        firestore.pipeline().createFrom(query1).execute().get().getResults();
+    // document "2" should be included because "bar" is missing, which is not equal to 1.
+    verifyResults(snapshot, map("foo", 2L));
+  }
+
+  @Test
+  public void testNotInIncludesMissingField() throws Exception {
+    CollectionReference collRef =
+        testCollectionWithDocs(
+            ImmutableMap.of(
+                "1", map("foo", 1L, "bar", 1L),
+                "2", map("foo", 2L) // Missing "bar"
+                ));
+    Query query1 = collRef.whereNotIn("bar", Arrays.asList(1L));
+    List<PipelineResult> snapshot =
+        firestore.pipeline().createFrom(query1).execute().get().getResults();
+    // document "2" should be included because "bar" is missing, which is not in [1].
+    verifyResults(snapshot, map("foo", 2L));
+  }
+
+  @Test
+  public void testInequalityMaintainsExistenceFilter() throws Exception {
+    CollectionReference collRef =
+        testCollectionWithDocs(
+            ImmutableMap.of(
+                "1", map("foo", 1L, "bar", 0L),
+                "2", map("foo", 2L) // Missing "bar"
+                ));
+    Query query1 = collRef.whereLessThan("bar", 1L);
+    List<PipelineResult> snapshot =
+        firestore.pipeline().createFrom(query1).execute().get().getResults();
+    // document "2" should be excluded because "bar" is missing.
+    verifyResults(snapshot, map("foo", 1L, "bar", 0L));
+  }
+
+  @Test
+  public void testExplicitOrderMaintainsExistenceFilter() throws Exception {
+    CollectionReference collRef =
+        testCollectionWithDocs(
+            ImmutableMap.of(
+                "1", map("foo", 1L, "bar", 1L),
+                "2", map("foo", 2L) // Missing "bar"
+                ));
+    Query query1 = collRef.orderBy("bar");
+    List<PipelineResult> snapshot =
+        firestore.pipeline().createFrom(query1).execute().get().getResults();
+    // document "2" should be excluded because "bar" is missing and we have explicit order.
+    verifyResults(snapshot, map("foo", 1L, "bar", 1L));
+  }
+>>>>>>> main
 }
