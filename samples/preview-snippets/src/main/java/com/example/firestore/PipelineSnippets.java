@@ -3133,7 +3133,7 @@ class PipelineSnippets {
     // [START search_exact_match]
     firestore.collection("restaurants").add(new HashMap<String, Object>() {{
       put("name", "Waffle Place");
-      put("description", "A cozy place for fresh waffles.");
+      put("description", "A cozy place for fresh belgian waffles.");
     }});
     // [END search_exact_match]
   }
